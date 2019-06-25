@@ -1,4 +1,4 @@
-"""Edinburgh Genomics Online SF2 web application
+"""Edinburgh Genomics Online SF2 web application.
 
 examples:
 
@@ -9,28 +9,27 @@ To start the tornado server:
 More information is available at:
 
 - http://gitlab.genepool.private/hdunnda/sf2-webapp
-
 """
 
 __version__="0.0.1"
 
 
-import argparse
+import tornado.options
+
+from tornado.options import define, options
+
+import sf2_webapp.controller
+
+
+define("port", default=8888, help="run on the given port", type=int)
 
 
 def main():  # type: () -> None
     """Command line entry point for the web application"""
 
-    # Parse the command line arguments
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
-    
-    parser.add_argument("-v", "--version", action="version", version='%(prog)s {version}'.format(version=__version__))
-    
-    args = parser.parse_args()
-
-    print('started...')
+    tornado.options.parse_command_line()
+    sf2_webapp.controller.run(options.port)
 
 
 if __name__ == "__main__":
     main()
-
