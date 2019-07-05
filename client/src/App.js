@@ -14,13 +14,30 @@ export default class App extends React.Component{
     // Callback function to submit the data to the server for stage 1
     submitData = (project_data: string) => {
 
-        console.log(project_data);
+        const url = 'http://localhost:8888/submit/';
 
-        this.setState(
-            {
-                stage1FormUrl: '',
-                stage1ModalIsActive: true
-            })
+        fetch(url, {
+          method: 'POST', 
+          mode: 'cors',
+          body: JSON.stringify(project_data), 
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        })
+            .then(response => response.json())
+            .then(
+            json => {
+                console.log('Success:', JSON.stringify(json));
+                this.setState(
+                    {
+                        stage1FormUrl: '',
+                        stage1ModalIsActive: true
+                    });
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('Network error. Please try again later.');
+            });
+
     };
 
     render() {
