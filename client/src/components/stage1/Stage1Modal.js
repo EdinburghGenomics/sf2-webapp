@@ -14,11 +14,10 @@ const Stage1Modal = (props: Props) => {return (
         <ModalHeader>Project Setup Completed</ModalHeader>
         <ModalBody>
             <div>
-                Once the Edinburgh Genomics staff member has completed the 'Project Setup' form,
-                the project team will be sent an e-mail containing a link to a
-                webpage containing online SF2 forms set up as specified in the project setup form:
+            The contents of the Project Setup form have been saved to the database.
             </div>
-            <a href={props.formUrl}>Link to the online SF2 forms</a>
+            <br/>
+            <a href={props.formUrl}>Return to Project Setup form</a>
         </ModalBody>
     </Modal>
 )};
