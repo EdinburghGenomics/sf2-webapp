@@ -34,7 +34,8 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
         numSamplesOrLibrariesIsInvalid: false,
         numUnpooledSamplesOrLibrariesIsInvalid: false,
         numberOfSamplesOrLibrariesInPoolIsInvalid: {},
-        numberOfPoolsAndUnpooledSamplesIsInvalid: false
+        numberOfPoolsAndUnpooledSamplesIsInvalid: false,
+        comments: ''
     };
 
 
@@ -86,6 +87,11 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
     };
 
 
+    handleCommentsChange = (event : SyntheticInputEvent<HTMLInputElement>) => {
+        this.updateStateField('comments', event.target.value);
+    };
+
+    
     handleSF2TypeChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
         this.handleChange(event, 'sf2type');
     };
@@ -285,17 +291,17 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
 
     // Handler for the submission logic
     handleSubmit = (event: SyntheticInputEvent<HTMLInputElement>) => {
-        //event.preventDefault();
+
         let numberOfSamplesOrLibrariesInPools = '{}';
         if(this.state.sf2type === '10X' || this.state.sf2type === 'Library') {
             numberOfSamplesOrLibrariesInPools = JSON.stringify(
                 R.filter(x => R.any(y => R.equals(x,y)(this.getPoolKeys())), this.state.numberOfSamplesOrLibrariesInPool)
             );
         }
-
+        
         if(this.formIsValid()) {
 
-            const query_string_source = {
+            const project_data = JSON.stringify({
                 pid: this.state.projectID,
                 st: this.state.sf2type,
                 ctp: this.state.containerTypeIsPlate,
@@ -308,12 +314,12 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
                 nc: this.state.numberOfCustomPrimers,
                 husl: this.state.sf2HasUnpooledSamplesOrLibraries,
                 nusl: this.state.numberOfUnpooledSamplesOrLibraries,
-                nslp: numberOfSamplesOrLibrariesInPools
-            };
-
-            const project_data = JSON.stringify(query_string_source);
+                nslp: numberOfSamplesOrLibrariesInPools,
+                cm: this.state.comments
+            });
 
             this.props.submitData(project_data);
+
         } else {
             alert('Form contains errors. Please fix these before submitting.');
         }
@@ -772,7 +778,15 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
                     }
                     <FormGroup>
                         <Label for="comments">Comments</Label>
-                        <Input type="textarea" name="comments" id="comments"/>
+                        <Input type="textarea"
+                               name="comments"
+                               id="comments"
+                               placeholder="Enter your comments here"
+                               autoComplete="off"
+                               onChange={this.handleCommentsChange}
+                               onInput={this.handleCommentsChange}
+                               value={this.state.comments}
+                        />
                     </FormGroup>
                     <br/>
                     <Button>Submit</Button>
