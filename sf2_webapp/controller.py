@@ -1,32 +1,34 @@
 """Controller module for sf2 web application"""
 
-#import json
+
 import os
 
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 
+import sf2_webapp.model
 
 settings = {
     'debug': True
 }
 
-    
+
 # Request handlers -----
-    
+
 class MainHandler(tornado.web.RequestHandler):
     """Class to handle requests to the top level URL"""
 
+
     def get(self):
         self.render("../client/build/index.html")
-        
-        
+
+
 class CorsHandler(tornado.web.RequestHandler):
     """Class to handle CORS requests from localhost. To be used in development only.
     Adapted from https://stackoverflow.com/questions/30610934/content-type-header-not-getting-set-in-tornado
     """
-    
+
     def set_default_headers(self):
         super(CorsHandler, self).set_default_headers()
 
@@ -39,15 +41,17 @@ class CorsHandler(tornado.web.RequestHandler):
 
         self.set_header('Content-Type', 'application/json')
 
-    def options(self, *args, **kwargs):
-        pass       
 
-    
+    def options(self, *args, **kwargs):
+        pass
+
+
 class SubmitHandler(CorsHandler):
     """Class to handle Stage 1 form submissions"""
-    
+
+
     def post(self):
-        print(str(self.request.body))
+        sf2_webapp.model.ProjectSetupHandler.process_submission(self.request.body)
         self.write(self.request.body)
 
 

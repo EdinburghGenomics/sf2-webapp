@@ -25,7 +25,9 @@ setup(
     packages=["sf2_webapp"],
     include_package_data=True,
     install_requires=[
-        "tornado"
+        "tornado",
+        "psycopg2",
+        "pyyaml"
     ],
     entry_points={"console_scripts": ["start_sf2_webapp=sf2_webapp.__main__:main"]},
 )
