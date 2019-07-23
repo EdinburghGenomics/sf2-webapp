@@ -28,11 +28,11 @@ class ProjectSetupHandler:
         submission_dict = yaml.safe_load(submission)
         query_string = ProjectSetupHandler.generate_query_string()
 
-        load_submission_into_db(submission_dict, query_string)
+        ProjectSetupHandler.load_submission_into_db(submission_dict, query_string)
 
 
     @staticmethod
-    def load_submission_into_db(submission_dict, query_string)
+    def load_submission_into_db(submission_dict, query_string):
 
         app_version = sf2_webapp.__version__
         current_dt = datetime.datetime.now()
