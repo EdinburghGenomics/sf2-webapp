@@ -19,7 +19,7 @@ export default class App extends React.Component{
         fetch(url, {
           method: 'POST', 
           mode: 'cors',
-          body: JSON.stringify(project_data), 
+          body: project_data,
           headers:{
             'Content-Type': 'application/json'
           }

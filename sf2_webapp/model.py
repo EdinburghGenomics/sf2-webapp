@@ -26,6 +26,9 @@ class ProjectSetupHandler:
         """Process a project setup form submission."""
 
         submission_dict = yaml.safe_load(submission)
+
+        assert isinstance(submission_dict, dict), "Error: yaml parsing failed"
+
         query_string = ProjectSetupHandler.generate_query_string()
 
         ProjectSetupHandler.load_submission_into_db(submission_dict, query_string)
