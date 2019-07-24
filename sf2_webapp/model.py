@@ -42,7 +42,7 @@ class ProjectSetupHandler:
 
         with sf2_webapp.database.db_cursor() as cur:
             cur.execute(
-                "INSERT INTO onlinesf2.sf2metadata (querystring, appversion, datecreated, projectid, sf2type, containertypeisplate, numberofsamplesorlibraries, sf2isdualindex, barcodesetisna, sf2haspools, numberofpools, sf2hascustomprimers, numberofcustomprimers, hasunpooledsamplesorlibraries, numberofunpooledsamplesorlibraries, numberofsamplesorlibrariesinpools) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                "INSERT INTO onlinesf2.sf2metadata (querystring, appversion, datecreated, projectid, sf2type, containertypeisplate, numberofsamplesorlibraries, sf2isdualindex, barcodesetisna, sf2haspools, numberofpools, sf2hascustomprimers, numberofcustomprimers, hasunpooledsamplesorlibraries, numberofunpooledsamplesorlibraries, numberofsamplesorlibrariesinpools, comments) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                 [
                     query_string,
                     app_version,
@@ -59,6 +59,7 @@ class ProjectSetupHandler:
                     ProjectSetupHandler.str_to_count(submission_dict['nc']),
                     submission_dict['husl'],
                     ProjectSetupHandler.str_to_count(submission_dict['nusl']),
-                    str(submission_dict['nslp'])
+                    str(submission_dict['nslp']),
+                    submission_dict['cm']
                 ]
             )
