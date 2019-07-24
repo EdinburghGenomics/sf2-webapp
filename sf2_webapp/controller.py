@@ -46,7 +46,7 @@ class CorsHandler(tornado.web.RequestHandler):
         pass
 
 
-class SubmitHandler(CorsHandler):
+class SubmitHandler(tornado.web.RequestHandler):
     """Class to handle Stage 1 form submissions"""
 
 
@@ -55,14 +55,22 @@ class SubmitHandler(CorsHandler):
         self.write(self.request.body)
 
 
+class CorsSubmitHandler(CorsHandler, SubmitHandler):
+    """Class to handle Stage 1 form submissions, which allows CORS requests""" 
+    pass
+
+
+
 # Run function -----
 
-def run(port):
+def run(port, enable_cors=False):
     """Runs the server and listens on the specified port"""
+
+    submit_handler = CorsSubmitHandler if enable_cors else SubmitHandler
 
     handlers = [
         (r'/', MainHandler),
-        (r'/submit/', SubmitHandler),
+        (r'/submit/', submit_handler),
         (r'/(favicon\.ico)', tornado.web.StaticFileHandler, {'path': 'client/build'}),
         (r'/(.*\.(?:css|js|svg|json))', tornado.web.StaticFileHandler, {'path': 'client/build'})
     ]
