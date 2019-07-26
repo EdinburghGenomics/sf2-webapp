@@ -60,7 +60,6 @@ class CorsSubmitHandler(CorsHandler, SubmitHandler):
     pass
 
 
-
 # Run function -----
 
 def run(port, enable_cors=False):
@@ -68,11 +67,12 @@ def run(port, enable_cors=False):
 
     submit_handler = CorsSubmitHandler if enable_cors else SubmitHandler
 
+    static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "client/build")
+
     handlers = [
         (r'/', MainHandler),
         (r'/submit/', submit_handler),
-        (r'/(favicon\.ico)', tornado.web.StaticFileHandler, {'path': 'client/build'}),
-        (r'/(.*\.(?:css|js|svg|json))', tornado.web.StaticFileHandler, {'path': 'client/build'})
+        (r'/(.*\.(?:css|js|ico|json))', tornado.web.StaticFileHandler, {'path': static_path})
     ]
 
     application = tornado.web.Application(handlers, **settings)
