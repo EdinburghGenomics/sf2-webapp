@@ -60,6 +60,15 @@ class CorsSubmitHandler(CorsHandler, SubmitHandler):
     pass
 
 
+class CheckHandler(tornado.web.RequestHandler):
+    """Class to handle Project ID check requests"""
+
+
+    def post(self):
+        result = sf2_webapp.model.ProjectSetupHandler.check_project_id(self.request.body)
+        self.write(str(result).lower())
+
+
 # Run function -----
 
 def run(port, enable_cors=False):
@@ -72,6 +81,7 @@ def run(port, enable_cors=False):
     handlers = [
         (r'/', MainHandler),
         (r'/submit/', submit_handler),
+        (r'/check/', CheckHandler),
         (r'/(.*\.(?:css|js|ico|json))', tornado.web.StaticFileHandler, {'path': static_path})
     ]
 

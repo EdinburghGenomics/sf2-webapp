@@ -108,3 +108,19 @@ class ProjectSetupHandler:
             server.sendmail(email_sender[1], [email_recipient[1]], email_message.as_string())
         finally:
             server.quit()
+
+
+    @staticmethod
+    def check_project_id(project_id):
+        """Check whether the specified project id is present in the database"""
+
+        with sf2_webapp.database.db_cursor() as cur:
+            cur.execute(
+                "SELECT COUNT(*) FROM onlinesf2.sf2metadata WHERE projectid = %s",
+                [
+                    project_id.decode('ascii')
+                ]
+            )
+            count_row = cur.fetchone()
+
+        return count_row[0] > 0
