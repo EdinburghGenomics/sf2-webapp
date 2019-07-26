@@ -14,7 +14,15 @@ export default class App extends React.Component{
     // Callback function to submit the data to the server for stage 1
     submitData = (project_data: string) => {
 
-        const url = 'http://localhost:8888/submit/';
+        // work out web service url
+        let url = '';
+        if(window.location.port === "3000") {
+            // running in dev environment, just use hardcoded url
+            url = 'http://localhost:8888/submit/';
+        } else {
+            // running in test / production, infer url from window.location
+            url = window.location.href.concat("submit/");
+        }
 
         fetch(url, {
           method: 'POST', 
