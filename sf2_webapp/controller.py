@@ -55,11 +55,6 @@ class SubmitHandler(tornado.web.RequestHandler):
         self.write(self.request.body)
 
 
-class CorsSubmitHandler(CorsHandler, SubmitHandler):
-    """Class to handle Stage 1 form submissions, which allows CORS requests""" 
-    pass
-
-
 class CheckHandler(tornado.web.RequestHandler):
     """Class to handle Project ID check requests"""
 
@@ -69,19 +64,46 @@ class CheckHandler(tornado.web.RequestHandler):
         self.write(str(result).lower())
 
 
+class ReissueHandler(tornado.web.RequestHandler):
+    """Class to handle SF2 reissue requests"""
+
+
+    def post(self):
+        result = sf2_webapp.model.ProjectSetupHandler.reissue_sf2(self.request.body)
+        self.write(str(result).lower())
+
+
+class CorsSubmitHandler(CorsHandler, SubmitHandler):
+    """Class to handle Stage 1 form submissions, which allows CORS requests"""
+    pass
+
+
+class CorsCheckHandler(CorsHandler, CheckHandler):
+    """Class to handle Project ID check requests, which allows CORS requests"""
+    pass
+
+
+class CorsReissueHandler(CorsHandler, ReissueHandler):
+    """Class to handle SF2 reissue requests, which allows CORS requests"""
+    pass
+
+
 # Run function -----
 
 def run(port, enable_cors=False):
     """Runs the server and listens on the specified port"""
 
     submit_handler = CorsSubmitHandler if enable_cors else SubmitHandler
+    check_handler = CorsCheckHandler if enable_cors else CheckHandler
+    reissue_handler = CorsReissueHandler if enable_cors else ReissueHandler
 
     static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "client/build")
 
     handlers = [
         (r'/', MainHandler),
         (r'/submit/', submit_handler),
-        (r'/check/', CheckHandler),
+        (r'/check/', check_handler),
+        (r'/reissue/', reissue_handler),
         (r'/(.*\.(?:css|js|ico|json))', tornado.web.StaticFileHandler, {'path': static_path})
     ]
 
