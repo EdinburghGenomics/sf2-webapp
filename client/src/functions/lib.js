@@ -40,3 +40,19 @@ export const getNumSamplesOrLibrariesPlaceholder = (sf2type : string) : string =
 
 };
 
+
+export const getCallbackHref = (location : Object) : string => {
+
+    // work out web service url
+    let href = '';
+    if(location.port === "3000") {
+        // running in dev environment, just use hardcoded url
+        href = 'http://localhost:8888/';
+    } else {
+        // running in test / production, infer url from window.location
+        href = location.href;
+    }
+
+    return href;
+
+};

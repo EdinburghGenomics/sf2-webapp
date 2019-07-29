@@ -5,11 +5,13 @@ import * as R from 'ramda';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 import { Stage1FormState } from '../../types/flowTypes';
-import { eventTargetIsValid, getNumSamplesOrLibrariesLabel, getNumSamplesOrLibrariesPlaceholder } from '../../functions/lib';
+import { eventTargetIsValid, getNumSamplesOrLibrariesLabel, getNumSamplesOrLibrariesPlaceholder,
+getCallbackHref } from '../../functions/lib';
 
 
 type Stage1FormProps = {
-    submitData: (string) => any
+    submitData: (string) => void,
+    reissueProject: (string, string) => void
 };
 
 
@@ -35,7 +37,8 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
         numUnpooledSamplesOrLibrariesIsInvalid: false,
         numberOfSamplesOrLibrariesInPoolIsInvalid: {},
         numberOfPoolsAndUnpooledSamplesIsInvalid: false,
-        comments: ''
+        comments: '',
+        reissueIsEnabled: false
     };
 
 
@@ -71,6 +74,32 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
     };
 
 
+    enableReissueIfAppropriate = (projectID : string) => {
+
+        console.log('Enabling reissue if appropriate for project ID: ', projectID);
+
+        const check_url = getCallbackHref(window.location).concat("check/");
+
+        fetch(check_url, {
+          method: 'POST',
+          mode: 'cors',
+          body: projectID,
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        })
+            .then(response => response.json())
+            .then(
+            json => {
+                const jsonBool = R.equals(JSON.stringify(json), 'true');
+                this.updateStateField('reissueIsEnabled', jsonBool);
+            }).catch(error => {
+                console.error('Error (check):', error);
+            });
+
+    }
+
+
     // event handlers to manage the state of the form component
 
     handleProjectIDChange = (event : SyntheticInputEvent<HTMLInputElement>) => {
@@ -80,6 +109,8 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
         if(!R.test(/^\d{5}_[^_]+_[^_]+$/)(event.target.value)) {
             const newEventTarget = R.assoc('validity', {'valid': false}, event.target);
             newEvent = R.assoc('target', newEventTarget, event);
+        } else {
+            this.enableReissueIfAppropriate(event.target.value);
         }
 
         this.handleInputChange(newEvent, 'projectID', 'projectIDIsInvalid');
@@ -91,7 +122,7 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
         this.updateStateField('comments', event.target.value);
     };
 
-    
+
     handleSF2TypeChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
         this.handleChange(event, 'sf2type');
     };
@@ -298,7 +329,7 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
                 R.filter(x => R.any(y => R.equals(x,y)(this.getPoolKeys())), this.state.numberOfSamplesOrLibrariesInPool)
             );
         }
-        
+
         if(this.formIsValid()) {
 
             const project_data = JSON.stringify({
@@ -324,9 +355,12 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
             alert('Form contains errors. Please fix these before submitting.');
         }
 
-        event.preventDefault();
-
     };
+
+
+    handleReissue = (event: SyntheticInputEvent<HTMLInputElement>) => {
+        this.props.reissueProject(this.state.projectID, this.state.comments);
+    }
 
 
     // UI components
@@ -675,7 +709,7 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
             <div style={{maxWidth: "640px"}}>
                 <h2>Project Setup</h2>
                 <br/>
-                <Form onSubmit={this.handleSubmit}>
+                <Form onSubmit={e=>{e.preventDefault()}}>
                     <FormGroup>
                         <Label for="projectID">Project ID</Label>
                         <Input type="text"
@@ -789,9 +823,12 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
                         />
                     </FormGroup>
                     <br/>
-                    <Button>Submit</Button>
+                    <Button onClick={this.handleSubmit}>Submit</Button>
                     <span>   </span>
-                    <Button disabled>Reissue</Button>
+                    <Button disabled={!this.state.reissueIsEnabled}
+                            onClick={this.handleReissue}>
+                        Reissue
+                    </Button>
                 </Form>
             </div>
         );
