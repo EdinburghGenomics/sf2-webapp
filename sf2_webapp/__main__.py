@@ -25,8 +25,8 @@ import sf2_webapp.config
 import sf2_webapp.database
 
 
-define("port", default=8888, help="run on the given port", type=int)
 define("dbconfig", default=None, help="Path to the database configuration file", type=str)
+define("webconfig", default=None, help="Path to the web configuration file", type=str)
 define("enable_cors", default=False, help="Flag to indicate that CORS should be enabled", type=bool)
 
 
@@ -36,11 +36,12 @@ def main():  # type: () -> None
     tornado.options.parse_command_line()
 
     assert (options.dbconfig is None or os.path.exists(options.dbconfig)), 'Error: database configuration file ' + str(options.dbconfig) + ' not found.'
+    assert (options.webconfig is None or os.path.exists(options.webconfig)), 'Error: web configuration file ' + str(options.webconfig) + ' not found.'
 
     sf2_webapp.controller.run(
-        port=options.port,
         enable_cors=options.enable_cors,
-        db_config_fp=options.dbconfig
+        db_config_fp=options.dbconfig,
+        web_config_fp=options.webconfig
     )
 
 

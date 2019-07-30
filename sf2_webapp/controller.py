@@ -108,11 +108,12 @@ class CorsReissueHandler(CorsHandler, ReissueHandler):
 
 # Run function -----
 
-def run(port, enable_cors=False, db_config_fp=None):
+def run(enable_cors=False, db_config_fp=None, web_config_fp=None):
     """Runs the server and listens on the specified port"""
 
     config_manager = sf2_webapp.config.ConfigurationManager(
-        db_config_fp=db_config_fp
+        db_config_fp=db_config_fp,
+        web_config_fp=web_config_fp
     )
 
     project_setup_model = sf2_webapp.model.ProjectSetup(
@@ -137,5 +138,5 @@ def run(port, enable_cors=False, db_config_fp=None):
 
     application = tornado.web.Application(handlers, **settings)
     http_server = tornado.httpserver.HTTPServer(application)
-    http_server.listen(port)
+    http_server.listen(config_manager.web_config.project_setup.port)
     tornado.ioloop.IOLoop.current().start()

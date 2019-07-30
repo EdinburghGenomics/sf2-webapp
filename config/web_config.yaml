@@ -1,0 +1,4 @@
+project_setup:
+    address: localhost
+    port: 8888
+

@@ -8,6 +8,9 @@ from collections import namedtuple
 
 DatabaseConnectionParams = namedtuple('DatabaseConnectionParams', 'user host port dbname')
 
+WebAppConfig =  namedtuple('WebAppConfig', 'address port')
+WebConfig =  namedtuple('WebConfig', 'project_setup')
+
 
 def load_config_dict_from_file(fp):
     """Function to load a dict of configuration settings from a yaml file"""
@@ -33,17 +36,33 @@ def load_db_connection_params(fp):
     return db_connection_params
 
 
+def load_web_config(fp):
+    """Function to create a WebConfig instance from a web config yaml file"""
+
+    web_config_dict = load_config_dict_from_file(fp)
+
+    web_config = WebConfig(
+        project_setup = WebAppConfig(
+            address = web_config_dict['project_setup']['address'],
+            port = web_config_dict['project_setup']['port']
+        )
+    )
+
+    return web_config
+
+
 class ConfigurationManager:
     """Class to manage configuration settings for the SF2 web application"""
 
 
     _default_config_dirname = 'config'
     _default_config_filenames = {
-        'db': 'db_config.yaml'
+        'db': 'db_config.yaml',
+        'web': 'web_config.yaml'
     }
 
 
-    def __init__(self, db_config_fp=None):
+    def __init__(self, db_config_fp=None, web_config_fp=None):
         """Initialise a ConfigurationManager object with either values from the provided config files, or default config files"""
 
         default_config_filepaths = self._get_default_config_filepaths()
@@ -51,7 +70,11 @@ class ConfigurationManager:
         if db_config_fp is None:
             db_config_fp = default_config_filepaths['db']
 
+        if web_config_fp is None:
+            web_config_fp = default_config_filepaths['web']
+
         self.db_connection_params = load_db_connection_params(db_config_fp)
+        self.web_config = load_web_config(web_config_fp)
 
 
     def _get_default_config_filepaths(self):
