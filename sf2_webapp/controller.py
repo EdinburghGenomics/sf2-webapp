@@ -108,16 +108,18 @@ class CorsReissueHandler(CorsHandler, ReissueHandler):
 
 # Run function -----
 
-def run(enable_cors=False, db_config_fp=None, web_config_fp=None):
+def run(enable_cors=False, db_config_fp=None, web_config_fp=None, email_config_fp=None):
     """Runs the server and listens on the specified port"""
 
     config_manager = sf2_webapp.config.ConfigurationManager(
         db_config_fp=db_config_fp,
-        web_config_fp=web_config_fp
+        web_config_fp=web_config_fp,
+        email_config_fp=email_config_fp
     )
 
     project_setup_model = sf2_webapp.model.ProjectSetup(
-        db_connection_params = config_manager.db_connection_params
+        db_connection_params = config_manager.db_connection_params,
+        email_config = config_manager.email_config
     )
 
     handler_params = dict(project_setup_model=project_setup_model)

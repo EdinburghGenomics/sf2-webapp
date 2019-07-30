@@ -11,6 +11,11 @@ DatabaseConnectionParams = namedtuple('DatabaseConnectionParams', 'user host por
 WebAppConfig =  namedtuple('WebAppConfig', 'address port')
 WebConfig =  namedtuple('WebConfig', 'project_setup')
 
+EmailConfig = namedtuple('EmailConfig', 'smtp_server submission_email reissue_email')
+SMTPServerConfig = namedtuple('SMTPServerConfig', 'host port')
+EmailDetails = namedtuple('EmailDetails', 'subject body sender recipient')
+EmailContact = namedtuple('EmailContact', 'name address')
+
 
 def load_config_dict_from_file(fp):
     """Function to load a dict of configuration settings from a yaml file"""
@@ -51,6 +56,45 @@ def load_web_config(fp):
     return web_config
 
 
+def load_email_config(fp):
+    """Function to create a EmailConfig instance from a email config yaml file"""
+
+    email_config_dict = load_config_dict_from_file(fp)
+
+    email_config = EmailConfig(
+        smtp_server = SMTPServerConfig(
+            host = email_config_dict['smtp_server']['host'],
+            port = email_config_dict['smtp_server']['port']
+        ),
+        submission_email = EmailDetails(
+            subject = email_config_dict['submission_email']['subject'],
+            body = email_config_dict['submission_email']['body'],
+            sender = EmailContact(
+                name = email_config_dict['submission_email']['sender']['name'],
+                address = email_config_dict['submission_email']['sender']['address']
+            ),
+            recipient = EmailContact(
+                name = email_config_dict['submission_email']['recipient']['name'],
+                address = email_config_dict['submission_email']['recipient']['address']
+            )
+        ),
+        reissue_email = EmailDetails(
+            subject = email_config_dict['reissue_email']['subject'],
+            body = email_config_dict['reissue_email']['body'],
+            sender = EmailContact(
+                name = email_config_dict['reissue_email']['sender']['name'],
+                address = email_config_dict['reissue_email']['sender']['address']
+            ),
+            recipient = EmailContact(
+                name = email_config_dict['reissue_email']['recipient']['name'],
+                address = email_config_dict['reissue_email']['recipient']['address']
+            )
+        )
+    )
+
+    return email_config
+
+
 class ConfigurationManager:
     """Class to manage configuration settings for the SF2 web application"""
 
@@ -58,11 +102,12 @@ class ConfigurationManager:
     _default_config_dirname = 'config'
     _default_config_filenames = {
         'db': 'db_config.yaml',
-        'web': 'web_config.yaml'
+        'web': 'web_config.yaml',
+        'email': 'email_config.yaml'
     }
 
 
-    def __init__(self, db_config_fp=None, web_config_fp=None):
+    def __init__(self, db_config_fp=None, web_config_fp=None, email_config_fp=None):
         """Initialise a ConfigurationManager object with either values from the provided config files, or default config files"""
 
         default_config_filepaths = self._get_default_config_filepaths()
@@ -73,8 +118,12 @@ class ConfigurationManager:
         if web_config_fp is None:
             web_config_fp = default_config_filepaths['web']
 
+        if email_config_fp is None:
+            email_config_fp = default_config_filepaths['email']
+
         self.db_connection_params = load_db_connection_params(db_config_fp)
         self.web_config = load_web_config(web_config_fp)
+        self.email_config = load_email_config(email_config_fp)
 
 
     def _get_default_config_filepaths(self):

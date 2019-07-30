@@ -13,9 +13,11 @@ import sf2_webapp.database
 
 class ProjectSetup:
 
-    def __init__(self, db_connection_params):
+    def __init__(self, db_connection_params, email_config):
 
         self.database_connection = sf2_webapp.database.DatabaseConnection(db_connection_params)
+
+        self.email_config = email_config
 
 
     @staticmethod
@@ -85,39 +87,29 @@ class ProjectSetup:
             )
 
 
-    @staticmethod
-    def send_email(submission_dict, query_string, host='127.0.0.1', port=1025, reissue=False):
+    def send_email(self, submission_dict, query_string, reissue=False):
         """Send an e-mail specifying the url of the new Online SF2 form"""
 
         project_id = submission_dict['pid']
         sf2_url = 'https://localhost:3001?{query_string}'.format(**locals())
-        email_subject = """New Online SF2 created for project '{project_id}'""".format(**locals())
-        action = 'reissued' if reissue else 'created'
-        email_body = """
-        Dear Customer,
 
-        An Online SF2 form has been {action} for project '{project_id}'.  You can find the form at the following url:
+        email_details = self.email_config.reissue_email if reissue else self.email_config.submission_email
 
-        {sf2_url}
-
-        Please do not hesitate to contact us if you need any assistance completing the form.
-
-        Best wishes,
-
-        Edinburgh Genomics
-        """.format(**locals())
-        email_sender = 'Online SF2 Project Setup', 'online-sf2-project-setup@edinburgh-genomics.ed.ac.uk'
-        email_recipient = 'Edinburgh Genomics Admin', 'genepool-admin@ed.ac.uk'
+        email_subject = email_details.subject.format(**locals())
+        email_body = email_details.body.format(**locals())
 
         email_message = email.mime.text.MIMEText(email_body)
-        email_message['From'] = email.utils.formataddr(email_sender)
-        email_message['To'] = email.utils.formataddr(email_recipient)
+        email_message['From'] = email.utils.formataddr(email_details.sender)
+        email_message['To'] = email.utils.formataddr(email_details.recipient)
         email_message['Subject'] = email_subject
 
-        server = smtplib.SMTP(host, port)
+        server = smtplib.SMTP(
+            self.email_config.smtp_server.host,
+            self.email_config.smtp_server.port
+        )
 
         try:
-            server.sendmail(email_sender[1], [email_recipient[1]], email_message.as_string())
+            server.sendmail(email_details.sender.address, [email_details.recipient.address], email_message.as_string())
         finally:
             server.quit()
 
@@ -191,7 +183,7 @@ class ProjectSetup:
         )
 
         # e-mail the customer to inform them that the form has been reissued
-        ProjectSetup.send_email(
+        self.send_email(
             submission_dict=new_record,
             query_string=new_query_string,
             reissue=True
