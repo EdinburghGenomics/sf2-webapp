@@ -2,6 +2,10 @@ smtp_server:
     host: localhost
     port: 1025
 
+dev_smtp_server:
+    host: localhost
+    port: 1025
+
 submission_email:
     subject: Online SF2 created for project '{project_id}'
     body: |
