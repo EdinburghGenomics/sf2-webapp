@@ -7,7 +7,9 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 
+import sf2_webapp.config
 import sf2_webapp.model
+
 
 settings = {
     'debug': True
@@ -18,6 +20,10 @@ settings = {
 
 class MainHandler(tornado.web.RequestHandler):
     """Class to handle requests to the top level URL"""
+
+
+    def initialize(self, project_setup_model):
+        self.project_setup_model = project_setup_model
 
 
     def get(self):
@@ -50,8 +56,12 @@ class SubmitHandler(tornado.web.RequestHandler):
     """Class to handle Stage 1 form submissions"""
 
 
+    def initialize(self, project_setup_model):
+        self.project_setup_model = project_setup_model
+
+
     def post(self):
-        sf2_webapp.model.ProjectSetupHandler.process_submission(self.request.body)
+        self.project_setup_model.process_submission(self.request.body)
         self.write(self.request.body)
 
 
@@ -59,8 +69,12 @@ class CheckHandler(tornado.web.RequestHandler):
     """Class to handle Project ID check requests"""
 
 
+    def initialize(self, project_setup_model):
+        self.project_setup_model = project_setup_model
+
+
     def post(self):
-        result = sf2_webapp.model.ProjectSetupHandler.check_project_id(self.request.body)
+        result = self.project_setup_model.check_project_id(self.request.body)
         self.write(str(result).lower())
 
 
@@ -68,8 +82,12 @@ class ReissueHandler(tornado.web.RequestHandler):
     """Class to handle SF2 reissue requests"""
 
 
+    def initialize(self, project_setup_model):
+        self.project_setup_model = project_setup_model
+
+
     def post(self):
-        result = sf2_webapp.model.ProjectSetupHandler.reissue_sf2(self.request.body)
+        result = self.project_setup_model.reissue_sf2(self.request.body)
         self.write(str(result).lower())
 
 
@@ -90,8 +108,22 @@ class CorsReissueHandler(CorsHandler, ReissueHandler):
 
 # Run function -----
 
-def run(port, enable_cors=False):
+def run(enable_cors=False, db_config_fp=None, web_config_fp=None, email_config_fp=None):
     """Runs the server and listens on the specified port"""
+
+    config_manager = sf2_webapp.config.ConfigurationManager(
+        db_config_fp=db_config_fp,
+        web_config_fp=web_config_fp,
+        email_config_fp=email_config_fp
+    )
+
+    project_setup_model = sf2_webapp.model.ProjectSetup(
+        db_connection_params = config_manager.db_connection_params,
+        email_config = config_manager.email_config,
+        web_config = config_manager.web_config
+    )
+
+    handler_params = dict(project_setup_model=project_setup_model)
 
     submit_handler = CorsSubmitHandler if enable_cors else SubmitHandler
     check_handler = CorsCheckHandler if enable_cors else CheckHandler
@@ -100,14 +132,14 @@ def run(port, enable_cors=False):
     static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "client/build")
 
     handlers = [
-        (r'/', MainHandler),
-        (r'/submit/', submit_handler),
-        (r'/check/', check_handler),
-        (r'/reissue/', reissue_handler),
+        (r'/', MainHandler, handler_params),
+        (r'/submit/', submit_handler, handler_params),
+        (r'/check/', check_handler, handler_params),
+        (r'/reissue/', reissue_handler, handler_params),
         (r'/(.*\.(?:css|js|ico|json))', tornado.web.StaticFileHandler, {'path': static_path})
     ]
 
     application = tornado.web.Application(handlers, **settings)
     http_server = tornado.httpserver.HTTPServer(application)
-    http_server.listen(port)
+    http_server.listen(config_manager.web_config.project_setup.port)
     tornado.ioloop.IOLoop.current().start()
