@@ -119,7 +119,8 @@ def run(enable_cors=False, db_config_fp=None, web_config_fp=None, email_config_f
 
     project_setup_model = sf2_webapp.model.ProjectSetup(
         db_connection_params = config_manager.db_connection_params,
-        email_config = config_manager.email_config
+        email_config = config_manager.email_config,
+        web_config = config_manager.web_config
     )
 
     handler_params = dict(project_setup_model=project_setup_model)

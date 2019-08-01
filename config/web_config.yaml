@@ -1,4 +1,7 @@
 project_setup:
     address: localhost
-    port: 8888
+    port: 8000
 
+customer_submission:
+    address: localhost
+    port: 8001

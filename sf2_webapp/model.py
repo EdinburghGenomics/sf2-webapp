@@ -13,11 +13,11 @@ import sf2_webapp.database
 
 class ProjectSetup:
 
-    def __init__(self, db_connection_params, email_config):
+    def __init__(self, db_connection_params, email_config, web_config):
 
         self.database_connection = sf2_webapp.database.DatabaseConnection(db_connection_params)
-
         self.email_config = email_config
+        self.web_config = web_config
 
 
     @staticmethod
@@ -91,12 +91,16 @@ class ProjectSetup:
         """Send an e-mail specifying the url of the new Online SF2 form"""
 
         project_id = submission_dict['pid']
-        sf2_url = 'https://localhost:3001?{query_string}'.format(**locals())
+        sf2_url = 'https://{address}:{port}?{query_string}'.format(
+            address=self.web_config.customer_submission.address,
+            port=self.web_config.customer_submission.port,
+            query_string=query_string
+        )
 
         email_details = self.email_config.reissue_email if reissue else self.email_config.submission_email
 
-        email_subject = email_details.subject.format(**locals())
-        email_body = email_details.body.format(**locals())
+        email_subject = email_details.subject.format(project_id=project_id)
+        email_body = email_details.body.format(project_id=project_id, sf2_url=sf2_url)
 
         email_message = email.mime.text.MIMEText(email_body)
         email_message['From'] = email.utils.formataddr(email_details.sender)

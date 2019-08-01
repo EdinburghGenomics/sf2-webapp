@@ -9,7 +9,7 @@ from collections import namedtuple
 DatabaseConnectionParams = namedtuple('DatabaseConnectionParams', 'user host port dbname')
 
 WebAppConfig =  namedtuple('WebAppConfig', 'address port')
-WebConfig =  namedtuple('WebConfig', 'project_setup')
+WebConfig =  namedtuple('WebConfig', 'project_setup customer_submission')
 
 EmailConfig = namedtuple('EmailConfig', 'smtp_server submission_email reissue_email')
 SMTPServerConfig = namedtuple('SMTPServerConfig', 'host port')
@@ -50,6 +50,10 @@ def load_web_config(fp):
         project_setup = WebAppConfig(
             address = web_config_dict['project_setup']['address'],
             port = web_config_dict['project_setup']['port']
+        ),
+        customer_submission = WebAppConfig(
+            address = web_config_dict['customer_submission']['address'],
+            port = web_config_dict['customer_submission']['port']
         )
     )
 
