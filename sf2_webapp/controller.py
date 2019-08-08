@@ -1,6 +1,6 @@
 """Controller module for sf2 web application"""
 
-
+import logging
 import os
 
 import tornado.httpserver
@@ -14,6 +14,47 @@ import sf2_webapp.model
 settings = {
     'debug': True
 }
+
+
+# Logging setup -----
+
+def set_up_logging(config_manager):
+
+    logging_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+    logging_handler = logging.handlers.RotatingFileHandler(
+        config_manager.logging_config.log_file.prefix,
+        maxBytes=config_manager.logging_config.log_file.max_size_in_bytes,
+        backupCount=config_manager.logging_config.log_file.number_to_keep
+    )
+    logging_handler.setFormatter(logging_formatter)
+
+    access_log = logging.getLogger("tornado.access")
+    app_log = logging.getLogger("tornado.application")
+    gen_log = logging.getLogger("tornado.general")
+
+    tornado.log.enable_pretty_logging()
+
+    access_log.addHandler(logging_handler)
+    app_log.addHandler(logging_handler)
+    gen_log.addHandler(logging_handler)
+
+    logging.getLogger("tornado.access").propagate = False
+    logging.getLogger("tornado.application").propagate = False
+    logging.getLogger("tornado.general").propagate = False
+
+    log_levels = dict(
+        zip(
+            ['debug', 'info', 'warning', 'error'],
+            [logging.DEBUG, logging.INFO, logging.WARNING, logging.ERROR]
+        )
+    )
+
+    log_level = log_levels[config_manager.logging_config.log_level]
+
+    logging.getLogger("tornado.access").setLevel(log_level)
+    logging.getLogger("tornado.application").setLevel(log_level)
+    logging.getLogger("tornado.general").setLevel(log_level)
 
 
 # Request handlers -----
@@ -108,14 +149,17 @@ class CorsReissueHandler(CorsHandler, ReissueHandler):
 
 # Run function -----
 
-def run(enable_cors=False, db_config_fp=None, web_config_fp=None, email_config_fp=None):
+def run(enable_cors=False, db_config_fp=None, web_config_fp=None, email_config_fp=None, logging_config_fp=None):
     """Runs the server and listens on the specified port"""
 
     config_manager = sf2_webapp.config.ConfigurationManager(
         db_config_fp=db_config_fp,
         web_config_fp=web_config_fp,
-        email_config_fp=email_config_fp
+        email_config_fp=email_config_fp,
+        logging_config_fp=logging_config_fp
     )
+
+    set_up_logging(config_manager)
 
     project_setup_model = sf2_webapp.model.ProjectSetup(
         db_connection_params = config_manager.db_connection_params,

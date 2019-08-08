@@ -1,0 +1,5 @@
+log_level: debug
+log_file:
+    prefix: ~/.onlinesf2/onlinesf2_log
+    max_size_in_bytes: 100000000
+    number_to_keep: 1000
