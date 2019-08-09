@@ -1,5 +1,6 @@
 """Controller module for sf2 web application"""
 
+import functools
 import logging
 import os
 
@@ -15,8 +16,13 @@ settings = {
     'debug': True
 }
 
+# Helper functions ----
 
-# Logging setup -----
+def add_cors_if_enabled(cls, enable_cors=False):
+    class WithCors(cls, CorsHandler):
+        pass
+    return WithCors if enable_cors else cls
+
 
 def set_up_logging(config_manager):
 
@@ -55,6 +61,28 @@ def set_up_logging(config_manager):
     logging.getLogger("tornado.access").setLevel(log_level)
     logging.getLogger("tornado.application").setLevel(log_level)
     logging.getLogger("tornado.general").setLevel(log_level)
+
+
+def initialise_http_server(form, model, custom_handlers, port, enable_cors=False):
+
+    static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "client/{form}/build".format(**locals()))
+
+    handler_params = dict(model=model)
+
+    cors = functools.partial(add_cors_if_enabled, enable_cors=enable_cors)
+
+    generic_handlers = [
+        (r'/', MainHandler, dict(static_path=static_path)),
+        (r'/(.*\.(?:css|js|ico|json))', tornado.web.StaticFileHandler, {'path': static_path})
+    ]
+
+    handlers = [(k, cors(custom_handlers[k]), handler_params) for k in custom_handlers.keys()] + generic_handlers
+
+    application = tornado.web.Application(handlers, **settings)
+    http_server = tornado.httpserver.HTTPServer(application)
+    http_server.listen(port)
+
+    return http_server
 
 
 # Generic request handlers ----
@@ -99,12 +127,12 @@ class ProjectSetupSubmitHandler(tornado.web.RequestHandler):
     """Class to handle Stage 1 form submissions"""
 
 
-    def initialize(self, project_setup_model):
-        self.project_setup_model = project_setup_model
+    def initialize(self, model):
+        self.model = model
 
 
     def post(self):
-        self.project_setup_model.process_submission(self.request.body)
+        self.model.process_submission(self.request.body)
         self.write(self.request.body)
 
 
@@ -112,12 +140,12 @@ class ProjectSetupCheckHandler(tornado.web.RequestHandler):
     """Class to handle Project ID check requests"""
 
 
-    def initialize(self, project_setup_model):
-        self.project_setup_model = project_setup_model
+    def initialize(self, model):
+        self.model = model
 
 
     def post(self):
-        result = self.project_setup_model.check_project_id(self.request.body)
+        result = self.model.check_project_id(self.request.body)
         self.write(str(result).lower())
 
 
@@ -125,28 +153,13 @@ class ProjectSetupReissueHandler(tornado.web.RequestHandler):
     """Class to handle SF2 reissue requests"""
 
 
-    def initialize(self, project_setup_model):
-        self.project_setup_model = project_setup_model
+    def initialize(self, model):
+        self.model = model
 
 
     def post(self):
-        result = self.project_setup_model.reissue_sf2(self.request.body)
+        result = self.model.reissue_sf2(self.request.body)
         self.write(str(result).lower())
-
-
-class ProjectSetupCorsSubmitHandler(CorsHandler, ProjectSetupSubmitHandler):
-    """Class to handle Stage 1 form submissions, which allows CORS requests"""
-    pass
-
-
-class ProjectSetupCorsCheckHandler(CorsHandler, ProjectSetupCheckHandler):
-    """Class to handle Project ID check requests, which allows CORS requests"""
-    pass
-
-
-class ProjectSetupCorsReissueHandler(CorsHandler, ProjectSetupReissueHandler):
-    """Class to handle SF2 reissue requests, which allows CORS requests"""
-    pass
 
 
 # HTTP servers ----
@@ -159,43 +172,32 @@ def initialise_project_setup_server(config_manager, enable_cors=False):
         web_config = config_manager.web_config
     )
 
-    handler_params = dict(project_setup_model=project_setup_model)
+    custom_handlers = {
+        r'/submit/': ProjectSetupSubmitHandler,
+        r'/check/': ProjectSetupCheckHandler,
+        r'/reissue/': ProjectSetupReissueHandler
+    }
 
-    submit_handler = CorsProjectSetupSubmitHandler if enable_cors else ProjectSetupSubmitHandler
-    check_handler = CorsProjectSetupCheckHandler if enable_cors else ProjectSetupCheckHandler
-    reissue_handler = CorsProjectSetupReissueHandler if enable_cors else ProjectSetupReissueHandler
-
-    static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "client/project_setup/build")
-
-    handlers = [
-        (r'/', MainHandler, dict(static_path=static_path)),
-        (r'/submit/', submit_handler, handler_params),
-        (r'/check/', check_handler, handler_params),
-        (r'/reissue/', reissue_handler, handler_params),
-        (r'/(.*\.(?:css|js|ico|json))', tornado.web.StaticFileHandler, {'path': static_path})
-    ]
-
-    application = tornado.web.Application(handlers, **settings)
-    http_server = tornado.httpserver.HTTPServer(application)
-    http_server.listen(config_manager.web_config.project_setup.port)
-
-    return http_server
+    return initialise_http_server(
+        form='project_setup',
+        model=project_setup_model,
+        custom_handlers=custom_handlers,
+        port=config_manager.web_config.project_setup.port,
+        enable_cors=enable_cors
+    )
 
 
 def initialise_customer_submission_server(config_manager, enable_cors=False):
 
-    static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "client/customer_submission/build")
+    return initialise_http_server(
+        form='customer_submission',
+        model=None,
+        custom_handlers={},
+        port=config_manager.web_config.customer_submission.port,
+        enable_cors=enable_cors
+    )
 
-    handlers = [
-        (r'/', MainHandler, dict(static_path=static_path)),
-        (r'/(.*\.(?:css|js|ico|json))', tornado.web.StaticFileHandler, {'path': static_path})
-    ]
 
-    application = tornado.web.Application(handlers, **settings)
-    http_server = tornado.httpserver.HTTPServer(application)
-    http_server.listen(config_manager.web_config.customer_submission.port)
-
-    return http_server
 
 
 # Run function -----
