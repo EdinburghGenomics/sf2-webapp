@@ -182,6 +182,22 @@ def initialise_project_setup_server(config_manager, enable_cors=False):
     return http_server
 
 
+def initialise_customer_submission_server(config_manager, enable_cors=False):
+
+    static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "client/customer_submission/build")
+
+    handlers = [
+        (r'/', MainHandler, dict(static_path=static_path)),
+        (r'/(.*\.(?:css|js|ico|json))', tornado.web.StaticFileHandler, {'path': static_path})
+    ]
+
+    application = tornado.web.Application(handlers, **settings)
+    http_server = tornado.httpserver.HTTPServer(application)
+    http_server.listen(config_manager.web_config.customer_submission.port)
+
+    return http_server
+
+
 # Run function -----
 
 def run(enable_cors=False, db_config_fp=None, web_config_fp=None, email_config_fp=None, logging_config_fp=None):
@@ -197,5 +213,6 @@ def run(enable_cors=False, db_config_fp=None, web_config_fp=None, email_config_f
     set_up_logging(config_manager)
 
     initialise_project_setup_server(config_manager, enable_cors=enable_cors)
+    initialise_customer_submission_server(config_manager, enable_cors=enable_cors)
 
     tornado.ioloop.IOLoop.current().start()
