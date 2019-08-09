@@ -57,19 +57,7 @@ def set_up_logging(config_manager):
     logging.getLogger("tornado.general").setLevel(log_level)
 
 
-# Request handlers -----
-
-class MainHandler(tornado.web.RequestHandler):
-    """Class to handle requests to the top level URL"""
-
-
-    def initialize(self, project_setup_model):
-        self.project_setup_model = project_setup_model
-
-
-    def get(self):
-        self.render("../client/build/index.html")
-
+# Generic request handlers ----
 
 class CorsHandler(tornado.web.RequestHandler):
     """Class to handle CORS requests from localhost. To be used in development only.
@@ -93,7 +81,21 @@ class CorsHandler(tornado.web.RequestHandler):
         pass
 
 
-class SubmitHandler(tornado.web.RequestHandler):
+class MainHandler(tornado.web.RequestHandler):
+    """Class to handle requests to the top level URL"""
+
+
+    def initialize(self, static_path):
+        self.static_path = static_path
+
+
+    def get(self):
+        self.render(os.path.join(self.static_path, "index.html"))
+
+
+# Project setup request handlers -----
+
+class ProjectSetupSubmitHandler(tornado.web.RequestHandler):
     """Class to handle Stage 1 form submissions"""
 
 
@@ -106,7 +108,7 @@ class SubmitHandler(tornado.web.RequestHandler):
         self.write(self.request.body)
 
 
-class CheckHandler(tornado.web.RequestHandler):
+class ProjectSetupCheckHandler(tornado.web.RequestHandler):
     """Class to handle Project ID check requests"""
 
 
@@ -119,7 +121,7 @@ class CheckHandler(tornado.web.RequestHandler):
         self.write(str(result).lower())
 
 
-class ReissueHandler(tornado.web.RequestHandler):
+class ProjectSetupReissueHandler(tornado.web.RequestHandler):
     """Class to handle SF2 reissue requests"""
 
 
@@ -132,17 +134,17 @@ class ReissueHandler(tornado.web.RequestHandler):
         self.write(str(result).lower())
 
 
-class CorsSubmitHandler(CorsHandler, SubmitHandler):
+class ProjectSetupCorsSubmitHandler(CorsHandler, ProjectSetupSubmitHandler):
     """Class to handle Stage 1 form submissions, which allows CORS requests"""
     pass
 
 
-class CorsCheckHandler(CorsHandler, CheckHandler):
+class ProjectSetupCorsCheckHandler(CorsHandler, ProjectSetupCheckHandler):
     """Class to handle Project ID check requests, which allows CORS requests"""
     pass
 
 
-class CorsReissueHandler(CorsHandler, ReissueHandler):
+class ProjectSetupCorsReissueHandler(CorsHandler, ProjectSetupReissueHandler):
     """Class to handle SF2 reissue requests, which allows CORS requests"""
     pass
 
@@ -159,14 +161,14 @@ def initialise_project_setup_server(config_manager, enable_cors=False):
 
     handler_params = dict(project_setup_model=project_setup_model)
 
-    submit_handler = CorsSubmitHandler if enable_cors else SubmitHandler
-    check_handler = CorsCheckHandler if enable_cors else CheckHandler
-    reissue_handler = CorsReissueHandler if enable_cors else ReissueHandler
+    submit_handler = CorsProjectSetupSubmitHandler if enable_cors else ProjectSetupSubmitHandler
+    check_handler = CorsProjectSetupCheckHandler if enable_cors else ProjectSetupCheckHandler
+    reissue_handler = CorsProjectSetupReissueHandler if enable_cors else ProjectSetupReissueHandler
 
-    static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "client/build")
+    static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "client/project_setup/build")
 
     handlers = [
-        (r'/', MainHandler, handler_params),
+        (r'/', MainHandler, dict(static_path=static_path)),
         (r'/submit/', submit_handler, handler_params),
         (r'/check/', check_handler, handler_params),
         (r'/reissue/', reissue_handler, handler_params),
