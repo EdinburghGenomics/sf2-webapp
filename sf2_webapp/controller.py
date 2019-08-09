@@ -147,19 +147,9 @@ class CorsReissueHandler(CorsHandler, ReissueHandler):
     pass
 
 
-# Run function -----
+# HTTP servers ----
 
-def run(enable_cors=False, db_config_fp=None, web_config_fp=None, email_config_fp=None, logging_config_fp=None):
-    """Runs the server and listens on the specified port"""
-
-    config_manager = sf2_webapp.config.ConfigurationManager(
-        db_config_fp=db_config_fp,
-        web_config_fp=web_config_fp,
-        email_config_fp=email_config_fp,
-        logging_config_fp=logging_config_fp
-    )
-
-    set_up_logging(config_manager)
+def initialise_project_setup_server(config_manager, enable_cors=False):
 
     project_setup_model = sf2_webapp.model.ProjectSetup(
         db_connection_params = config_manager.db_connection_params,
@@ -186,4 +176,24 @@ def run(enable_cors=False, db_config_fp=None, web_config_fp=None, email_config_f
     application = tornado.web.Application(handlers, **settings)
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(config_manager.web_config.project_setup.port)
+
+    return http_server
+
+
+# Run function -----
+
+def run(enable_cors=False, db_config_fp=None, web_config_fp=None, email_config_fp=None, logging_config_fp=None):
+    """Runs the server and listens on the specified port"""
+
+    config_manager = sf2_webapp.config.ConfigurationManager(
+        db_config_fp=db_config_fp,
+        web_config_fp=web_config_fp,
+        email_config_fp=email_config_fp,
+        logging_config_fp=logging_config_fp
+    )
+
+    set_up_logging(config_manager)
+
+    initialise_project_setup_server(config_manager, enable_cors=enable_cors)
+
     tornado.ioloop.IOLoop.current().start()
