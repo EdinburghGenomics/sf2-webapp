@@ -11,38 +11,51 @@ import TenXSF2 from '../SF2s/10XSF2/10XSF2';
 
 import { decodeFormStateQueryString } from '../../functions/lib';
 
-import type { SF2Data, Stage1FormState } from '../../types/flowTypes';
+import type { SF2Data, Stage1FormState, AbbreviatedStage1FormState } from '../../types/flowTypes';
+
+
+const uppercaseFirstLetter = (str : String) : String => {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+
+const inflateStage1FormState = (abbreviatedState : AbbreviatedStage1FormState) : Stage1FormState => {
+
+    return {
+        projectID: abbreviatedState.pid,
+        sf2type: uppercaseFirstLetter(abbreviatedState.st),
+        containerTypeIsPlate: abbreviatedState.ctp,
+        numberOfSamplesOrLibraries: abbreviatedState.nsl,
+        sf2IsDualIndex: abbreviatedState.di,
+        barcodeSetIsNA: abbreviatedState.na,
+        sf2HasPools: abbreviatedState.hp,
+        numberOfPools: abbreviatedState.np,
+        sf2HasCustomPrimers: abbreviatedState.hc,
+        numberOfCustomPrimers: abbreviatedState.nc,
+        sf2HasUnpooledSamplesOrLibraries: abbreviatedState.husl,
+        numberOfUnpooledSamplesOrLibraries: abbreviatedState.nusl,
+        numberOfSamplesOrLibrariesInPools: abbreviatedState.nslp
+    };
+
+}
 
 
 type Stage2SF2ContainerProps = {
-    queryString: string,
-    redirectToHome: () => void,
+    initState: ?String,
     handleSubmission: () => void
 };
 
 
 export default class Stage2SF2Container extends React.Component<Stage2SF2ContainerProps, Stage1FormState> {
-    initialSF2Data = null;
+    initialSF2Data = {};
     saveDataName = '';
 
 
     constructor (props : Object) {
         super(props);
-        //this.state = decodeFormStateQueryString(this.props.queryString);
-        this.state = {"projectID":"21354_a_a","sf2type":"Library","numberOfSamplesOrLibraries":"","sf2IsDualIndex":true,"barcodeSetIsNA":false,"sf2HasPools":true,"numberOfPools":"2","sf2HasCustomPrimers":true,"numberOfCustomPrimers":"1","sf2HasUnpooledSamplesOrLibraries":true,"numberOfUnpooledSamplesOrLibraries":"1","numberOfSamplesOrLibrariesInPools":"{\"1\":\"1\",\"2\":\"2\"}"}
-        console.log(JSON.stringify(this.state))
 
-        this.saveDataName = 'saveData-stage2-' + this.props.queryString;
-
-        // Load initial grids if present
-        if(window.sessionStorage !== undefined) {
-
-            const saveData = window.sessionStorage.getItem(this.saveDataName);
-
-            if (!R.isNil(saveData)) {
-                this.initialSF2Data = JSON.parse(saveData);
-            }
-
+        if (!R.isNil(this.props.initState)) {
+            this.state = inflateStage1FormState(this.props.initState);
         }
     };
 

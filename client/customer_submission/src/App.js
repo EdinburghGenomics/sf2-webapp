@@ -1,8 +1,11 @@
 // @flow
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import Stage2Modal from './components/stage2/Stage2Modal';
 import Stage2SF2Container from './components/stage2/Stage2SF2Container';
+
+import { getCallbackHref } from './functions/lib.js';
 
 // App class
 type AppProps = {};
@@ -22,19 +25,47 @@ export default class App extends React.Component<AppProps, AppState> {
         this.setState({stage2ModalIsActive: true});
     };
 
+    fetchInitState = (queryString: String) : void => {
+
+        const submit_url = getCallbackHref(window.location).concat("initstate/");
+
+        fetch(submit_url, {
+          method: 'POST',
+          mode: 'cors',
+          body: '{"queryString": '+queryString+'}',
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        })
+            .then(response => response.json())
+            .then(
+            json => {
+                console.log('Success (initstate):', JSON.stringify(json));
+                ReactDOM.render(<div style={{margin: 10}}>
+                <Stage2SF2Container initState={json} handleSubmission={this.handleStage2FormSubmission} />
+                <Stage2Modal redirectUrl={''} active={this.state.stage2ModalIsActive}/>
+                                </div>, document.getElementById('stage2Container'))
+            }).catch(error => {
+                console.error('Error (initstate):', error);
+                alert('Network error (initstate). Please try again later.');
+            });
+
+    };
+
+    componentDidMount() {
+
+        var queryString = window.location.search.replace(/^\?/,'');
+
+        this.fetchInitState(queryString);
+
+    }
+
     render() {
-        
-        const queryString = "eyJwaWQiOiIyMTM1NF9hX2EiLCJzdCI6IkxpYnJhcnlWMiIsImN0IjoiVHViZSIsIm5zbCI6IiIsImRpIjp0cnVlLCJuYSI6ZmFsc2UsImhwIjp0cnVlLCJucCI6IjIiLCJoYyI6dHJ1ZSwibmMiOiIxIiwiaHVzbCI6dHJ1ZSwibnVzbCI6IjEiLCJuc2xwIjoie1wiMVwiOlwiMVwiLFwiMlwiOlwiMlwifSJ9";
-        const stage3Path = '';
 
         return (
-            
-            <div style={{margin: 10}}>
-                <Stage2SF2Container queryString={queryString} redirectToHome={()=>{}} handleSubmission={this.handleStage2FormSubmission} />
-                <Stage2Modal redirectUrl={stage3Path} active={this.state.stage2ModalIsActive}/>
-            </div>
+            <div id="stage2Container"></div>
         )
-        
+
     };
 
 };

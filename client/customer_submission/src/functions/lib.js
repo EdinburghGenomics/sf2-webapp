@@ -327,3 +327,19 @@ export const getDuplicateWarnings = (colIndex : number, columns : Columns, grid 
 
 };
 
+
+export const getCallbackHref = (location : Object) : string => {
+
+    // work out web service url
+    let href = '';
+    if(location.port === "3001") {
+        // running in dev environment, just use hardcoded url
+        href = 'http://localhost:8001/';
+    } else {
+        // running in test / production, infer url from window.location
+        href = location.href;
+    }
+
+    return href;
+
+};

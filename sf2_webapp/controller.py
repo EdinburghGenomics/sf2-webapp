@@ -162,6 +162,19 @@ class ProjectSetupReissueHandler(tornado.web.RequestHandler):
         self.write(str(result).lower())
 
 
+class CustomerSubmissionInitialStateHandler(tornado.web.RequestHandler):
+    """Class to handle initial state requests"""
+
+
+    def initialize(self, model):
+        self.model = model
+
+
+    def post(self):
+        result = self.model.get_initial_state(self.request.body)
+        self.write(str(result).lower())
+
+
 # HTTP servers ----
 
 def initialise_project_setup_server(config_manager, enable_cors=False):
@@ -189,15 +202,21 @@ def initialise_project_setup_server(config_manager, enable_cors=False):
 
 def initialise_customer_submission_server(config_manager, enable_cors=False):
 
+    customer_submission_model = sf2_webapp.model.CustomerSubmission(
+        db_connection_params = config_manager.db_connection_params
+    )
+
+    custom_handlers = {
+        r'/initstate/': CustomerSubmissionInitialStateHandler
+    }
+
     return initialise_http_server(
         form='customer_submission',
-        model=None,
-        custom_handlers={},
+        model=customer_submission_model,
+        custom_handlers=custom_handlers,
         port=config_manager.web_config.customer_submission.port,
         enable_cors=enable_cors
     )
-
-
 
 
 # Run function -----
