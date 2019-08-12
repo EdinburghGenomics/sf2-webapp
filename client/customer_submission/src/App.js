@@ -23,7 +23,8 @@ export default class App extends React.Component<AppProps, AppState> {
     state = {
         stage2ModalIsActive: false,
         queryString: '',
-        submittedAt: ''
+        submittedAt: '',
+        sf2: {}
     };
 
 
@@ -140,7 +141,9 @@ export default class App extends React.Component<AppProps, AppState> {
             .then(
             json => {
                 console.log('Success (initdata):', JSON.stringify(json));
-                ReactDOM.render(<Stage2SF2Container initState={this.initialState} initialSF2Data={json.sf2} handleSubmission={this.handleStage2FormSubmission} handleSave={this.handleStage2FormSave} submittedAt={json.submittedAt.length > 0 && 'Submitted at: ' + JSON.parse(json.submittedAt)} />, document.getElementById('stage2Container'))
+                this.setState({'submittedAt': json.submittedAt, 'sf2': json.sf2}, () => {
+                    ReactDOM.render(<Stage2SF2Container initState={this.initialState} initialSF2Data={this.state.sf2} handleSubmission={this.handleStage2FormSubmission} handleSave={this.handleStage2FormSave}/>, document.getElementById('stage2Container'));
+                });
             }).catch(error => {
                 console.error('Error (initdata):', error);
                 alert('Network error (initdata). Please try again later.');

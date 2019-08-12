@@ -44,8 +44,7 @@ type Stage2SF2ContainerProps = {
     initState: ?String,
     initialSF2Data: ?String,
     handleSave: SF2Data => void,
-    handleSubmission: SF2Data => void,
-    submittedAt: String
+    handleSubmission: SF2Data => void
 };
 
 
@@ -137,7 +136,6 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
                     showHiddenColumns={false}
                 />
                 }
-                <div>{this.props.submittedAt}</div>
             </div>
     )};
 };
