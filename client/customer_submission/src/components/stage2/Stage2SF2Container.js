@@ -42,7 +42,8 @@ const inflateStage1FormState = (abbreviatedState : AbbreviatedStage1FormState) :
 
 type Stage2SF2ContainerProps = {
     initState: ?String,
-    handleSubmission: (SF2Data, Array<any>) => void,
+    handleSave: SF2Data => void,
+    handleSubmission: SF2Data => void,
     submittedAt: String
 };
 
@@ -61,22 +62,24 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
     };
 
 
+    getSubmissionData = tables => {
+        return {
+            initialState: this.state,
+            queryString: this.props.queryString,
+            tables: tables
+        }
+    }
+
+
     handleSave = (tables : SF2Data) : void => {
-        window.sessionStorage.setItem(this.saveDataName, JSON.stringify(tables));
+        this.props.handleSave(this.getSubmissionData(tables));
     };
 
 
     handleSubmission = (tables : SF2Data) : void => {
-
-        const submissionData = {
-            initialState: this.state,
-            queryString: this.props.queryString,
-            tables: tables
-        };
-
-        this.props.handleSubmission(submissionData);
-
+        this.props.handleSubmission(this.getSubmissionData(tables));
     };
+
 
     render() {
         return(

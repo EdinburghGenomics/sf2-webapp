@@ -26,14 +26,49 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
 
+    handleStage2FormSave = (saveData : Object) : void => {
+
+        const fullSaveData = {
+            queryString: this.state.queryString,
+            saveData: saveData
+        };
+
+        this.saveSF2(fullSaveData);
+    };
+
+
     handleStage2FormSubmission = (submissionData : Object) : void => {
-        console.log(submissionData);
+
         const fullSubmissionData = {
             queryString: this.state.queryString,
             submissionData: submissionData
         };
 
         this.submitSF2(fullSubmissionData);
+    };
+
+
+    saveSF2 = (saveData: Object) : void => {
+
+        const save_url = getCallbackHref(window.location).concat("save/");
+
+        fetch(save_url, {
+          method: 'POST',
+          mode: 'cors',
+          body: JSON.stringify(saveData),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        })
+            .then(response => response.json())
+            .then(
+            json => {
+                console.log('Success (save):', JSON.stringify(json));
+            }).catch(error => {
+                console.error('Error (save):', error);
+                alert('Network error (save). Please try again later.');
+            });
+
     };
 
 
@@ -78,7 +113,7 @@ export default class App extends React.Component<AppProps, AppState> {
             .then(
             json => {
                 console.log('Success (initstate):', JSON.stringify(json));
-                ReactDOM.render(<Stage2SF2Container initState={json} handleSubmission={this.handleStage2FormSubmission} submittedAt={this.state.submittedAt} />, document.getElementById('stage2Container'))
+                ReactDOM.render(<Stage2SF2Container initState={json} handleSubmission={this.handleStage2FormSubmission} handleSave={this.handleStage2FormSave} submittedAt={this.state.submittedAt} />, document.getElementById('stage2Container'))
             }).catch(error => {
                 console.error('Error (initstate):', error);
                 alert('Network error (initstate). Please try again later.');
@@ -92,7 +127,6 @@ export default class App extends React.Component<AppProps, AppState> {
 
         this.setState({'queryString': queryString});
         this.fetchInitState(queryString);
-
 
     }
 

@@ -355,3 +355,21 @@ class CustomerSubmission:
             email_details=self.email_config.review_email,
             stage='review'
         )
+
+
+    def process_save(self, save):
+        """Process a customer save SF2 action"""
+
+        save_dict = json.loads(as_ascii(save))
+
+        query_string = save_dict['queryString']
+        sf2_contents = json.dumps(save_dict['saveData']['tables'])
+
+        save_dt = self.load_sf2_into_db(
+            query_string=query_string,
+            sf2_contents=sf2_contents,
+            action='save',
+            stage='customer_submission'
+        )
+
+        return datetime_to_json(save_dt)

@@ -135,6 +135,19 @@ class SubmitHandler(tornado.web.RequestHandler):
         self.write(submission_result)
 
 
+class SaveHandler(tornado.web.RequestHandler):
+    """Class to handle form saves"""
+
+
+    def initialize(self, model):
+        self.model = model
+
+
+    def post(self):
+        save_result = self.model.process_save(self.request.body)
+        self.write(save_result)
+
+
 # Project setup request handlers -----
 
 class ProjectSetupCheckHandler(tornado.web.RequestHandler):
@@ -211,7 +224,8 @@ def initialise_customer_submission_server(config_manager, enable_cors=False):
     )
 
     custom_handlers = {
-        r'/initstate/': CustomerSubmissionInitialStateHandler
+        r'/initstate/': CustomerSubmissionInitialStateHandler,
+        r'/save/': SaveHandler
     }
 
     return initialise_http_server(
