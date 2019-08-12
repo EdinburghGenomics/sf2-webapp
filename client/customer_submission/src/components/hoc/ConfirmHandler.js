@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import * as R from 'ramda';
 
 import type { SF2Data } from '../../types/flowTypes';
 import ConfirmModal from "../general/ConfirmModal";
@@ -43,7 +44,7 @@ export const withConfirmHandler = (WrappedSF2 : React.ComponentType<SF2Props>) :
 
         handleSubmission = (tables : SF2Data, warnings: Array<any>) : void => {
 
-            if(warnings.length === 0) {
+            if(R.isNil(warnings) || warnings.length === 0) {
                 this.setState({
                     tables: tables,
                     warnings: warnings,
@@ -73,6 +74,8 @@ export const withConfirmHandler = (WrappedSF2 : React.ComponentType<SF2Props>) :
 
 
         onConfirm = () => {
+            this.hideModals();
+            document.getElementById("submittedAt").textContent = "Submitting...";
             this.props.handleSubmission(this.state.tables);
         };
 

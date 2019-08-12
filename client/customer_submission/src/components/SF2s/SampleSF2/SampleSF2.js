@@ -7,6 +7,7 @@ import { getSF2, getInitialTables, updateTables } from '../../../functions/lib';
 
 import { SF2DefaultProps, withDisableHandler } from "../../hoc/DisableHandler";
 import { withDownloadHandler } from "../../hoc/DownloadHandler";
+import { withConfirmHandler } from "../../hoc/ConfirmHandler";
 import { withShowDocumentationHandler } from "../../hoc/ShowDocumentationHandler";
 
 import type { Stage1FormState, SF2Data, Table, Tables } from '../../../types/flowTypes';
@@ -26,7 +27,6 @@ type SampleSF2Props = {
     updateSaveDisabled: Tables => void,
     disableSaveButton: Tables => void
 };
-
 
 class SampleSF2 extends React.Component<SampleSF2Props> {
     static defaultProps = SF2DefaultProps;
@@ -77,5 +77,6 @@ class SampleSF2 extends React.Component<SampleSF2Props> {
 
 }
 
+
 //$FlowFixMe
-export default withDisableHandler(withDownloadHandler(withShowDocumentationHandler(SampleSF2)));
+export default withDisableHandler(withConfirmHandler(withDownloadHandler(withShowDocumentationHandler(SampleSF2))));

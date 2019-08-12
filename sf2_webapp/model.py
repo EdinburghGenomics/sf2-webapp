@@ -54,6 +54,38 @@ def sf2metadata_record_to_dict(record):
     }
 
 
+def send_email(email_config, web_config, project_id, query_string, email_details, stage):
+    """Send an e-mail"""
+
+    sf2_url = 'https://{address}:{port}?{query_string}'.format(
+        address=web_config._asdict()[stage].address,
+        port=web_config._asdict()[stage].port,
+        query_string=query_string
+    )
+
+    email_subject = email_details.subject.format(project_id=project_id)
+    email_body = email_details.body.format(project_id=project_id, sf2_url=sf2_url)
+
+    email_message = email.mime.text.MIMEText(email_body)
+    email_message['From'] = email.utils.formataddr(email_details.sender)
+    email_message['To'] = email.utils.formataddr(email_details.recipient)
+    email_message['Subject'] = email_subject
+
+    server = smtplib.SMTP(
+        email_config.smtp_server.host,
+        email_config.smtp_server.port
+    )
+
+    try:
+        server.sendmail(email_details.sender.address, [email_details.recipient.address], email_message.as_string())
+    finally:
+        server.quit()
+
+
+def datetime_to_json(dt):
+    return json.dumps('{:%c}'.format(dt))
+
+
 # Model classes ----
 
 class ProjectSetup:
@@ -72,8 +104,10 @@ class ProjectSetup:
         submission_dict = json.loads(submission_str);
         query_string = generate_query_string()
 
-        self.load_submission_into_db(submission_dict, query_string)
-        self.send_email(submission_dict, query_string)
+        submission_dt = self.load_submission_into_db(submission_dict, query_string)
+        self.send_notification_email(submission_dict, query_string)
+
+        return datetime_to_json(submission_dt)
 
 
     def load_submission_into_db(self, submission_dict, query_string, reissue_of=None):
@@ -107,36 +141,23 @@ class ProjectSetup:
                 ]
             )
 
+        return current_dt
 
-    def send_email(self, submission_dict, query_string, reissue=False):
+
+    def send_notification_email(self, submission_dict, query_string, reissue=False):
         """Send an e-mail specifying the url of the new Online SF2 form"""
 
-        project_id = submission_dict['pid']
-        sf2_url = 'https://{address}:{port}?{query_string}'.format(
-            address=self.web_config.customer_submission.address,
-            port=self.web_config.customer_submission.port,
-            query_string=query_string
-        )
-
         email_details = self.email_config.reissue_email if reissue else self.email_config.submission_email
+        project_id = submission_dict['pid']
 
-        email_subject = email_details.subject.format(project_id=project_id)
-        email_body = email_details.body.format(project_id=project_id, sf2_url=sf2_url)
-
-        email_message = email.mime.text.MIMEText(email_body)
-        email_message['From'] = email.utils.formataddr(email_details.sender)
-        email_message['To'] = email.utils.formataddr(email_details.recipient)
-        email_message['Subject'] = email_subject
-
-        server = smtplib.SMTP(
-            self.email_config.smtp_server.host,
-            self.email_config.smtp_server.port
+        send_email(
+            email_config=self.email_config,
+            web_config=self.web_config,
+            project_id=project_id,
+            query_string=query_string,
+            email_details=email_details,
+            stage='customer_submission'
         )
-
-        try:
-            server.sendmail(email_details.sender.address, [email_details.recipient.address], email_message.as_string())
-        finally:
-            server.quit()
 
 
     def check_project_id(self, project_id):
@@ -193,7 +214,7 @@ class ProjectSetup:
         )
 
         # e-mail the customer to inform them that the form has been reissued
-        self.send_email(
+        self.send_notification_email(
             submission_dict=new_record_json,
             query_string=new_query_string,
             reissue=True
@@ -204,9 +225,11 @@ class ProjectSetup:
 
 class CustomerSubmission:
 
-    def __init__(self, db_connection_params):
+    def __init__(self, db_connection_params, email_config, web_config):
 
         self.database_connection = sf2_webapp.database.DatabaseConnection(db_connection_params)
+        self.email_config = email_config
+        self.web_config = web_config
 
 
     def get_latest_sf2metadata_record_with_query_string(self, query_string):
@@ -232,3 +255,103 @@ class CustomerSubmission:
         initial_state_json = json.dumps(sf2metadata_record_to_dict(initial_state_row))
 
         return initial_state_json
+
+
+    def get_latest_sf2metadata_record_with_query_string(self, query_string):
+
+        with self.database_connection.cursor() as cur:
+            cur.execute(
+                "SELECT * FROM onlinesf2.sf2metadata WHERE querystring = %s ORDER BY datecreated desc LIMIT 1",
+                [
+                    as_ascii(query_string)
+                ]
+            )
+            row = cur.fetchone()
+
+            return row
+
+
+    def get_initial_state(self, query_string):
+
+        qs = re.sub('^.*: ', '', as_ascii(query_string))
+        qs = re.sub('}$', '', qs)
+
+        initial_state_row = self.get_latest_sf2metadata_record_with_query_string(qs)
+        initial_state_json = json.dumps(sf2metadata_record_to_dict(initial_state_row))
+
+        return initial_state_json
+
+
+    def load_sf2_into_db(self, query_string, sf2_contents, action, stage):
+        """Load an SF2 into the sf2data table in the database"""
+
+        app_version = sf2_webapp.__version__
+        current_dt = datetime.datetime.now()
+
+        with self.database_connection.cursor() as cur:
+            cur.execute(
+                "INSERT INTO onlinesf2.sf2data (querystring, appversion, datecreated, sf2contents, action, stage) VALUES (%s, %s, %s, %s, %s, %s)",
+                [
+                    query_string,
+                    app_version,
+                    current_dt,
+                    sf2_contents,
+                    action,
+                    stage
+                ]
+            )
+
+        return current_dt
+
+
+    def get_project_id_for_query_string(self, query_string):
+        """Get the project ID for a given query string"""
+
+        with self.database_connection.cursor() as cur:
+            cur.execute(
+                "SELECT projectid FROM onlinesf2.sf2metadata WHERE querystring = %s ORDER BY datecreated desc LIMIT 1",
+                [
+                    query_string
+                ]
+            )
+            row = cur.fetchone()
+
+        return row[0]
+
+
+    def process_submission(self, submission):
+        """Process a customer submission"""
+
+        submission_dict = json.loads(as_ascii(submission))
+
+        query_string = submission_dict['queryString']
+        sf2_contents = json.dumps(submission_dict['submissionData']['tables'])
+
+        submission_dt = self.load_sf2_into_db(
+            query_string=query_string,
+            sf2_contents=sf2_contents,
+            action='submit',
+            stage='customer_submission'
+        )
+
+        project_id = self.get_project_id_for_query_string(query_string)
+
+        self.send_notification_email(
+            project_id=project_id,
+            query_string=submission_dict['queryString']
+        )
+
+        return datetime_to_json(submission_dt)
+
+
+    def send_notification_email(self, project_id, query_string):
+        """Send an e-mail specifying the url of the Online SF2 form ready for review"""
+
+        send_email(
+            email_config=self.email_config,
+            web_config=self.web_config,
+            project_id=project_id,
+            query_string=query_string,
+            email_details=self.email_config.review_email,
+            stage='review'
+        )

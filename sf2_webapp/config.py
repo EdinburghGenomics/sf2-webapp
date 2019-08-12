@@ -9,9 +9,9 @@ from collections import namedtuple
 DatabaseConnectionParams = namedtuple('DatabaseConnectionParams', 'user host port dbname')
 
 WebAppConfig =  namedtuple('WebAppConfig', 'address port')
-WebConfig =  namedtuple('WebConfig', 'project_setup customer_submission')
+WebConfig =  namedtuple('WebConfig', 'project_setup customer_submission review')
 
-EmailConfig = namedtuple('EmailConfig', 'smtp_server submission_email reissue_email')
+EmailConfig = namedtuple('EmailConfig', 'smtp_server submission_email reissue_email review_email')
 SMTPServerConfig = namedtuple('SMTPServerConfig', 'host port')
 EmailDetails = namedtuple('EmailDetails', 'subject body sender recipient')
 EmailContact = namedtuple('EmailContact', 'name address')
@@ -57,6 +57,10 @@ def load_web_config(fp):
         customer_submission = WebAppConfig(
             address = web_config_dict['customer_submission']['address'],
             port = web_config_dict['customer_submission']['port']
+        ),
+        review = WebAppConfig(
+            address = web_config_dict['review']['address'],
+            port = web_config_dict['review']['port']
         )
     )
 
@@ -95,6 +99,18 @@ def load_email_config(fp):
             recipient = EmailContact(
                 name = email_config_dict['reissue_email']['recipient']['name'],
                 address = email_config_dict['reissue_email']['recipient']['address']
+            )
+        ),
+        review_email = EmailDetails(
+            subject = email_config_dict['review_email']['subject'],
+            body = email_config_dict['review_email']['body'],
+            sender = EmailContact(
+                name = email_config_dict['review_email']['sender']['name'],
+                address = email_config_dict['review_email']['sender']['address']
+            ),
+            recipient = EmailContact(
+                name = email_config_dict['review_email']['recipient']['name'],
+                address = email_config_dict['review_email']['recipient']['address']
             )
         )
     )

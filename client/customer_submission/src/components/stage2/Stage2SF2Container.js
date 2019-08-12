@@ -42,7 +42,8 @@ const inflateStage1FormState = (abbreviatedState : AbbreviatedStage1FormState) :
 
 type Stage2SF2ContainerProps = {
     initState: ?String,
-    handleSubmission: () => void
+    handleSubmission: (SF2Data, Array<any>) => void,
+    submittedAt: String
 };
 
 
@@ -73,10 +74,7 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
             tables: tables
         };
 
-        window.sessionStorage.setItem('submissionData', JSON.stringify(submissionData));
-        window.sessionStorage.removeItem(this.saveDataName);
-
-        this.props.handleSubmission();
+        this.props.handleSubmission(submissionData);
 
     };
 
@@ -130,6 +128,7 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
                     showHiddenColumns={false}
                 />
                 }
+                <div>{this.props.submittedAt}</div>
             </div>
     )};
 };

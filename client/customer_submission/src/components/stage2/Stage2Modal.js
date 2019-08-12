@@ -9,7 +9,7 @@ type Props = {
 };
 
 
-const Stage1Modal = (props: Props) => {return (
+const Stage2Modal = (props: Props) => {return (
     <Modal isOpen={props.active} style={{minWidth: "75%"}} >
         <ModalHeader>SF2 Submission Completed</ModalHeader>
         <ModalBody>
@@ -24,4 +24,4 @@ const Stage1Modal = (props: Props) => {return (
 )};
 
 
-export default Stage1Modal;
+export default Stage2Modal;

@@ -7,7 +7,7 @@ type Props = {
     onConfirm: () => any,
     onCancel: () => any,
     active: boolean,
-    warnings: Array<any>
+    warnings: ?Array<any>
 };
 
 
@@ -20,7 +20,7 @@ const WarningModal = (props: Props) => {
             <div>This SF2 contains the following warnings:</div>
             <br/>
             <div style={{height: "150px", overflowY: "auto", border: "1px solid grey", padding: "10px"}}>
-                {props.warnings.map(x=><div>{x.message}</div>)}
+                {props.warnings && props.warnings.map(x=><div>{x.message}</div>)}
             </div>
             <br/>
             <div>Do you want to submit the SF2 anyway?</div>

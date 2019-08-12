@@ -43,7 +43,6 @@ export const withDisableHandler = (WrappedSF2 : React.ComponentType<SF2Props>) :
             };
         }
 
-
         getShouldDisableSubmit = () : boolean => {
             return R.pipe(
                 R.values,

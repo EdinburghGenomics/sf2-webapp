@@ -72,6 +72,7 @@ def initialise_http_server(form, model, custom_handlers, port, enable_cors=False
     cors = functools.partial(add_cors_if_enabled, enable_cors=enable_cors)
 
     generic_handlers = [
+        (r'/submit/', cors(SubmitHandler), handler_params),
         (r'/', MainHandler, dict(static_path=static_path)),
         (r'/(.*\.(?:css|js|ico|json))', tornado.web.StaticFileHandler, {'path': static_path})
     ]
@@ -121,10 +122,8 @@ class MainHandler(tornado.web.RequestHandler):
         self.render(os.path.join(self.static_path, "index.html"))
 
 
-# Project setup request handlers -----
-
-class ProjectSetupSubmitHandler(tornado.web.RequestHandler):
-    """Class to handle Stage 1 form submissions"""
+class SubmitHandler(tornado.web.RequestHandler):
+    """Class to handle form submissions"""
 
 
     def initialize(self, model):
@@ -132,9 +131,11 @@ class ProjectSetupSubmitHandler(tornado.web.RequestHandler):
 
 
     def post(self):
-        self.model.process_submission(self.request.body)
-        self.write(self.request.body)
+        submission_result = self.model.process_submission(self.request.body)
+        self.write(submission_result)
 
+
+# Project setup request handlers -----
 
 class ProjectSetupCheckHandler(tornado.web.RequestHandler):
     """Class to handle Project ID check requests"""
@@ -162,6 +163,8 @@ class ProjectSetupReissueHandler(tornado.web.RequestHandler):
         self.write(str(result).lower())
 
 
+# Customer submission request handlers ----
+
 class CustomerSubmissionInitialStateHandler(tornado.web.RequestHandler):
     """Class to handle initial state requests"""
 
@@ -186,7 +189,6 @@ def initialise_project_setup_server(config_manager, enable_cors=False):
     )
 
     custom_handlers = {
-        r'/submit/': ProjectSetupSubmitHandler,
         r'/check/': ProjectSetupCheckHandler,
         r'/reissue/': ProjectSetupReissueHandler
     }
@@ -203,7 +205,9 @@ def initialise_project_setup_server(config_manager, enable_cors=False):
 def initialise_customer_submission_server(config_manager, enable_cors=False):
 
     customer_submission_model = sf2_webapp.model.CustomerSubmission(
-        db_connection_params = config_manager.db_connection_params
+        db_connection_params = config_manager.db_connection_params,
+        email_config = config_manager.email_config,
+        web_config = config_manager.web_config
     )
 
     custom_handlers = {

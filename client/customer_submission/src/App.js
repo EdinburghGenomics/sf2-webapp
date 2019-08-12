@@ -12,24 +12,61 @@ type AppProps = {};
 
 
 type AppState = {
-    stage2ModalIsActive: boolean
+    stage2ModalIsActive: boolean,
+    queryString: String,
+    submittedAt: String
 }
 
 
 export default class App extends React.Component<AppProps, AppState> {
     state = {
-        stage2ModalIsActive: false
+        stage2ModalIsActive: false,
+        queryString: '',
+        submittedAt: ''
     };
 
-    handleStage2FormSubmission = () => {
-        this.setState({stage2ModalIsActive: true});
+
+    handleStage2FormSubmission = (submissionData : Object) : void => {
+        console.log(submissionData);
+        const fullSubmissionData = {
+            queryString: this.state.queryString,
+            submissionData: submissionData
+        };
+
+        this.submitSF2(fullSubmissionData);
     };
+
+
+    submitSF2 = (submissionData: Object) : void => {
+
+        const submit_url = getCallbackHref(window.location).concat("submit/");
+
+        fetch(submit_url, {
+          method: 'POST',
+          mode: 'cors',
+          body: JSON.stringify(submissionData),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        })
+            .then(response => response.json())
+            .then(
+            json => {
+                console.log('Success (submit):', JSON.stringify(json));
+                this.setState({'submittedAt': json});
+            }).catch(error => {
+                console.error('Error (submit):', error);
+                alert('Network error (submit). Please try again later.');
+            });
+
+    };
+
 
     fetchInitState = (queryString: String) : void => {
 
-        const submit_url = getCallbackHref(window.location).concat("initstate/");
+        const init_url = getCallbackHref(window.location).concat("initstate/");
 
-        fetch(submit_url, {
+        fetch(init_url, {
           method: 'POST',
           mode: 'cors',
           body: '{"queryString": '+queryString+'}',
@@ -41,10 +78,7 @@ export default class App extends React.Component<AppProps, AppState> {
             .then(
             json => {
                 console.log('Success (initstate):', JSON.stringify(json));
-                ReactDOM.render(<div style={{margin: 10}}>
-                <Stage2SF2Container initState={json} handleSubmission={this.handleStage2FormSubmission} />
-                <Stage2Modal redirectUrl={''} active={this.state.stage2ModalIsActive}/>
-                                </div>, document.getElementById('stage2Container'))
+                ReactDOM.render(<Stage2SF2Container initState={json} handleSubmission={this.handleStage2FormSubmission} submittedAt={this.state.submittedAt} />, document.getElementById('stage2Container'))
             }).catch(error => {
                 console.error('Error (initstate):', error);
                 alert('Network error (initstate). Please try again later.');
@@ -54,16 +88,21 @@ export default class App extends React.Component<AppProps, AppState> {
 
     componentDidMount() {
 
-        var queryString = window.location.search.replace(/^\?/,'');
+        const queryString = window.location.search.replace(/^\?/,'');
 
+        this.setState({'queryString': queryString});
         this.fetchInitState(queryString);
+
 
     }
 
     render() {
 
         return (
-            <div id="stage2Container"></div>
+            <div style={{margin: 10}}>
+                <div id="stage2Container"></div>
+                <div id="submittedAt">{this.state.submittedAt != '' && 'Submitted at: ' + this.state.submittedAt}</div>
+            </div>
         )
 
     };

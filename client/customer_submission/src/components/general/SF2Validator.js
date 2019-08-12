@@ -229,6 +229,14 @@ export default class SF2Validator extends React.Component<SF2ValidatorProps, Sta
     };
 
 
+    getButtonDisabled = (disabledProp : Boolean) : Boolean => {
+
+        const submittedAt = document.getElementById("submittedAt").textContent;
+        return submittedAt.length > 0 || disabledProp;
+
+    }
+
+
     render() {
 
         return (
@@ -250,11 +258,11 @@ export default class SF2Validator extends React.Component<SF2ValidatorProps, Sta
                     containerTypeIsPlate={this.state.containerTypeIsPlate}
                 />
                 <p><em>1. If the source of your samples is human or other organism covered by regulatory controls such as the Human Tissue regulations or CITES regulations we require you to affirm to us that all samples are covered by relevant licences and ethical permissions. You should note that we are not a clinical diagnostic service, and you should not use us as such.</em></p>
-                <Button onClick={this.props.handleSave} disabled={this.props.saveDisabled}>Save</Button>
+                <Button onClick={this.props.handleSave} disabled={this.getButtonDisabled(this.props.saveDisabled)}>Save</Button>
                 <span>    </span>
-                <Button onClick={this.props.handleDownload} disabled={false}>Download</Button>
+                <Button onClick={this.props.handleDownload} disabled={this.getButtonDisabled(false)}>Download</Button>
                 <span>    </span>
-                <Button onClick={this.props.handleSubmission} disabled={this.props.submitDisabled}>Submit</Button>
+                <Button onClick={this.props.handleSubmission} disabled={this.getButtonDisabled(this.props.submitDisabled)}>Submit</Button>
                 <br/>
                 <br/>
                 <div style={{width: "1000px", wordBreak: "break-word"}}>
