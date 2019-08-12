@@ -188,7 +188,20 @@ class CustomerSubmissionInitialStateHandler(tornado.web.RequestHandler):
 
     def post(self):
         result = self.model.get_initial_state(self.request.body)
-        self.write(str(result).lower())
+        self.write(str(result))
+
+
+class CustomerSubmissionInitialDataHandler(tornado.web.RequestHandler):
+    """Class to handle initial data requests"""
+
+
+    def initialize(self, model):
+        self.model = model
+
+
+    def post(self):
+        result = self.model.get_initial_data(self.request.body)
+        self.write(str(result))
 
 
 # HTTP servers ----
@@ -225,6 +238,7 @@ def initialise_customer_submission_server(config_manager, enable_cors=False):
 
     custom_handlers = {
         r'/initstate/': CustomerSubmissionInitialStateHandler,
+        r'/initdata/': CustomerSubmissionInitialDataHandler,
         r'/save/': SaveHandler
     }
 

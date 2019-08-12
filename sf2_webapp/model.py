@@ -33,6 +33,7 @@ def as_ascii(input_string):
     except AttributeError:
         return input_string
 
+
 def sf2metadata_record_to_dict(record):
     """Helper function to convert a record from the sf2metadata table to a dict"""
 
@@ -215,7 +216,7 @@ class ProjectSetup:
 
         # e-mail the customer to inform them that the form has been reissued
         self.send_notification_email(
-            submission_dict=new_record_json,
+            submission_dict=new_record_dict,
             query_string=new_query_string,
             reissue=True
         )
@@ -248,34 +249,7 @@ class CustomerSubmission:
 
     def get_initial_state(self, query_string):
 
-        qs = re.sub('^.*: ', '', as_ascii(query_string))
-        qs = re.sub('}$', '', qs)
-
-        initial_state_row = self.get_latest_sf2metadata_record_with_query_string(qs)
-        initial_state_json = json.dumps(sf2metadata_record_to_dict(initial_state_row))
-
-        return initial_state_json
-
-
-    def get_latest_sf2metadata_record_with_query_string(self, query_string):
-
-        with self.database_connection.cursor() as cur:
-            cur.execute(
-                "SELECT * FROM onlinesf2.sf2metadata WHERE querystring = %s ORDER BY datecreated desc LIMIT 1",
-                [
-                    as_ascii(query_string)
-                ]
-            )
-            row = cur.fetchone()
-
-            return row
-
-
-    def get_initial_state(self, query_string):
-
-        qs = re.sub('^.*: ', '', as_ascii(query_string))
-        qs = re.sub('}$', '', qs)
-
+        qs = json.loads(as_ascii(query_string))
         initial_state_row = self.get_latest_sf2metadata_record_with_query_string(qs)
         initial_state_json = json.dumps(sf2metadata_record_to_dict(initial_state_row))
 
@@ -373,3 +347,100 @@ class CustomerSubmission:
         )
 
         return datetime_to_json(save_dt)
+
+
+    def get_latest_sf2data_record_with_details(self, query_string, action, stage):
+
+        with self.database_connection.cursor() as cur:
+            cur.execute(
+                "SELECT * FROM onlinesf2.sf2data WHERE querystring = %s AND action = %s AND stage = %s ORDER BY datecreated desc LIMIT 1",
+                [
+                    as_ascii(query_string),
+                    action,
+                    stage
+                ]
+            )
+            row = cur.fetchone()
+
+            return row
+
+
+    def get_query_string_of_reissued_sf2(self, query_string):
+
+        with self.database_connection.cursor() as cur:
+            cur.execute(
+                "SELECT reissueof FROM onlinesf2.sf2metadata WHERE querystring = %s ORDER BY datecreated desc LIMIT 1",
+                [
+                    as_ascii(query_string),
+                ]
+            )
+            row = cur.fetchone()
+
+            return row[0]
+
+
+    def get_initial_data(self, query_string):
+        """Get the initial data for an SF2 form.
+
+        This method checks for the following (in order):
+        - The most recent submitted SF2, or if none are present
+        - The most recent saved SF2, or if none are present
+        - The most recent submitted SF2 that the current SF2 is a reissue of
+        """
+
+        qs = json.loads(as_ascii(query_string))
+
+        new_record = None
+        sf2_contents = {}
+        submitted_at = ''
+
+        latest_submitted_record = self.get_latest_sf2data_record_with_details(
+            query_string=qs,
+            action='submit',
+            stage='customer_submission'
+        )
+
+        if latest_submitted_record:
+            new_record = latest_submitted_record
+            submitted_at = datetime_to_json(new_record[3])
+        else:
+            latest_saved_record = self.get_latest_sf2data_record_with_details(
+                query_string=qs,
+                action='save',
+                stage='customer_submission'
+            )
+
+            if latest_saved_record:
+                new_record = latest_saved_record
+            else:
+                reissue_query_string = self.get_query_string_of_reissued_sf2(
+                    query_string=qs
+                )
+
+                latest_reissue_submit_review = self.get_latest_sf2data_record_with_details(
+                    query_string=reissue_query_string,
+                    action='submit',
+                    stage='review'
+                )
+
+                if latest_reissue_submit_review:
+                    new_record = latest_reissue_submit_review
+                else:
+                    latest_reissue_submit_cs = self.get_latest_sf2data_record_with_details(
+                        query_string=reissue_query_string,
+                        action='submit',
+                        stage='customer_submission'
+                    )
+
+                    if latest_reissue_submit_cs:
+                        new_record = latest_reissue_submit_cs
+
+        if new_record:
+            sf2_contents = json.loads(new_record[4])
+
+        initial_data = {
+           'submittedAt': submitted_at,
+           'sf2': sf2_contents
+        }
+
+        return json.dumps(initial_data)

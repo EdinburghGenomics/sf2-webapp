@@ -19,6 +19,7 @@ type AppState = {
 
 
 export default class App extends React.Component<AppProps, AppState> {
+    initialState = {}
     state = {
         stage2ModalIsActive: false,
         queryString: '',
@@ -104,7 +105,7 @@ export default class App extends React.Component<AppProps, AppState> {
         fetch(init_url, {
           method: 'POST',
           mode: 'cors',
-          body: '{"queryString": '+queryString+'}',
+            body: JSON.stringify(queryString),
           headers:{
             'Content-Type': 'application/json'
           }
@@ -113,13 +114,40 @@ export default class App extends React.Component<AppProps, AppState> {
             .then(
             json => {
                 console.log('Success (initstate):', JSON.stringify(json));
-                ReactDOM.render(<Stage2SF2Container initState={json} handleSubmission={this.handleStage2FormSubmission} handleSave={this.handleStage2FormSave} submittedAt={this.state.submittedAt} />, document.getElementById('stage2Container'))
+                this.initialState = json;
+                this.fetchInitData(queryString);
             }).catch(error => {
                 console.error('Error (initstate):', error);
                 alert('Network error (initstate). Please try again later.');
             });
 
     };
+
+
+    fetchInitData = (queryString: String) : void => {
+
+        const init_url = getCallbackHref(window.location).concat("initdata/");
+
+        fetch(init_url, {
+          method: 'POST',
+          mode: 'cors',
+          body: JSON.stringify(queryString),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        })
+            .then(response => response.json())
+            .then(
+            json => {
+                console.log('Success (initdata):', JSON.stringify(json));
+                ReactDOM.render(<Stage2SF2Container initState={this.initialState} initialSF2Data={json.sf2} handleSubmission={this.handleStage2FormSubmission} handleSave={this.handleStage2FormSave} submittedAt={json.submittedAt.length > 0 && 'Submitted at: ' + JSON.parse(json.submittedAt)} />, document.getElementById('stage2Container'))
+            }).catch(error => {
+                console.error('Error (initdata):', error);
+                alert('Network error (initdata). Please try again later.');
+            });
+
+    };
+
 
     componentDidMount() {
 

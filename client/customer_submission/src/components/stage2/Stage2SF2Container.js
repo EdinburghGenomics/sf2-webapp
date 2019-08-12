@@ -42,6 +42,7 @@ const inflateStage1FormState = (abbreviatedState : AbbreviatedStage1FormState) :
 
 type Stage2SF2ContainerProps = {
     initState: ?String,
+    initialSF2Data: ?String,
     handleSave: SF2Data => void,
     handleSubmission: SF2Data => void,
     submittedAt: String
@@ -59,6 +60,11 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
         if (!R.isNil(this.props.initState)) {
             this.state = inflateStage1FormState(this.props.initState);
         }
+
+        if (!R.isNil(this.props.initialSF2Data)) {
+            this.initialSF2Data = this.props.initialSF2Data;
+        }
+
     };
 
 
