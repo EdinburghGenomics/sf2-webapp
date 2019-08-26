@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import Stage2Modal from './components/stage2/Stage2Modal';
 import Stage2SF2Container from './components/stage2/Stage2SF2Container';
 
-import { getCallbackHref } from './functions/lib.js';
 
 // App class
 type AppProps = {};
@@ -50,9 +49,26 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
 
+    getCallbackHref = (location : Object) : string => {
+
+        // work out web service url
+        let href = '';
+        if(location.port === "3001") {
+            // running in dev environment, just use hardcoded url
+            href = 'http://localhost:8001/';
+        } else {
+            // running in test / production, infer url from window.location
+            href = location.href;
+        }
+
+        return href;
+
+    };
+
+
     saveSF2 = (saveData: Object) : void => {
 
-        const save_url = getCallbackHref(window.location).concat("save/");
+        const save_url = this.getCallbackHref(window.location).concat("save/");
 
         fetch(save_url, {
           method: 'POST',
@@ -76,7 +92,7 @@ export default class App extends React.Component<AppProps, AppState> {
 
     submitSF2 = (submissionData: Object) : void => {
 
-        const submit_url = getCallbackHref(window.location).concat("submit/");
+        const submit_url = this.getCallbackHref(window.location).concat("submit/");
 
         fetch(submit_url, {
           method: 'POST',
@@ -101,7 +117,7 @@ export default class App extends React.Component<AppProps, AppState> {
 
     fetchInitState = (queryString: String) : void => {
 
-        const init_url = getCallbackHref(window.location).concat("initstate/");
+        const init_url = this.getCallbackHref(window.location).concat("initstate/");
 
         fetch(init_url, {
           method: 'POST',
@@ -127,7 +143,7 @@ export default class App extends React.Component<AppProps, AppState> {
 
     fetchInitData = (queryString: String) : void => {
 
-        const init_url = getCallbackHref(window.location).concat("initdata/");
+        const init_url = this.getCallbackHref(window.location).concat("initdata/");
 
         fetch(init_url, {
           method: 'POST',

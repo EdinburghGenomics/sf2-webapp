@@ -45,6 +45,8 @@ export default class SF2Validator extends React.Component<SF2ValidatorProps, Sta
     constructor (props : Object) {
         super(props);
 
+        console.log(this.props);
+
         this.state = this.props.initialState;
         Object.assign(this.state, {
             errors: [],

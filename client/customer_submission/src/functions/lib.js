@@ -2,7 +2,7 @@
 // Helper functions for the SF2 webapp demo
 import * as R from 'ramda';
 
-import type { Columns, Grid } from '../sf2datasheet/types/flowTypes';
+import type {Columns, Grid, Row} from '../sf2datasheet/types/flowTypes';
 import type { Grids, Table, Tables, SF2Data, AbbreviatedStage1FormState, Stage1FormState } from '../types/flowTypes';
 
 
@@ -236,8 +236,8 @@ export const updateTables = (table: Table, allTables : Tables) : Tables => {
 };
 
 
-export const getSF2 = (SF2Type : string, tables : Tables) : SF2Data => {
-    return {name: SF2Type, tables: tables};
+export const getSF2 = (SF2Type : string, tables : Tables, frozenGrids : Grids) : SF2Data => {
+    return {name: SF2Type, tables: tables, frozenGrids: frozenGrids};
 };
 
 
@@ -328,18 +328,84 @@ export const getDuplicateWarnings = (colIndex : number, columns : Columns, grid 
 };
 
 
-export const getCallbackHref = (location : Object) : string => {
+export const getInitialInformationTableGrids = (initialTables : Tables, frozenGrids : Grids, tableName : string) : Grids => {
 
-    // work out web service url
-    let href = '';
-    if(location.port === "3001") {
-        // running in dev environment, just use hardcoded url
-        href = 'http://localhost:8001/';
+    const getMatchingTable = tables => R.find(R.propEq('name', tableName), tables);
+
+    const matchingTable = getMatchingTable(initialTables);
+    const matchingFrozenGrid = getMatchingTable(frozenGrids);
+
+    if(!R.isNil(matchingTable)) {
+        return matchingTable.grids.map(x=>x.grid);
+    } else if (matchingFrozenGrid.grids[0].length === 0) {
+        return [];
     } else {
-        // running in test / production, infer url from window.location
-        href = location.href;
+        const frozenGridContents = matchingFrozenGrid.grids.map(x=>x.grid);
+        return frozenGridContents.map(frozenGrid => R.repeat([], frozenGrid.length));
     }
 
-    return href;
+};
+
+
+export const updateRow = (currentWellOffset : number, row : Row) : Row => {
+
+        const newWellIndex = row.wellIndex - currentWellOffset;
+        const newWellID = calculateWellID(newWellIndex-1);
+
+        return R.pipe(
+            R.assoc('wellIndex', newWellIndex),
+            R.assoc('egWellID', newWellID)
+        )(row);
+
+    };
+
+
+export const splitRows = (wellsPerPlate : number, rows : Grid) : Grids => {
+
+    const sortedRows = R.sort((a, b) => a.wellIndex - b.wellIndex)(rows);
+
+    let splitRows = [];
+    let currentPlate = [];
+    let currentWellOffset = 0;
+    let currentPlateMaximum = wellsPerPlate;
+
+    sortedRows.forEach(row => {
+
+        if (row.wellIndex > currentPlateMaximum) {
+            currentWellOffset = currentPlateMaximum;
+            currentPlateMaximum += wellsPerPlate;
+            splitRows = splitRows.concat([currentPlate]);
+            currentPlate = [updateRow(currentWellOffset, row)];
+        } else {
+            currentPlate = currentPlate.concat([updateRow(currentWellOffset, row)]);
+        }
+    });
+
+    splitRows = splitRows.concat([currentPlate]);
+
+    return splitRows;
+
+};
+
+
+export const calculateFrozenGrids = (allRowsWithIDs : Object, containerTypeIsPlate : boolean, getRowsToReturn : (Array<Object>) => Array<Object>) : Grids => {
+
+    const getGridToReturn = (x, ix) => { return {id: ix, grid: x} };
+
+    let frozenGrids = [];
+
+    if(containerTypeIsPlate) {
+        frozenGrids = R.pipe(
+                R.curry(splitRows)(96),
+                R.map(getRowsToReturn)
+            )(allRowsWithIDs).map(getGridToReturn);
+    } else {
+        frozenGrids = [R.pipe(
+                getRowsToReturn,
+                x => getGridToReturn(x, 0)
+            )(allRowsWithIDs)];
+    }
+
+    return frozenGrids;
 
 };
