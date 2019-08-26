@@ -47,7 +47,7 @@ export const getCallbackHref = (location : Object) : string => {
     let href = '';
     if(location.port === "3000") {
         // running in dev environment, just use hardcoded url
-        href = 'http://localhost:8888/';
+        href = 'http://localhost:8000/';
     } else {
         // running in test / production, infer url from window.location
         href = location.href;

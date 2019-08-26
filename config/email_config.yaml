@@ -20,10 +20,10 @@ submission_email:
         Best wishes,
 
         Edinburgh Genomics
-    sender: 
+    sender:
         name: Online SF2 Project Setup
         address: online-sf2-project-setup@edinburgh-genomics.ed.ac.uk
-    recipient: 
+    recipient:
         name: Edinburgh Genomics Admin
         address: genepool-admin@ed.ac.uk
 
@@ -41,9 +41,28 @@ reissue_email:
         Best wishes,
 
         Edinburgh Genomics
-    sender: 
+    sender:
         name: Online SF2 Project Setup
         address: online-sf2-project-setup@edinburgh-genomics.ed.ac.uk
-    recipient: 
+    recipient:
+        name: Edinburgh Genomics Admin
+        address: genepool-admin@ed.ac.uk
+
+review_email:
+    subject: Online SF2 submitted for review for project '{project_id}'
+    body: |
+        Dear Admin,
+
+        An Online SF2 form for project '{project_id}' has been submitted for review by the customer.  You can find the form at the following url:
+
+        {sf2_url}
+
+        Best wishes,
+
+        Edinburgh Genomics
+    sender:
+        name: Online SF2 Project Setup
+        address: online-sf2-project-setup@edinburgh-genomics.ed.ac.uk
+    recipient:
         name: Edinburgh Genomics Admin
         address: genepool-admin@ed.ac.uk
