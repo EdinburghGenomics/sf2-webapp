@@ -38,6 +38,17 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
 
+    handleStage2FormSaveForDownload = (saveData : Object) : void => {
+
+        const fullSaveData = {
+            queryString: this.state.queryString,
+            saveData: saveData
+        };
+
+        this.saveSF2ForDownload(fullSaveData);
+    };
+
+
     handleStage2FormSubmission = (submissionData : Object) : void => {
 
         const fullSubmissionData = {
@@ -115,6 +126,37 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
 
+    saveSF2ForDownload = (submissionData: Object) : void => {
+
+        const savedownload_url = this.getCallbackHref(window.location).concat("savedownload/");
+        const tsvdownload_url = this.getCallbackHref(window.location).concat("getdownload/?"+this.state.queryString);
+
+        fetch(savedownload_url, {
+          method: 'POST',
+          mode: 'cors',
+          body: JSON.stringify(submissionData),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        })
+            .then(response => response.json())
+            .then(
+            json => {
+                console.log('Success (savedownload):', JSON.stringify(json));
+                let a = document.createElement('a');
+                a.href = tsvdownload_url;
+                a.id = "tsvDownloadLink";
+                document.body.appendChild(a);
+                document.getElementById('tsvDownloadLink').click();
+
+            }).catch(error => {
+                console.error('Error (savedownload):', error);
+                alert('Network error (savedownload). Please try again later.');
+            });
+
+    };
+
+
     fetchInitState = (queryString: String) : void => {
 
         const init_url = this.getCallbackHref(window.location).concat("initstate/");
@@ -158,7 +200,7 @@ export default class App extends React.Component<AppProps, AppState> {
             json => {
                 console.log('Success (initdata):', JSON.stringify(json));
                 this.setState({'submittedAt': json.submittedAt, 'sf2': json.sf2}, () => {
-                    ReactDOM.render(<Stage2SF2Container initState={this.initialState} initialSF2Data={this.state.sf2} handleSubmission={this.handleStage2FormSubmission} handleSave={this.handleStage2FormSave}/>, document.getElementById('stage2Container'));
+                    ReactDOM.render(<Stage2SF2Container initState={this.initialState} initialSF2Data={this.state.sf2} handleSubmission={this.handleStage2FormSubmission} handleSave={this.handleStage2FormSave} handleDownload={this.handleStage2FormSaveForDownload} />, document.getElementById('stage2Container'));
                 });
             }).catch(error => {
                 console.error('Error (initdata):', error);
@@ -172,8 +214,9 @@ export default class App extends React.Component<AppProps, AppState> {
 
         const queryString = window.location.search.replace(/^\?/,'');
 
-        this.setState({'queryString': queryString});
-        this.fetchInitState(queryString);
+        this.setState({'queryString': queryString}, () => {
+            this.fetchInitState(queryString);
+        });
 
     }
 

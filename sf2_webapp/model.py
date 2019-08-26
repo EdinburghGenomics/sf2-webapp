@@ -11,6 +11,7 @@ import email.mime.text
 
 import sf2_webapp.database
 
+
 # Helper functions ----
 
 def generate_query_string():
@@ -85,6 +86,156 @@ def send_email(email_config, web_config, project_id, query_string, email_details
 
 def datetime_to_json(dt):
     return json.dumps('{:%c}'.format(dt))
+
+
+# Helper classes ----
+
+class TsvGenerator:
+    """Class to convert a json dict into a tsv file"""
+
+
+    sf2_frozen_rows = {
+        'SampleInformation': ['EG Sample ID', 'Well ID'],
+        '10XSampleInformation': ['EG 10X Sample ID', 'EG 10X Submission ID'],
+        'LibraryInformation': ['EG Library ID', 'EG Submission ID', 'Well ID'],
+        'PrimerInformation': ['EG Primer ID']
+    }
+
+
+    sf2_rows = {
+        'SampleInformation': [
+            'Your Sample ID',
+            'Genus_Species_NCBITaxonID',
+            'Reference Genome',
+            'Conc (ng/\u03BCl)',
+            'Volume (\u03BCl)',
+            'Quantification Method',
+            'Yield (ng)',
+            'Image Available',
+            'Storage Buffer',
+            'DIN / RIN Value',
+            '260 / 280nm Ratio',
+            'Sample Type',
+            'Tissue',
+            'Extraction Method',
+            'PCR Product Length (bp)',
+            'Fragment Size (sheared only) (bp)',
+            'Potential Biological Contaminants',
+            'DNAse Treated?',
+            'RNAse Treated?',
+            'Type of RNAse used?',
+            'Comments',
+            'Library Type',
+            'Sequencing Type',
+            'Sequencing Chemistry',
+            'Platform',
+            'Number of Lanes',
+            'QC Workflow'
+        ],
+        '10XSampleInformation': [
+            'Your 10X Sample ID',
+            '10X Genomics Barcode Set',
+            '10X Sample Conc. (ng/\u03BCl)',
+            'Pool Concentration',
+            'Pool Size',
+            '10X Sample Vol. (\u03BCl)',
+            'Genus_Species_TaxonID',
+            'Quantification Method',
+            'Image Available',
+            'Storage Buffer',
+            'Average 10X Sample Size (bp)',
+            'Estimated Molarity (nM)',
+            'Potential Biological Contaminants',
+            'Comments'
+        ],
+        'PrimerInformation': [
+            'Your Primer ID',
+            'Primer Conc. (\u03BCM)',
+            'Primer Vol. (\u03BCl)',
+            'Storage Buffer',
+            'Custom Primer details',
+            'Primer Sequence',
+            'Comments'
+        ],
+        'LibraryInformation': [
+            'Your Library ID',
+            'Species_TaxonID',
+            'Library Conc. (ng/\u03BCl)',
+            'Library Vol. (\u03BCl)',
+            'Quantification Method',
+            'Image Available',
+            'Storage Buffer',
+            'Library Type',
+            'Average Library Size (bp)',
+            'Estimated Molarity (nM)',
+            'First Index (I7) Sequence',
+            'Second Index (I5) Sequence',
+            'Custom Primer',
+            'Potential Biological Contaminants',
+            'Comments'
+        ]
+    }
+
+
+    @staticmethod
+    def row_to_tsv(row):  # List<dict> -> String
+        """Function that converts a table row to a tsv string"""
+
+        return '\t'.join(
+            (cell['value'] for cell in row)
+        )
+
+
+    @staticmethod
+    def json_to_tsv(tables, frozen_grids, sf2_rows, sf2_frozen_rows, has_plates, table_name=''):  # type: (dict, dict, dict, dict, boolean, String) -> String
+        """Function that converts a json dict to a tsv string"""
+
+        sf2_rows = TsvGenerator.sf2_rows
+        sf2_frozen_rows = TsvGenerator.sf2_frozen_rows
+
+        lines = []
+
+        if 'name' in tables:
+            lines.append(str(tables['name']))
+            lines.append("")
+
+        if 'id' in tables and has_plates:
+            lines.append(str(tables['id']))
+            lines.append("")
+
+        if 'grids' in tables:
+            for grid, frozen_grid in zip(tables['grids'], frozen_grids['grids']):
+                lines.extend(TsvGenerator.json_to_tsv(grid, frozen_grid, sf2_rows, sf2_frozen_rows, has_plates, table_name=table_name))
+
+        elif 'grid' in tables:
+            header_written = False
+            for grid_row, frozen_grid_row in zip(tables['grid'], frozen_grids['grid']):
+                if not header_written:
+                    frozen_header_row = sf2_frozen_rows[table_name][:len(frozen_grid_row)]
+                    grid_header_row = sf2_rows[table_name][:len(grid_row)]
+                    header_row = frozen_header_row + grid_header_row
+                    lines.append('\t'.join(header_row))
+                    header_written = True
+                lines.append(TsvGenerator.row_to_tsv(frozen_grid_row + grid_row))
+            lines.append('')
+        else:
+            for table, frozen_grid in zip(tables, frozen_grids):
+                lines.extend(TsvGenerator.json_to_tsv(table, frozen_grid, sf2_rows, sf2_frozen_rows, has_plates, table_name=table['name']))
+
+        return lines
+
+
+    @staticmethod
+    def generate_tsv(json_dict):
+
+        has_plates = len(json_dict['frozenGrids'][0]['grids']) > 1
+        keyfunc = lambda k: k['name']
+        tables_dict = sorted(json_dict['tables'], key=keyfunc, reverse=True)
+        frozen_grids_dict = sorted(json_dict['frozenGrids'], key=keyfunc, reverse=True)
+
+        return "\n".join(
+            TsvGenerator.json_to_tsv(tables_dict, frozen_grids_dict, TsvGenerator.sf2_rows, TsvGenerator.sf2_frozen_rows, has_plates)
+        )
 
 
 # Model classes ----
@@ -349,6 +500,39 @@ class CustomerSubmission:
         return datetime_to_json(save_dt)
 
 
+    def process_save_download(self, save_download):
+        """Process a customer save download SF2 action"""
+
+        save_dict = json.loads(as_ascii(save_download))
+
+        query_string = save_dict['queryString']
+        sf2_contents = json.dumps(save_dict['saveData']['tables'])
+
+        save_dt = self.load_sf2_into_db(
+            query_string=query_string,
+            sf2_contents=sf2_contents,
+            action='save_download',
+            stage='customer_submission'
+        )
+
+        return datetime_to_json(save_dt)
+
+
+    def process_get_download(self, query_string):
+        """Process a customer save download SF2 action"""
+
+        latest_save_download_record = self.get_latest_sf2data_record_with_details(
+            query_string=as_ascii(query_string),
+            action='save_download',
+            stage='customer_submission'
+        )
+
+        json_dict = json.loads(latest_save_download_record[4])
+        tsv = TsvGenerator.generate_tsv(json_dict)
+
+        return tsv
+
+
     def get_latest_sf2data_record_with_details(self, query_string, action, stage):
 
         with self.database_connection.cursor() as cur:
@@ -444,3 +628,4 @@ class CustomerSubmission:
         }
 
         return json.dumps(initial_data)
+

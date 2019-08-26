@@ -147,7 +147,7 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
 
     handleDownload = () : void => {
         this.props.handleDownload(
-            getSF2(this.formType, this.tables)
+            getSF2(this.formType, this.tables, this.frozenGrids)
         );
     };
 
@@ -592,4 +592,4 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
 
 
 //$FlowFixMe
-export default withConfirmHandler(withDisableHandler(withDownloadHandler(withShowDocumentationHandler(LibrarySF2))));
+export default withConfirmHandler(withDisableHandler(withShowDocumentationHandler(LibrarySF2)));

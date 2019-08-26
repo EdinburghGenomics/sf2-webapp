@@ -237,4 +237,4 @@ class SampleSF2 extends React.Component<SampleSF2Props> {
 }
 
 //$FlowFixMe
-export default withConfirmHandler(withDisableHandler(withDownloadHandler(withShowDocumentationHandler(SampleSF2))));
+export default withConfirmHandler(withDisableHandler(withShowDocumentationHandler(SampleSF2)));

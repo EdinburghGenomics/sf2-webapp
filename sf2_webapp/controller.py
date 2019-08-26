@@ -45,9 +45,9 @@ def set_up_logging(config_manager):
     app_log.addHandler(logging_handler)
     gen_log.addHandler(logging_handler)
 
-    logging.getLogger("tornado.access").propagate = False
-    logging.getLogger("tornado.application").propagate = False
-    logging.getLogger("tornado.general").propagate = False
+    #logging.getLogger("tornado.access").propagate = False
+    #logging.getLogger("tornado.application").propagate = False
+    #logging.getLogger("tornado.general").propagate = False
 
     log_levels = dict(
         zip(
@@ -148,6 +148,33 @@ class SaveHandler(tornado.web.RequestHandler):
         self.write(save_result)
 
 
+class SaveDownloadHandler(tornado.web.RequestHandler):
+    """Class to handle form saves for download"""
+
+
+    def initialize(self, model):
+        self.model = model
+
+
+    def post(self):
+        save_result = self.model.process_save_download(self.request.body)
+        self.write(save_result)
+
+
+class GetDownloadHandler(tornado.web.RequestHandler):
+    """Class to get tsv for download"""
+
+
+    def initialize(self, model):
+        self.model = model
+
+
+    def get(self):
+        query_string = list(self.request.arguments.keys())[0]
+        result = self.model.process_get_download(query_string)
+        self.write(str(result))
+
+
 # Project setup request handlers -----
 
 class ProjectSetupCheckHandler(tornado.web.RequestHandler):
@@ -239,6 +266,8 @@ def initialise_customer_submission_server(config_manager, enable_cors=False):
     custom_handlers = {
         r'/initstate/': CustomerSubmissionInitialStateHandler,
         r'/initdata/': CustomerSubmissionInitialDataHandler,
+        r'/savedownload/': SaveDownloadHandler,
+        r'/getdownload/': GetDownloadHandler,
         r'/save/': SaveHandler
     }
 
