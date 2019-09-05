@@ -163,7 +163,9 @@ class SaveDownloadHandler(tornado.web.RequestHandler):
 
 class GetDownloadHandler(tornado.web.RequestHandler):
     """Class to get tsv for download"""
-
+    
+    def prepare(self):
+        self.set_header("Content-Type", "application/octet-stream")
 
     def initialize(self, model):
         self.model = model

@@ -27,7 +27,8 @@ setup(
     install_requires=[
         "tornado",
         "psycopg2",
-        "pyyaml"
+        "pyyaml",
+        "pyclarity-lims"
     ],
     entry_points={"console_scripts": ["start_sf2_webapp=sf2_webapp.__main__:main"]},
 )
