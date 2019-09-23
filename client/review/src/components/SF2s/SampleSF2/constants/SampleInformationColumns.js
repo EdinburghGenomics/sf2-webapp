@@ -60,12 +60,8 @@ const platform_options = [
 
 export const frozenSampleInformationColumns = [
     {
-        value: 'Well ID',
-        width: 65
-    },
-    {
         value: 'EG Sample ID',
-        width: 120
+        width: 130
     }
 ];
 

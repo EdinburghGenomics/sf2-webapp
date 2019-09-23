@@ -3,102 +3,108 @@ import React from 'react';
 import * as R from 'ramda';
 
 import Stage1FormStateSummary from '../general/Stage1FormStateSummary';
-
 import SampleSF2 from '../SF2s/SampleSF2/SampleSF2';
 import LibrarySF2Old from '../SF2s/LibrarySF2_old/LibrarySF2';
 import LibrarySF2 from '../SF2s/LibrarySF2/LibrarySF2';
 import TenXSF2Old from '../SF2s/10XSF2_old/10XSF2';
 import TenXSF2 from '../SF2s/10XSF2/10XSF2';
 
-import type { Tables } from '../../sf2datasheet/types/flowTypes'
+import { decodeFormStateQueryString } from '../../functions/lib';
+
+import type { SF2Data, Stage1FormState, AbbreviatedStage1FormState } from '../../types/flowTypes';
 
 
-type Stage3SF2ContainerProps = {
-    redirectToHome: () => void,
-    handleSubmission: () => void
-};
-
-
-type Stage3SF2ContainerState = {
-    projectID?: string,
-    sf2type?: string
+const uppercaseFirstLetter = (str : String) : String => {
+  return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 
-export default class Stage3SF2Container extends React.Component<Stage3SF2ContainerProps, Stage3SF2ContainerState> {
+const inflateStage1FormState = (abbreviatedState : AbbreviatedStage1FormState) : Stage1FormState => {
 
-    initialSF2Data = null;
-    saveDataName = null;
+    return {
+        projectID: abbreviatedState.pid,
+        sf2type: uppercaseFirstLetter(abbreviatedState.st),
+        containerTypeIsPlate: abbreviatedState.ctp,
+        numberOfSamplesOrLibraries: abbreviatedState.nsl,
+        sf2IsDualIndex: abbreviatedState.di,
+        barcodeSetIsNA: abbreviatedState.na,
+        sf2HasPools: abbreviatedState.hp,
+        numberOfPools: abbreviatedState.np,
+        sf2HasCustomPrimers: abbreviatedState.hc,
+        numberOfCustomPrimers: abbreviatedState.nc,
+        sf2HasUnpooledSamplesOrLibraries: abbreviatedState.husl,
+        numberOfUnpooledSamplesOrLibraries: abbreviatedState.nusl,
+        numberOfSamplesOrLibrariesInPools: abbreviatedState.nslp
+    };
+
+}
+
+
+type Stage2SF2ContainerProps = {
+    initState: ?String,
+    initialSF2Data: ?String,
+    handleSave: SF2Data => void,
+    handleSubmission: SF2Data => void,
+    handleDownload: SF2Data => void
+};
+
+
+export default class Stage3SF2Container extends React.Component<Stage2SF2ContainerProps, Stage1FormState> {
+    initialSF2Data = {};
+    saveDataName = '';
 
 
     constructor (props : Object) {
         super(props);
 
-        const submissionData = window.sessionStorage === undefined ?
-            {projectID: null, initialState: {}, queryString: null, tables: null} :
-            JSON.parse(window.sessionStorage.getItem('submissionData'));
+        if (!R.isNil(this.props.initState)) {
+            this.state = inflateStage1FormState(this.props.initState);
+        }
 
-        this.state = !R.isNil(submissionData) ? submissionData.initialState : {};
-
-        // Redirect to home page if there is no project ID
-        if (!this.state.projectID) {
-            this.props.redirectToHome();
-
-        } else {
-
-            //$FlowFixMe
-            this.saveDataName = 'saveData-stage3-' + submissionData.queryString;
-
-            // Load initial grids if present
-            if (window.sessionStorage !== undefined) {
-
-                const saveData = window.sessionStorage.getItem(this.saveDataName);
-
-                if (!R.isNil(saveData)) {
-                    this.initialSF2Data = JSON.parse(saveData);
-                }
-
-            }
-
-            if (R.isNil(this.initialSF2Data)) {
-                // the grids weren't initialised from session storage so initialise them from the submission data
-                this.initialSF2Data = submissionData.tables;
-            }
-
+        if (!R.isNil(this.props.initialSF2Data)) {
+            this.initialSF2Data = this.props.initialSF2Data;
         }
 
     };
 
-    handleSave = (tables : Tables) : void => {
 
-        window.sessionStorage.setItem(this.saveDataName, JSON.stringify(tables));
+    getSubmissionData = tables => {
+        return {
+            initialState: this.state,
+            queryString: this.props.queryString,
+            tables: tables
+        }
+    }
 
+
+    handleSave = (tables : SF2Data) : void => {
+        this.props.handleSave(this.getSubmissionData(tables));
     };
 
 
-    handleSubmission = (tables : Tables) : void => {
-
-        window.sessionStorage.removeItem('submissionData');
-        window.sessionStorage.removeItem(this.saveDataName);
-
-        this.props.handleSubmission();
-
+    handleSubmission = (tables : SF2Data) : void => {
+        this.props.handleSubmission(this.getSubmissionData(tables));
     };
+
+
+    handleDownload = (tables : SF2Data) : void => {
+        this.props.handleDownload(this.getSubmissionData(tables));
+    }
 
 
     render() {
         return(
-            <div>{/*style={{border: "1px solid green"}}>}*/}
-            <h2>{this.state.sf2type} SF2 Submission Review</h2>
-                {/*<Stage1FormStateSummary {...this.state}/>*/}
-                {/*<br/>*/}
+            <div>
+                <h2>{this.state.sf2type} SF2 Submission Form</h2>
+                {<Stage1FormStateSummary {...this.state}/>}
                 {this.state.sf2type === 'Sample' &&
                     <SampleSF2
                         initialState={this.state}
                         initialSF2Data={this.initialSF2Data}
                         handleSubmission={this.handleSubmission}
                         handleSave={this.handleSave}
-                        showHiddenColumns={true}
+                        handleDownload={this.handleDownload}
+                        showHiddenColumns={false}
                     />
                 }
                 {this.state.sf2type === 'Library_old' &&
@@ -107,7 +113,7 @@ export default class Stage3SF2Container extends React.Component<Stage3SF2Contain
                         initialSF2Data={this.initialSF2Data}
                         handleSubmission={this.handleSubmission}
                         handleSave={this.handleSave}
-                        showHiddenColumns={true}
+                        showHiddenColumns={false}
                     />
                 }
                 {this.state.sf2type === '10X_old' &&
@@ -116,7 +122,7 @@ export default class Stage3SF2Container extends React.Component<Stage3SF2Contain
                         initialSF2Data={this.initialSF2Data}
                         handleSubmission={this.handleSubmission}
                         handleSave={this.handleSave}
-                        showHiddenColumns={true}
+                        showHiddenColumns={false}
                     />
                 }
                 {this.state.sf2type === '10X' &&
@@ -125,6 +131,7 @@ export default class Stage3SF2Container extends React.Component<Stage3SF2Contain
                         initialSF2Data={this.initialSF2Data}
                         handleSubmission={this.handleSubmission}
                         handleSave={this.handleSave}
+                        handleDownload={this.handleDownload}
                         showHiddenColumns={false}
                     />
                 }
@@ -134,6 +141,7 @@ export default class Stage3SF2Container extends React.Component<Stage3SF2Contain
                     initialSF2Data={this.initialSF2Data}
                     handleSubmission={this.handleSubmission}
                     handleSave={this.handleSave}
+                    handleDownload={this.handleDownload}
                     showHiddenColumns={false}
                 />
                 }

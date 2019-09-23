@@ -18,7 +18,8 @@ import {
     calculateEGSampleID,
     calculateEGIDIndex,
     calculateEGPoolID,
-    getInitialTables
+    getInitialTables,
+    getInitialInformationTableGrids
 } from '../../../functions/lib';
 
 import { SF2DefaultProps, withDisableHandler } from "../../hoc/DisableHandler";
@@ -49,6 +50,7 @@ type TenXSF2Props = {
 class TenXSF2 extends React.Component<TenXSF2Props> {
     static defaultProps = SF2DefaultProps;
     tables = [];
+    frozenGrids = [];
     tableTypes = ['10XSampleInformation'];
     formType = '10XSF2';
     errors = new Map([[0, true]]);
@@ -61,57 +63,9 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
             warnings: []
         };
 
-    };
-
-
-    handleSave = () : void => {
-        this.props.handleSave(getSF2(this.formType, this.tables));
-        this.props.disableSaveButton(this.tables);
-    };
-
-
-    handleSubmission = () : void => this.props.handleSubmission(
-        getSF2(this.formType, this.tables),
-        this.state.warnings
-    );
-
-
-    handleDownload = () : void => {
-        this.props.handleDownload(
-            getSF2(this.formType, this.tables)
-        );
-    };
-
-
-    updateHasErrors = (tableName : string, hasErrors : boolean) : void => {
-        this.props.updateShouldDisableSubmit(tableName, hasErrors);
-        const tableIndex = R.indexOf(tableName, this.tableTypes);
-        this.errors.set(tableIndex, hasErrors);
-    };
-
-
-    makeTableFromGridWithID = (gridWithID : GridWithID) : Table => {
-        const grids = [gridWithID];
-        return {name: '10XSampleInformation', grids: grids};
-    };
-
-
-    updateTables = (table: Table) : void => {
-        this.tables = updateTables(table, this.tables);
-        this.props.updateSaveDisabled(this.tables);
-    };
-
-
-    updateTablesFromGridWithID = R.pipe(this.makeTableFromGridWithID, this.updateTables);
-
-
-    updateWarnings = (warnings : Warnings) : void => {
-
-        if(!R.equals(this.state.warnings, warnings)) {
-            this.setState({
-                warnings: warnings
-            });
-        }
+        this.frozenGrids = [
+            {name: '10XSampleInformation', grids: [this.calculateFrozenGrid()]}
+        ];
 
     };
 
@@ -165,19 +119,62 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
             )
         });
 
-        return allRowsWithSampleIDs.map(row => {
+        const allRowsWithIDs = allRowsWithSampleIDs.map(row => {
             return [{value: row.egSampleID}, {value: row.egSubmissionID}];
         });
+
+        return {id: 0, grid: allRowsWithIDs};
+
     };
 
 
-    getInitialGrid = frozenGrid => {
+    handleSave = () : void => {
+        this.props.handleSave(getSF2(this.formType, this.tables, this.frozenGrids));
+        this.props.disableSaveButton(this.tables);
+    };
 
-        const initialTables = getInitialTables(this.props);
-        if(initialTables.length > 0) {
-            return initialTables[0].grids[0].grid;
-        } else {
-            return R.repeat([], frozenGrid.length);
+
+    handleSubmission = () : void => this.props.handleSubmission(
+        getSF2(this.formType, this.tables, this.frozenGrids),
+        this.state.warnings
+    );
+
+
+    handleDownload = () : void => {
+        this.props.handleDownload(
+            getSF2(this.formType, this.tables)
+        );
+    };
+
+
+    updateHasErrors = (tableName : string, hasErrors : boolean) : void => {
+        this.props.updateShouldDisableSubmit(tableName, hasErrors);
+        const tableIndex = R.indexOf(tableName, this.tableTypes);
+        this.errors.set(tableIndex, hasErrors);
+    };
+
+
+    makeTableFromGridWithID = (gridWithID : GridWithID) : Table => {
+        const grids = [gridWithID];
+        return {name: '10XSampleInformation', grids: grids};
+    };
+
+
+    updateTables = (table: Table) : void => {
+        this.tables = updateTables(table, this.tables);
+        this.props.updateSaveDisabled(this.tables);
+    };
+
+
+    updateTablesFromGridWithID = R.pipe(this.makeTableFromGridWithID, this.updateTables);
+
+
+    updateWarnings = (warnings : Warnings) : void => {
+
+        if(!R.equals(this.state.warnings, warnings)) {
+            this.setState({
+                warnings: warnings
+            });
         }
 
     };
@@ -198,17 +195,24 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
 
     render() {
 
-        const frozenGrid = this.calculateFrozenGrid();
-        const initialGrid = this.getInitialGrid(frozenGrid);
+        const initialTables = getInitialTables(this.props);
+
+        const initialGrids = getInitialInformationTableGrids(
+            initialTables,
+            this.frozenGrids,
+            '10XSampleInformation'
+        );
+
+        const tenXSampleInformationFrozenGrid = this.frozenGrids[0].grids[0].grid;
 
         return (
             <SF2Validator
                 id={0}
                 columns={this.initialiseColumns(this.props.initialState)}
                 frozenColumns={frozenTenXSampleInformationColumns}
-                frozenGrid={frozenGrid}
+                frozenGrid={tenXSampleInformationFrozenGrid}
                 initialState={this.props.initialState}
-                initialGrid={initialGrid}
+                initialGrid={initialGrids[0]}
                 handleSubmission={this.handleSubmission}
                 handleSave={this.handleSave}
                 handleDownload={this.handleDownload}

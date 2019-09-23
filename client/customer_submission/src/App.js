@@ -105,10 +105,15 @@ export default class App extends React.Component<AppProps, AppState> {
 
         const submit_url = this.getCallbackHref(window.location).concat("submit/");
 
+        const postData = {
+            "submissionData": submissionData,
+            "stage": "customer_submission"
+        };
+
         fetch(submit_url, {
           method: 'POST',
           mode: 'cors',
-          body: JSON.stringify(submissionData),
+          body: JSON.stringify(postData),
           headers:{
             'Content-Type': 'application/json'
           }
@@ -187,10 +192,15 @@ export default class App extends React.Component<AppProps, AppState> {
 
         const init_url = this.getCallbackHref(window.location).concat("initdata/");
 
+        const postData = {
+            "queryString": queryString,
+            "stage": "customer_submission"
+        };
+
         fetch(init_url, {
           method: 'POST',
           mode: 'cors',
-          body: JSON.stringify(queryString),
+          body: JSON.stringify(postData),
           headers:{
             'Content-Type': 'application/json'
           }

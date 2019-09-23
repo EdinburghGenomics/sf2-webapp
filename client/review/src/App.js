@@ -2,10 +2,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Stage2Modal from './components/stage2/Stage2Modal';
+import Stage3Modal from './components/stage3/Stage3Modal';
 import Stage3SF2Container from './components/stage3/Stage3SF2Container';
 
-import { getCallbackHref } from './functions/lib.js';
 
 // App class
 type AppProps = {};
@@ -23,7 +22,8 @@ export default class App extends React.Component<AppProps, AppState> {
     state = {
         stage2ModalIsActive: false,
         queryString: '',
-        submittedAt: ''
+        submittedAt: '',
+        sf2: {}
     };
 
 
@@ -38,7 +38,18 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
 
-    handleStage2FormSubmission = (submissionData : Object) : void => {
+    handleStage3FormSaveForDownload = (saveData : Object) : void => {
+
+        const fullSaveData = {
+            queryString: this.state.queryString,
+            saveData: saveData
+        };
+
+        this.saveSF2ForDownload(fullSaveData);
+    };
+
+
+    handleStage3FormSubmission = (submissionData : Object) : void => {
 
         const fullSubmissionData = {
             queryString: this.state.queryString,
@@ -49,9 +60,26 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
 
+    getCallbackHref = (location : Object) : string => {
+
+        // work out web service url
+        let href = '';
+        if(location.port === "3002") {
+            // running in dev environment, just use hardcoded url
+            href = 'http://localhost:8002/';
+        } else {
+            // running in test / production, infer url from window.location
+            href = location.href;
+        }
+
+        return href;
+
+    };
+
+
     saveSF2 = (saveData: Object) : void => {
 
-        const save_url = getCallbackHref(window.location).concat("save/");
+        const save_url = this.getCallbackHref(window.location).concat("save/");
 
         fetch(save_url, {
           method: 'POST',
@@ -75,12 +103,17 @@ export default class App extends React.Component<AppProps, AppState> {
 
     submitSF2 = (submissionData: Object) : void => {
 
-        const submit_url = getCallbackHref(window.location).concat("submit/");
+        const submit_url = this.getCallbackHref(window.location).concat("submit/");
+
+        const postData = {
+            "submissionData": submissionData,
+            "stage": "review"
+        };
 
         fetch(submit_url, {
           method: 'POST',
           mode: 'cors',
-          body: JSON.stringify(submissionData),
+          body: JSON.stringify(postData),
           headers:{
             'Content-Type': 'application/json'
           }
@@ -98,9 +131,40 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
 
+    saveSF2ForDownload = (submissionData: Object) : void => {
+
+        const savedownload_url = this.getCallbackHref(window.location).concat("savedownload/");
+        const tsvdownload_url = this.getCallbackHref(window.location).concat("getdownload/?"+this.state.queryString);
+
+        fetch(savedownload_url, {
+          method: 'POST',
+          mode: 'cors',
+          body: JSON.stringify(submissionData),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        })
+            .then(response => response.json())
+            .then(
+            json => {
+                console.log('Success (savedownload):', JSON.stringify(json));
+                let a = document.createElement('a');
+                a.href = tsvdownload_url;
+                a.id = "tsvDownloadLink";
+                document.body.appendChild(a);
+                document.getElementById('tsvDownloadLink').click();
+
+            }).catch(error => {
+                console.error('Error (savedownload):', error);
+                alert('Network error (savedownload). Please try again later.');
+            });
+
+    };
+
+
     fetchInitState = (queryString: String) : void => {
 
-        const init_url = getCallbackHref(window.location).concat("initstate/");
+        const init_url = this.getCallbackHref(window.location).concat("initstate/");
 
         fetch(init_url, {
           method: 'POST',
@@ -126,12 +190,17 @@ export default class App extends React.Component<AppProps, AppState> {
 
     fetchInitData = (queryString: String) : void => {
 
-        const init_url = getCallbackHref(window.location).concat("initdata/");
+        const init_url = this.getCallbackHref(window.location).concat("initdata/");
+
+        const postData = {
+            "queryString": queryString,
+            "stage": "review"
+        };
 
         fetch(init_url, {
           method: 'POST',
           mode: 'cors',
-          body: JSON.stringify(queryString),
+          body: JSON.stringify(postData),
           headers:{
             'Content-Type': 'application/json'
           }
@@ -140,7 +209,9 @@ export default class App extends React.Component<AppProps, AppState> {
             .then(
             json => {
                 console.log('Success (initdata):', JSON.stringify(json));
-                ReactDOM.render(<Stage3SF2Container initState={this.initialState} initialSF2Data={json.sf2} handleSubmission={this.handleStage2FormSubmission} handleSave={this.handleStage2FormSave} submittedAt={json.submittedAt.length > 0 && JSON.parse(json.submittedAt)} />, document.getElementById('stage2Container'))
+                this.setState({'submittedAt': json.submittedAt, 'sf2': json.sf2}, () => {
+                    ReactDOM.render(<Stage3SF2Container initState={this.initialState} initialSF2Data={this.state.sf2} handleSubmission={this.handleStage3FormSubmission} handleSave={this.handleStage3FormSave} handleDownload={this.handleStage3FormSaveForDownload} />, document.getElementById('stage3Container'));
+                });
             }).catch(error => {
                 console.error('Error (initdata):', error);
                 alert('Network error (initdata). Please try again later.');
@@ -149,14 +220,14 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
 
-
-
     componentDidMount() {
 
         const queryString = window.location.search.replace(/^\?/,'');
 
-        this.setState({'queryString': queryString});
-        this.fetchInitState(queryString);
+        this.setState({'queryString': queryString}, () => {
+            console.log('fetching init state');
+            this.fetchInitState(queryString);
+        });
 
     }
 
@@ -164,7 +235,7 @@ export default class App extends React.Component<AppProps, AppState> {
 
         return (
             <div style={{margin: 10}}>
-                <div id="stage2Container"></div>
+                <div id="stage3Container"></div>
                 <div id="submittedAt">{this.state.submittedAt != '' && 'Submitted at: ' + this.state.submittedAt}</div>
             </div>
         )

@@ -1,6 +1,8 @@
 """Model classes for sf2 web application"""
 
 import datetime
+import functools
+import itertools
 import json
 import re
 import uuid
@@ -11,6 +13,10 @@ import email.mime.text
 
 import sf2_webapp.database
 
+from operator import itemgetter
+from pprint import pprint
+from pyclarity_lims.lims import Lims
+from pyclarity_lims.entities import Container, Containertype, Sample, Project
 
 # Helper functions ----
 
@@ -444,10 +450,13 @@ class CustomerSubmission:
         return row[0]
 
 
-    def process_submission(self, submission):
+    def process_submission(self, request_body):
         """Process a customer submission"""
 
-        submission_dict = json.loads(as_ascii(submission))
+        rb = json.loads(as_ascii(request_body))
+
+        submission_dict = rb['submissionData']
+        stage = rb['stage']
 
         query_string = submission_dict['queryString']
         sf2_contents = json.dumps(submission_dict['submissionData']['tables'])
@@ -456,15 +465,32 @@ class CustomerSubmission:
             query_string=query_string,
             sf2_contents=sf2_contents,
             action='submit',
-            stage='customer_submission'
+            stage=stage
         )
 
-        project_id = self.get_project_id_for_query_string(query_string)
+        if stage == 'customer_submission':
 
-        self.send_notification_email(
-            project_id=project_id,
-            query_string=submission_dict['queryString']
-        )
+            project_id = self.get_project_id_for_query_string(query_string)
+
+            self.send_notification_email(
+                project_id=project_id,
+                query_string=submission_dict['queryString']
+            )
+
+        elif stage == 'review':
+            # load the data into the lims
+
+            json_dict = submission_dict['submissionData']
+
+            lims_uploader = LIMSUploader(
+                json_dict = json_dict,
+                project_id=None,
+                container_type_is_plate=None,
+                has_pools=None,
+                has_custom_primers=None,
+            )
+
+            samples = lims_uploader.upload()
 
         return datetime_to_json(submission_dt)
 
@@ -563,16 +589,19 @@ class CustomerSubmission:
             return row[0]
 
 
-    def get_initial_data(self, query_string):
+    def get_initial_data(self, request_body):
         """Get the initial data for an SF2 form.
 
         This method checks for the following (in order):
-        - The most recent submitted SF2, or if none are present
-        - The most recent saved SF2, or if none are present
-        - The most recent submitted SF2 that the current SF2 is a reissue of
+        - The most recent submitted SF2 for the current stage, or if none are present
+        - The most recent saved SF2 for the current stage, or if none are present
+        - The most recent submitted SF2 for customer submission (if the stage is review)
+        - The most recent submitted SF2 that the current SF2 is a reissue of (if the stage is customer_submission)
         """
 
-        qs = json.loads(as_ascii(query_string))
+        rb = json.loads(as_ascii(request_body))
+        qs = rb['queryString']
+        stage = rb['stage']
 
         new_record = None
         sf2_contents = {}
@@ -581,7 +610,7 @@ class CustomerSubmission:
         latest_submitted_record = self.get_latest_sf2data_record_with_details(
             query_string=qs,
             action='submit',
-            stage='customer_submission'
+            stage=stage
         )
 
         if latest_submitted_record:
@@ -591,33 +620,42 @@ class CustomerSubmission:
             latest_saved_record = self.get_latest_sf2data_record_with_details(
                 query_string=qs,
                 action='save',
-                stage='customer_submission'
+                stage=stage
             )
 
             if latest_saved_record:
                 new_record = latest_saved_record
             else:
-                reissue_query_string = self.get_query_string_of_reissued_sf2(
-                    query_string=qs
-                )
-
-                latest_reissue_submit_review = self.get_latest_sf2data_record_with_details(
-                    query_string=reissue_query_string,
+                latest_submitted_cs_record = self.get_latest_sf2data_record_with_details(
+                    query_string=qs,
                     action='submit',
-                    stage='review'
+                    stage='customer_submission'
                 )
 
-                if latest_reissue_submit_review:
-                    new_record = latest_reissue_submit_review
+                if stage == 'review' and latest_submitted_cs_record:
+                    new_record = latest_submitted_cs_record
                 else:
-                    latest_reissue_submit_cs = self.get_latest_sf2data_record_with_details(
-                        query_string=reissue_query_string,
-                        action='submit',
-                        stage='customer_submission'
+                    reissue_query_string = self.get_query_string_of_reissued_sf2(
+                        query_string=qs
                     )
 
-                    if latest_reissue_submit_cs:
-                        new_record = latest_reissue_submit_cs
+                    latest_reissue_submit_review = self.get_latest_sf2data_record_with_details(
+                        query_string=reissue_query_string,
+                        action='submit',
+                        stage='review'
+                    )
+
+                    if latest_reissue_submit_review:
+                        new_record = latest_reissue_submit_review
+                    else:
+                        latest_reissue_submit_cs = self.get_latest_sf2data_record_with_details(
+                            query_string=reissue_query_string,
+                            action='submit',
+                            stage='customer_submission'
+                        )
+
+                        if latest_reissue_submit_cs:
+                            new_record = latest_reissue_submit_cs
 
         if new_record:
             sf2_contents = json.loads(new_record[4])
@@ -629,3 +667,362 @@ class CustomerSubmission:
 
         return json.dumps(initial_data)
 
+
+
+class LIMSUploader:
+    """Class to upload a json dict to the LIMS"""
+
+
+    def __init__(self, json_dict, config_manager, project_id=None, container_type_is_plate=None, has_pools=None, has_custom_primers=None, create_project=False, batch_mode=True):
+
+        self.lims = Lims(
+            config_manager.lims_url,
+            config_manager.lims_user,
+            config_manager.lims_password
+        )
+
+        self.batch_mode = batch_mode
+
+        # Get project data from the json dict if possible
+        tables, _project_id, _container_type_is_plate, _has_pools, _has_custom_primers = LIMSUploader.get_project_data_from_json(json_dict)
+
+        self.project_id = project_id if project_id is not None else _project_id
+        self.container_type_is_plate = container_type_is_plate if container_type_is_plate is True else _container_type_is_plate
+        self.has_pools = has_pools if has_pools is True else _has_pools
+        self.has_custom_primers = has_custom_primers if has_custom_primers is True else _has_custom_primers
+
+        assert self.project_id is not None, 'Project ID cannot be None'
+        assert self.container_type_is_plate is not None, 'containerTypeIsPlate cannot be None'
+        assert self.has_pools is not None, 'has_pools cannot be None'
+        assert self.has_custom_primers is not None, 'has_custom_primers cannot be None'
+
+        if not create_project:
+            assert self.project_exists, "Project {self.project_id} does not exist in the LIMS".format(**locals())
+        elif not self.project_exists:
+            pass
+            #TODO - create the project
+
+        self.json_dict = tables
+
+
+    @staticmethod
+    def get_project_data_from_json(json_dict):
+
+        #Usage: project_id, container_type_is_plate, has_pools, has_custom_primers = LIMSUploader.get_project_data_from_json(json_dict)
+
+        if 'initialState' in json_dict.keys():
+            #pprint(json_dict['initialState'].keys())
+            project_id, container_type_is_plate, has_pools, has_custom_primers = itemgetter('projectID', 'containerTypeIsPlate', 'sf2HasPools', 'sf2HasCustomPrimers')(json_dict['initialState'])
+            #print(project_id, container_type_is_plate, has_pools, has_custom_primers)
+
+        if 'tables' in json_dict.keys():
+            tables = json_dict['tables']
+        else:
+            tables = json_dict
+
+        return tables, project_id, container_type_is_plate, has_pools, has_custom_primers
+
+
+    @property
+    def project_exists(self):
+        return self.project is not None
+
+
+    @property
+    def project_has_samples(self):
+        samples = self.lims.get_samples(projectname=self.project_id)
+        return len(samples) > 0
+
+
+    @property
+    def project(self):
+        projects = self.lims.get_projects(name=self.project_id)
+        assert len(list(projects)) > 0, "No projects found for ID: " + self.project_id
+        return projects[0]
+
+
+    @property
+    def samples(self):
+        return self.lims.get_samples(projectname=self.project_id)
+
+
+    @staticmethod
+    def get_rows_from_tables(tables_dict, table_name, container_type):
+
+        add_container_id = (container_type == '96 well plate')
+
+        grids_with_ids = [x['grids'] for x in tables_dict if x['name'] == table_name][0]
+
+        grids = []
+        for grid_with_id in grids_with_ids:
+            id = grid_with_id['id']
+            new_grid = [x + [{'value': id}] for x in grid_with_id['grid']] if add_container_id else grid_with_id['grid']
+            grids.append(new_grid)
+
+
+        rows = list(itertools.chain.from_iterable(grids))
+
+        for row in rows:
+            for cell in row:
+                try:
+                    del cell['readonly']
+                    cell['value'] = cell['value'].strip()
+                except KeyError:
+                    pass
+
+        return rows
+
+
+    @staticmethod
+    def get_samples_dict(json_dict, table_name, container_type):
+
+        get_rows_from_tables = functools.partial(
+            LIMSUploader.get_rows_from_tables,
+            table_name = table_name,
+            container_type = container_type
+        )
+
+        frozen_rows = get_rows_from_tables(json_dict['frozenGrids'])
+        table_rows = get_rows_from_tables(json_dict['tables'])
+
+        return {'frozen_rows': frozen_rows, 'table_rows': table_rows}
+
+
+    @staticmethod
+    def process_json_dict(json_dict):
+
+        information_tables = {
+            'SampleSF2': 'SampleInformation',
+            '10XSF2': '10XSampleInformation',
+            'LibrarySF2': 'LibraryInformation'
+        }
+
+        frozen_row_lengths_for_plates = {
+            'SampleSF2': 2,
+            '10XSF2': -1,  # You never have plates for 10X submissions
+            'LibrarySF2': 3
+        }
+
+        new_dict = {}
+        new_dict['sf2_type'] = json_dict['name']
+        new_dict['table_name'] = information_tables[json_dict['name']]
+
+        frozen_grid = [x for x in json_dict['frozenGrids'] if x['name'] == new_dict['table_name']][0]
+
+        frozen_row_length = len(frozen_grid['grids'][0]['grid'][0])
+
+        return(new_dict)
+
+
+    samplesf2_udf_names = [
+        'User Sample ID',
+        'Species',
+        'NCBI ID',
+        'User Sample Concentration (ng/ul)',
+        'User_Volume (uL)',
+        'User_Quantification Method',
+        'User_Yield (ng)',
+        'Gel image or bioanalyser trace attached',
+        'Buffer',
+        'User quality value',
+        '260_280nm',
+        'Sample Type',
+        'Tissue',
+        'Extraction method',
+        'PCR product length',
+        'Fragment size (only for sheared samples)',
+        'Potential Biological Contaminants',
+        'DNase treated',
+        'RNase treated',
+        'Type of RNase used',
+        'Comment'
+    ]
+
+
+    tenxsf2_udf_names = [
+        'User Sample ID',
+        '10X Genomics Index Set',
+        'User Sample Concentration (ng/ul)',
+        'Pool concentration',
+        'Pool size',
+        'User_Volume (uL)',
+        'Species',
+        'User_Quantification Method',
+        'Gel image or bioanalyser trace attached',
+        'Buffer',
+        'User Average Library Size (bp)',
+        'User Estimated Molarity (nM)',
+        'Potential Biological Contaminants',
+        'Comment'
+    ]
+
+
+    librarysf2_udf_names = [
+        'User Sample ID',
+        'Species',
+        'User Sample Concentration (ng/ul)',
+        'Pool concentration',
+        'Pool size',
+        'User_Volume (uL)',
+        'User_Quantification Method',
+        'Gel image or bioanalyser trace attached',
+        'Buffer',
+        'Library Type',
+        'User Average Library Size (bp)',
+        'User Estimated Molarity (nM)',
+        'First Index (I7)',
+        'Second Index (I5)',
+        'Custom primer',
+        'Potential Biological Contaminants',
+        'Comment'
+    ]
+
+
+    def create_container(self, type_name, container_id):
+        container_type = self.lims.get_container_types(name=type_name)[0]
+        container = Container.create(self.lims, type=container_type, name=container_id)
+        return container
+
+
+    def create_sample_udfs_for_upload(self, table_row, sf2_type, eg_submission_id=None):
+
+        table_row_values = [x['value'] for x in table_row]
+
+        udf_names = []
+        if sf2_type == 'SampleSF2':
+            udf_names = LIMSUploader.samplesf2_udf_names
+        elif sf2_type == '10XSF2':
+            udf_names = LIMSUploader.tenxsf2_udf_names
+        elif sf2_type == 'LibrarySF2':
+            udf_names = LIMSUploader.librarysf2_udf_names
+
+        if not self.has_pools:
+            udf_names = [x for x in udf_names if x not in ['Pool concentration', 'Pool size']]
+
+        if not self.has_custom_primers:
+            udf_names = [x for x in udf_names if x != 'Custom primer']
+
+        if self.container_type_is_plate:
+            del table_row_values[-1]
+
+        assert len(udf_names) == len(table_row_values), "Number of udf names {udfnum} does not match number of columns {colnum}".format(udfnum=len(udf_names),colnum=len(table_row_values))
+
+        sample_udfs_for_upload = dict(zip(udf_names, table_row_values))
+
+        if eg_submission_id is not None and sf2_type in ['10XSF2', 'LibrarySF2']:
+            sample_udfs_for_upload['SLX Identifier'] = eg_submission_id
+
+        if self.has_pools:
+            del sample_udfs_for_upload['Pool concentration']  # This udf is currently missing from the LIMS
+            try:
+                sample_udfs_for_upload['Pool size'] = int(sample_udfs_for_upload['Pool size'])
+            except ValueError:
+                sample_udfs_for_upload['Pool size'] = 0
+
+        if sf2_type == 'LibrarySF2':
+
+            sample_udfs_for_upload['Index sequence'] = '-'.join([
+                sample_udfs_for_upload['First Index (I7)'],
+                sample_udfs_for_upload['Second Index (I5)']
+            ])
+
+            project_number = re.findall('\d+', eg_submission_id)[0]
+            sample_udfs_for_upload['Custom Index Name (I7)'] = project_number
+            sample_udfs_for_upload['Custom Index Name (I5)'] = project_number
+
+        return sample_udfs_for_upload
+
+
+    def expand_plate_id(self, plate_id):
+
+        pid_regex = re.compile('(\d+)_(\w)\w+_(\w)\w+')
+        pid_match = pid_regex.match(self.project.name)
+        pid_prefix = ''.join(pid_match.groups())
+        pid_index = str(int(plate_id)+1).zfill(2)
+
+        expanded_plate_id = pid_prefix + 'PLATE' + pid_index
+
+        return expanded_plate_id
+
+
+    def upload(self):
+        processed_json_dict = LIMSUploader.process_json_dict(self.json_dict)
+
+        container_type = '96 well plate' if self.container_type_is_plate else 'Tube'
+
+        get_samples_dict_func = functools.partial(
+            LIMSUploader.get_samples_dict,
+            table_name = processed_json_dict['table_name'],
+            container_type = container_type
+        )
+
+        samples_dict = get_samples_dict_func(self.json_dict)
+
+
+        frozen_rows = samples_dict['frozen_rows']
+        table_rows = samples_dict['table_rows']
+        sf2_type = processed_json_dict['sf2_type']
+
+        sf2_can_have_pools = sf2_type in ['10XSF2', 'LibrarySF2']
+        sf2_can_have_plates = sf2_type in ['SampleSF2', 'LibrarySF2']
+
+        sample_names_for_upload = [x[0]['value'] for x in frozen_rows]
+        zipped_sample_rows = list(zip(frozen_rows, table_rows))
+        existing_sample_names = [x.name for x in self.samples]
+
+        sample_udfs_for_upload = [
+            self.create_sample_udfs_for_upload(
+                x[1],
+                sf2_type=sf2_type,
+                eg_submission_id=(x[0][1]['value'] if self.has_pools else None)
+            ) for x in zipped_sample_rows
+        ]
+
+        positions = itertools.repeat("1:1")
+        if container_type == '96 well plate':
+            well_ids = [x[-2]['value'] for x in frozen_rows]
+            positions = well_ids
+
+        container_ids = [x[-1]['value'] for x in frozen_rows]
+
+        sample_upload_tuples = tuple(zip(sample_names_for_upload, sample_udfs_for_upload, positions, container_ids))
+
+        p = self.project
+
+        for sample_name_for_upload in sample_names_for_upload:
+            assert sample_name_for_upload not in existing_sample_names, 'Sample name {} already exists in the LIMS'.format(sample_name_for_upload)
+
+        sample_upload_dicts = []
+        if container_type == 'Tube':
+
+            sample_upload_dicts = [
+                {'container': self.create_container(container_type, container_id=x[0]), 'project': p, 'name': x[0], 'position': '1:1', 'udf': x[1]}
+                for x in sample_upload_tuples
+            ]
+
+        elif container_type == '96 well plate':
+            assert sf2_can_have_plates, 'The SF2 type specified is incompatible with a container type of ' + container_type
+
+            plate_ids = set([x[-1]['value'] for x in frozen_rows])
+            plates = {}
+            sample_upload_dicts = [
+                {'container': self.create_container(container_type, container_id=x[0]), 'project': p, 'name': x[0], 'position': x[2], 'udf': x[1]}
+                for x in sample_upload_tuples
+            ]
+
+        samples = []
+        if self.batch_mode:
+            samples = self.lims.create_batch(Sample, sample_upload_dicts)
+        else:
+            for sample_upload_dict in sample_upload_dicts:
+                samples.append(
+                    Sample.create(
+                    self.lims,
+                    container=sample_upload_dict['container'],
+                    position=sample_upload_dict['position'],
+                    project=sample_upload_dict['project'],
+                    name=sample_upload_dict['name'],
+                    udf=sample_upload_dict['udf'])
+                )
+
+        return(samples)

@@ -19,6 +19,8 @@ EmailContact = namedtuple('EmailContact', 'name address')
 LoggingConfig = namedtuple('LoggingConfig', 'log_level log_file')
 LogFileConfig = namedtuple('LogFileConfig', 'prefix max_size_in_bytes number_to_keep')
 
+LimsConfig = namedtuple('LIMSConfig', 'lims_url lims_user lims_password')
+
 
 def load_config_dict_from_file(fp):
     """Function to load a dict of configuration settings from a yaml file"""
@@ -135,6 +137,16 @@ def load_logging_config(fp):
     return logging_config
 
 
+def load_lims_config(fp):
+    """Function to create a LIMSConfig instance from a LIMS config yaml file"""
+
+    lims_config_dict = load_config_dict_from_file(fp)
+
+    lims_config = LimsConfig(**lims_config_dict)
+
+    return lims_config
+
+
 class ConfigurationManager:
     """Class to manage configuration settings for the SF2 web application"""
 
@@ -144,11 +156,12 @@ class ConfigurationManager:
         'db': 'db_config.yaml',
         'web': 'web_config.yaml',
         'email': 'email_config.yaml',
-        'logging': 'logging_config.yaml'
+        'logging': 'logging_config.yaml',
+        'lims': 'lims_config.yaml'
     }
 
 
-    def __init__(self, db_config_fp=None, web_config_fp=None, email_config_fp=None, logging_config_fp=None):
+    def __init__(self, db_config_fp=None, web_config_fp=None, email_config_fp=None, logging_config_fp=None, lims_config_fp=None):
         """Initialise a ConfigurationManager object with either values from the provided config files, or default config files"""
 
         default_config_filepaths = self._get_default_config_filepaths()
@@ -165,10 +178,14 @@ class ConfigurationManager:
         if logging_config_fp is None:
             logging_config_fp = default_config_filepaths['logging']
 
+        if lims_config_fp is None:
+            lims_config_fp = default_config_filepaths['lims']
+            
         self.db_connection_params = load_db_connection_params(db_config_fp)
         self.web_config = load_web_config(web_config_fp)
         self.email_config = load_email_config(email_config_fp)
         self.logging_config = load_logging_config(logging_config_fp)
+        self.lims_config = load_lims_config(lims_config_fp)
 
 
     def _get_default_config_filepaths(self):

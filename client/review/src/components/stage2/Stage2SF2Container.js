@@ -45,7 +45,7 @@ type Stage2SF2ContainerProps = {
     initialSF2Data: ?String,
     handleSave: SF2Data => void,
     handleSubmission: SF2Data => void,
-    submittedAt: String
+    handleDownload: SF2Data => void
 };
 
 
@@ -87,6 +87,11 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
     };
 
 
+    handleDownload = (tables : SF2Data) : void => {
+        this.props.handleDownload(this.getSubmissionData(tables));
+    }
+
+
     render() {
         return(
             <div>
@@ -98,6 +103,7 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
                         initialSF2Data={this.initialSF2Data}
                         handleSubmission={this.handleSubmission}
                         handleSave={this.handleSave}
+                        handleDownload={this.handleDownload}
                         showHiddenColumns={false}
                     />
                 }
@@ -125,6 +131,7 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
                         initialSF2Data={this.initialSF2Data}
                         handleSubmission={this.handleSubmission}
                         handleSave={this.handleSave}
+                        handleDownload={this.handleDownload}
                         showHiddenColumns={false}
                     />
                 }
@@ -134,10 +141,10 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
                     initialSF2Data={this.initialSF2Data}
                     handleSubmission={this.handleSubmission}
                     handleSave={this.handleSave}
+                    handleDownload={this.handleDownload}
                     showHiddenColumns={false}
                 />
                 }
-                <div>{this.props.submittedAt}</div>
             </div>
     )};
 };

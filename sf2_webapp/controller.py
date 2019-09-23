@@ -282,21 +282,48 @@ def initialise_customer_submission_server(config_manager, enable_cors=False):
     )
 
 
+def initialise_review_server(config_manager, enable_cors=False):
+
+    review_model = sf2_webapp.model.CustomerSubmission(
+        db_connection_params = config_manager.db_connection_params,
+        email_config = config_manager.email_config,
+        web_config = config_manager.web_config
+    )
+
+    custom_handlers = {
+        r'/initstate/': CustomerSubmissionInitialStateHandler,
+        r'/initdata/': CustomerSubmissionInitialDataHandler,
+        r'/savedownload/': SaveDownloadHandler,
+        r'/getdownload/': GetDownloadHandler,
+        r'/save/': SaveHandler
+    }
+
+    return initialise_http_server(
+        form='review',
+        model=review_model,
+        custom_handlers=custom_handlers,
+        port=config_manager.web_config.review.port,
+        enable_cors=enable_cors
+    )
+
+
 # Run function -----
 
-def run(enable_cors=False, db_config_fp=None, web_config_fp=None, email_config_fp=None, logging_config_fp=None):
+def run(enable_cors=False, db_config_fp=None, web_config_fp=None, email_config_fp=None, logging_config_fp=None, lims_config_fp=None):
     """Runs the server and listens on the specified port"""
 
     config_manager = sf2_webapp.config.ConfigurationManager(
         db_config_fp=db_config_fp,
         web_config_fp=web_config_fp,
         email_config_fp=email_config_fp,
-        logging_config_fp=logging_config_fp
+        logging_config_fp=logging_config_fp,
+        lims_config_fp=lims_config_fp
     )
 
     set_up_logging(config_manager)
 
     initialise_project_setup_server(config_manager, enable_cors=enable_cors)
     initialise_customer_submission_server(config_manager, enable_cors=enable_cors)
+    initialise_review_server(config_manager, enable_cors=enable_cors)
 
     tornado.ioloop.IOLoop.current().start()
