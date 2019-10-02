@@ -40,7 +40,7 @@ const inflateStage1FormState = (abbreviatedState : AbbreviatedStage1FormState) :
 }
 
 
-type Stage2SF2ContainerProps = {
+type Stage3SF2ContainerProps = {
     initState: ?String,
     initialSF2Data: ?String,
     handleSave: SF2Data => void,
@@ -49,7 +49,7 @@ type Stage2SF2ContainerProps = {
 };
 
 
-export default class Stage3SF2Container extends React.Component<Stage2SF2ContainerProps, Stage1FormState> {
+export default class Stage3SF2Container extends React.Component<Stage3SF2ContainerProps, Stage1FormState> {
     initialSF2Data = {};
     saveDataName = '';
 
