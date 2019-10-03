@@ -18,6 +18,7 @@ from pprint import pprint
 from pyclarity_lims.lims import Lims
 from pyclarity_lims.entities import Container, Containertype, Sample, Project
 
+
 # Helper functions ----
 
 def generate_query_string():
@@ -58,7 +59,10 @@ def sf2metadata_record_to_dict(record):
         "husl": record[15],
         "nusl": record[16],
         "nslp": record[17],
-        "cm": record[18]
+        "cm": record[18],
+        "sampleOrLibraryStartIndex": str(record[19]),
+        "unpooledSubmissionStartIndex": str(record[20]),
+        "poolStartIndex": str(record[21])
     }
 
 
@@ -248,11 +252,44 @@ class TsvGenerator:
 
 class ProjectSetup:
 
-    def __init__(self, db_connection_params, email_config, web_config):
+    def __init__(self, db_connection_params, email_config, web_config, lims_config):
 
         self.database_connection = sf2_webapp.database.DatabaseConnection(db_connection_params)
         self.email_config = email_config
         self.web_config = web_config
+        self.lims_config = lims_config
+
+        self.lims = Lims(
+            lims_config.lims_url,
+            lims_config.lims_user,
+            lims_config.lims_password
+        )
+
+
+    def get_index_dict(self, project_id):
+        samples = self.lims.get_samples(projectname=project_id)
+
+        sample_names = [sample.name for sample in samples]
+        sample_index_strings = [re.sub(r"^\d+\w\w", r"", sample_name) for sample_name in sample_names]
+        stripped_sample_index_strings = [re.sub(r"L01$", r"", sample_index_string) for sample_index_string in sample_index_strings]
+        sample_indices = [int(float(x)) for x in stripped_sample_index_strings]
+
+        sampleOrLibraryStartIndex = max(sample_indices) + 1 if len(sample_indices) > 0 else 1
+
+        slx_identifiers = [s.udf['SLX Identifier'] for s in samples if 'SLX Identifier' in s.udf]
+
+        start_indices = lambda x: max(x) + 1 if len(x) > 0 else 1
+
+        unpooled_submission_start_indices = start_indices([int(re.sub(r"^\d+\w\w", r"", slx_identifier)) for slx_identifier in slx_identifiers if not re.search('pool', slx_identifier)])
+        pool_start_indices = start_indices([int(re.sub(r"^\d+\w\wpool", r"", slx_identifier)) for slx_identifier in slx_identifiers if re.search('pool', slx_identifier)])
+
+        index_dict = {
+            "sampleOrLibraryStartIndex": sampleOrLibraryStartIndex,
+            "unpooledSubmissionStartIndex": unpooled_submission_start_indices,
+            "poolStartIndex": pool_start_indices
+        }
+
+        return index_dict
 
 
     def process_submission(self, submission):
@@ -261,22 +298,34 @@ class ProjectSetup:
         submission_str = as_ascii(submission);
         submission_dict = json.loads(submission_str);
         query_string = generate_query_string()
+        index_dict = self.get_index_dict(submission_dict['pid'])
 
-        submission_dt = self.load_submission_into_db(submission_dict, query_string)
+        submission_dt = self.load_submission_into_db(submission_dict, query_string, index_dict=None)
         self.send_notification_email(submission_dict, query_string)
 
         return datetime_to_json(submission_dt)
 
 
-    def load_submission_into_db(self, submission_dict, query_string, reissue_of=None):
+    def load_submission_into_db(self, submission_dict, query_string, reissue_of=None, index_dict=None):
         """Load the new submission into the sf2metadata table in the database"""
 
         app_version = sf2_webapp.__version__
         current_dt = datetime.datetime.now()
 
+        if index_dict is None:
+            index_dict = {
+                "sampleOrLibraryStartIndex": 1,
+                "unpooledSubmissionStartIndex": 1,
+                "poolStartIndex": 1
+            }
+
+        sampleOrLibraryStartIndex = index_dict['sampleOrLibraryStartIndex']
+        unpooledSubmissionStartIndex = index_dict['unpooledSubmissionStartIndex']
+        poolStartIndex = index_dict['poolStartIndex']
+
         with self.database_connection.cursor() as cur:
             cur.execute(
-                "INSERT INTO onlinesf2.sf2metadata (querystring, appversion, datecreated, reissueof, projectid, sf2type, containertypeisplate, numberofsamplesorlibraries, sf2isdualindex, barcodesetisna, sf2haspools, numberofpools, sf2hascustomprimers, numberofcustomprimers, hasunpooledsamplesorlibraries, numberofunpooledsamplesorlibraries, numberofsamplesorlibrariesinpools, comments) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                "INSERT INTO onlinesf2.sf2metadata (querystring, appversion, datecreated, reissueof, projectid, sf2type, containertypeisplate, numberofsamplesorlibraries, sf2isdualindex, barcodesetisna, sf2haspools, numberofpools, sf2hascustomprimers, numberofcustomprimers, hasunpooledsamplesorlibraries, numberofunpooledsamplesorlibraries, numberofsamplesorlibrariesinpools, comments, sampleorlibrarystartindex, unpooledsubmissionstartindex, poolstartindex) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                 [
                     query_string,
                     app_version,
@@ -295,7 +344,10 @@ class ProjectSetup:
                     submission_dict['husl'],
                     str_to_count(submission_dict['nusl']),
                     str(submission_dict['nslp']),
-                    submission_dict['cm']
+                    submission_dict['cm'],
+                    sampleOrLibraryStartIndex,
+                    unpooledSubmissionStartIndex,
+                    poolStartIndex
                 ]
             )
 
@@ -365,10 +417,13 @@ class ProjectSetup:
 
         new_query_string = generate_query_string()
 
+        index_dict = self.get_index_dict(project_id)
+
         self.load_submission_into_db(
             submission_dict=new_record_dict,
             query_string=new_query_string,
-            reissue_of=latest_record[1]
+            reissue_of=latest_record[1],
+            index_dict=index_dict
         )
 
         # e-mail the customer to inform them that the form has been reissued
@@ -381,13 +436,20 @@ class ProjectSetup:
         return reissue_str;
 
 
-class CustomerSubmission:
+class SF2:
 
-    def __init__(self, db_connection_params, email_config, web_config):
+    extra_column_counts = {
+        'SampleInformation': 6
+    }
+
+
+    def __init__(self, db_connection_params, email_config, web_config, lims_config, has_extra_cols=False):
 
         self.database_connection = sf2_webapp.database.DatabaseConnection(db_connection_params)
         self.email_config = email_config
         self.web_config = web_config
+        self.lims_config = lims_config
+        self.has_extra_cols = has_extra_cols
 
 
     def get_latest_sf2metadata_record_with_query_string(self, query_string):
@@ -488,6 +550,7 @@ class CustomerSubmission:
                 container_type_is_plate=None,
                 has_pools=None,
                 has_custom_primers=None,
+                config_manager=self.lims_config
             )
 
             samples = lims_uploader.upload()
@@ -589,6 +652,18 @@ class CustomerSubmission:
             return row[0]
 
 
+    def remove_extra_cols(self, sf2_contents):
+
+        for table in sf2_contents['tables']:
+            extra_column_count = self.extra_column_counts[table['name']]
+            if extra_column_count is not None and extra_column_count > 0:
+                for grid_dict in table['grids']:
+                    for row in grid_dict['grid']:
+                        del row[-1*extra_column_count:]
+
+        return sf2_contents
+
+
     def get_initial_data(self, request_body):
         """Get the initial data for an SF2 form.
 
@@ -660,6 +735,9 @@ class CustomerSubmission:
         if new_record:
             sf2_contents = json.loads(new_record[4])
 
+            if not self.has_extra_cols:
+                sf2_contents = self.remove_extra_cols(sf2_contents)
+
         initial_data = {
            'submittedAt': submitted_at,
            'sf2': sf2_contents
@@ -668,9 +746,78 @@ class CustomerSubmission:
         return json.dumps(initial_data)
 
 
-
 class LIMSUploader:
     """Class to upload a json dict to the LIMS"""
+
+
+    samplesf2_udf_names = [
+        'User Sample ID',
+        'Species',
+        'NCBI ID',
+        'User Sample Concentration (ng/ul)',
+        'User_Volume (uL)',
+        'User_Quantification Method',
+        'User_Yield (ng)',
+        'Gel image or bioanalyser trace attached',
+        'Buffer',
+        'User quality value',
+        '260_280nm',
+        'Sample Type',
+        'Tissue',
+        'Extraction method',
+        'PCR product length',
+        'Fragment size (only for sheared samples)',
+        'Potential Biological Contaminants',
+        'DNase treated',
+        'RNase treated',
+        'Type of RNase used',
+        'Comment',
+        'Library Type',
+        'Sequencing Method',
+        'Chemistry',
+        'Platform',
+        'Number of lanes',
+        'QC workflow'
+    ]
+
+
+    tenxsf2_udf_names = [
+        'User Sample ID',
+        '10X Genomics Index Set',
+        'User Sample Concentration (ng/ul)',
+        'Pool concentration',
+        'Pool size',
+        'User_Volume (uL)',
+        'Species',
+        'User_Quantification Method',
+        'Gel image or bioanalyser trace attached',
+        'Buffer',
+        'User Average Library Size (bp)',
+        'User Estimated Molarity (nM)',
+        'Potential Biological Contaminants',
+        'Comment'
+    ]
+
+
+    librarysf2_udf_names = [
+        'User Sample ID',
+        'Species',
+        'User Sample Concentration (ng/ul)',
+        'Pool concentration',
+        'Pool size',
+        'User_Volume (uL)',
+        'User_Quantification Method',
+        'Gel image or bioanalyser trace attached',
+        'Buffer',
+        'Library Type',
+        'User Average Library Size (bp)',
+        'User Estimated Molarity (nM)',
+        'First Index (I7)',
+        'Second Index (I5)',
+        'Custom primer',
+        'Potential Biological Contaminants',
+        'Comment'
+    ]
 
 
     def __init__(self, json_dict, config_manager, project_id=None, container_type_is_plate=None, has_pools=None, has_custom_primers=None, create_project=False, batch_mode=True):
@@ -759,7 +906,6 @@ class LIMSUploader:
             new_grid = [x + [{'value': id}] for x in grid_with_id['grid']] if add_container_id else grid_with_id['grid']
             grids.append(new_grid)
 
-
         rows = list(itertools.chain.from_iterable(grids))
 
         for row in rows:
@@ -814,70 +960,6 @@ class LIMSUploader:
         return(new_dict)
 
 
-    samplesf2_udf_names = [
-        'User Sample ID',
-        'Species',
-        'NCBI ID',
-        'User Sample Concentration (ng/ul)',
-        'User_Volume (uL)',
-        'User_Quantification Method',
-        'User_Yield (ng)',
-        'Gel image or bioanalyser trace attached',
-        'Buffer',
-        'User quality value',
-        '260_280nm',
-        'Sample Type',
-        'Tissue',
-        'Extraction method',
-        'PCR product length',
-        'Fragment size (only for sheared samples)',
-        'Potential Biological Contaminants',
-        'DNase treated',
-        'RNase treated',
-        'Type of RNase used',
-        'Comment'
-    ]
-
-
-    tenxsf2_udf_names = [
-        'User Sample ID',
-        '10X Genomics Index Set',
-        'User Sample Concentration (ng/ul)',
-        'Pool concentration',
-        'Pool size',
-        'User_Volume (uL)',
-        'Species',
-        'User_Quantification Method',
-        'Gel image or bioanalyser trace attached',
-        'Buffer',
-        'User Average Library Size (bp)',
-        'User Estimated Molarity (nM)',
-        'Potential Biological Contaminants',
-        'Comment'
-    ]
-
-
-    librarysf2_udf_names = [
-        'User Sample ID',
-        'Species',
-        'User Sample Concentration (ng/ul)',
-        'Pool concentration',
-        'Pool size',
-        'User_Volume (uL)',
-        'User_Quantification Method',
-        'Gel image or bioanalyser trace attached',
-        'Buffer',
-        'Library Type',
-        'User Average Library Size (bp)',
-        'User Estimated Molarity (nM)',
-        'First Index (I7)',
-        'Second Index (I5)',
-        'Custom primer',
-        'Potential Biological Contaminants',
-        'Comment'
-    ]
-
-
     def create_container(self, type_name, container_id):
         container_type = self.lims.get_container_types(name=type_name)[0]
         container = Container.create(self.lims, type=container_type, name=container_id)
@@ -905,7 +987,8 @@ class LIMSUploader:
         if self.container_type_is_plate:
             del table_row_values[-1]
 
-        assert len(udf_names) == len(table_row_values), "Number of udf names {udfnum} does not match number of columns {colnum}".format(udfnum=len(udf_names),colnum=len(table_row_values))
+        if len(table_row_values) > len(udf_names):
+            assert False, "Number of udf names {udfnum} is smaller than the number of columns {colnum}".format(udfnum=len(udf_names),colnum=len(table_row_values))
 
         sample_udfs_for_upload = dict(zip(udf_names, table_row_values))
 
@@ -987,8 +1070,6 @@ class LIMSUploader:
 
         sample_upload_tuples = tuple(zip(sample_names_for_upload, sample_udfs_for_upload, positions, container_ids))
 
-        p = self.project
-
         for sample_name_for_upload in sample_names_for_upload:
             assert sample_name_for_upload not in existing_sample_names, 'Sample name {} already exists in the LIMS'.format(sample_name_for_upload)
 
@@ -996,7 +1077,7 @@ class LIMSUploader:
         if container_type == 'Tube':
 
             sample_upload_dicts = [
-                {'container': self.create_container(container_type, container_id=x[0]), 'project': p, 'name': x[0], 'position': '1:1', 'udf': x[1]}
+                {'container': self.create_container(container_type, container_id=x[0]), 'project': self.project, 'name': x[0], 'position': '1:1', 'udf': x[1]}
                 for x in sample_upload_tuples
             ]
 
@@ -1006,7 +1087,7 @@ class LIMSUploader:
             plate_ids = set([x[-1]['value'] for x in frozen_rows])
             plates = {}
             sample_upload_dicts = [
-                {'container': self.create_container(container_type, container_id=x[0]), 'project': p, 'name': x[0], 'position': x[2], 'udf': x[1]}
+                {'container': self.create_container(container_type, container_id=x[0]), 'project': self.project, 'name': x[0], 'position': x[2], 'udf': x[1]}
                 for x in sample_upload_tuples
             ]
 

@@ -240,7 +240,8 @@ def initialise_project_setup_server(config_manager, enable_cors=False):
     project_setup_model = sf2_webapp.model.ProjectSetup(
         db_connection_params = config_manager.db_connection_params,
         email_config = config_manager.email_config,
-        web_config = config_manager.web_config
+        web_config = config_manager.web_config,
+        lims_config = config_manager.lims_config
     )
 
     custom_handlers = {
@@ -259,10 +260,12 @@ def initialise_project_setup_server(config_manager, enable_cors=False):
 
 def initialise_customer_submission_server(config_manager, enable_cors=False):
 
-    customer_submission_model = sf2_webapp.model.CustomerSubmission(
+    customer_submission_model = sf2_webapp.model.SF2(
         db_connection_params = config_manager.db_connection_params,
         email_config = config_manager.email_config,
-        web_config = config_manager.web_config
+        web_config = config_manager.web_config,
+        lims_config = config_manager.lims_config,
+        has_extra_cols = False
     )
 
     custom_handlers = {
@@ -284,10 +287,12 @@ def initialise_customer_submission_server(config_manager, enable_cors=False):
 
 def initialise_review_server(config_manager, enable_cors=False):
 
-    review_model = sf2_webapp.model.CustomerSubmission(
+    review_model = sf2_webapp.model.SF2(
         db_connection_params = config_manager.db_connection_params,
         email_config = config_manager.email_config,
-        web_config = config_manager.web_config
+        web_config = config_manager.web_config,
+        lims_config = config_manager.lims_config,
+        has_extra_cols = True
     )
 
     custom_handlers = {
