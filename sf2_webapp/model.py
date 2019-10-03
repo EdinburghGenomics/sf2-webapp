@@ -687,7 +687,11 @@ class SF2:
     def remove_extra_cols(self, sf2_contents):
 
         for table in sf2_contents['tables']:
-            extra_column_count = self.extra_column_counts[table['name']]
+            try:
+                extra_column_count = self.extra_column_counts[table['name']]
+            except KeyError:
+                extra_column_count = None
+
             if extra_column_count is not None and extra_column_count > 0:
                 for grid_dict in table['grids']:
                     for row in grid_dict['grid']:
