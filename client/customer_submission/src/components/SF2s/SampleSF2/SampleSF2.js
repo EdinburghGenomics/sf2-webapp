@@ -15,13 +15,10 @@ import {
 import {
     getSF2,
     updateTables,
-    calculateEGIDPrefix,
-    calculateEGSampleID,
-    calculateEGIDIndex,
     getInitialTables,
-    calculateWellID,
     getInitialInformationTableGrids,
-    calculateFrozenGrids
+    calculateFrozenGrids,
+    getAllRowsWithSampleAndLibraryIDs
 } from '../../../functions/lib';
 
 
@@ -46,7 +43,8 @@ type SampleSF2Props = {
     shouldDisableSave: boolean,
     updateShouldDisableSubmit: (string, boolean) => void,
     updateSaveDisabled: Tables => void,
-    disableSaveButton: Tables => void
+    disableSaveButton: Tables => void,
+    startIndices: Object
 };
 
 
@@ -70,31 +68,22 @@ class SampleSF2 extends React.Component<SampleSF2Props> {
             warnings: []
         };
 
+        this.allRowsWithSampleAndLibraryIDs = getAllRowsWithSampleAndLibraryIDs(
+            this.props.initialState,
+            this.props.startIndices
+        );
+
         const sampleInformationFrozenGrids = calculateFrozenGrids(
-            this.getAllRowsWithSampleIDs(),
+            this.allRowsWithSampleAndLibraryIDs,
             this.props.initialState.containerTypeIsPlate,
-            this.getSampleInformationFrozenGridRowsToReturn
+            this.getSampleInformationFrozenGridRowsToReturn,
+            this.props.initialState.projectID
         );
 
         this.frozenGrids = [
             {name: 'SampleInformation', grids: sampleInformationFrozenGrids}
         ];
 
-    };
-
-
-    getAllRowsWithSampleIDs = () : Object => {
-
-        const egIDPrefix = calculateEGIDPrefix(this.props.initialState.projectID);
-        const sampleIndices = R.range(1, parseInt(this.props.initialState.numberOfSamplesOrLibraries, 10) + 1);
-
-        return sampleIndices.map(i => {
-            return {
-                'egSampleID': calculateEGSampleID(egIDPrefix, calculateEGIDIndex(i)),
-                'wellIndex': i,
-                'egWellID': calculateWellID(i-1)
-            }
-        })
     };
 
 
@@ -179,7 +168,7 @@ class SampleSF2 extends React.Component<SampleSF2Props> {
         const sampleInformationFrozenGrids = this.frozenGrids[0].grids.map(x=>x.grid);
 
         const tubeSampleInformation = <SF2Validator
-            id={0}
+            id={"0"}
             columns={sampleInformationColumns}
             frozenColumns={frozenSampleInformationColumns}
             frozenGrid={sampleInformationFrozenGrids[0]}
@@ -204,7 +193,7 @@ class SampleSF2 extends React.Component<SampleSF2Props> {
             frozenColumns={this.frozenSampleInformationColumns}
             frozenGrids={sampleInformationFrozenGrids}
             initialState={this.props.initialState}
-            numberOfRows={this.getAllRowsWithSampleIDs().length}
+            numberOfRows={this.allRowsWithSampleAndLibraryIDs.length}
             initialGrids={initialGrids}
             handleSubmission={this.handleSubmission}
             handleSave={this.handleSave}

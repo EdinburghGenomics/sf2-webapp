@@ -45,7 +45,8 @@ type Stage2SF2ContainerProps = {
     initialSF2Data: ?String,
     handleSave: SF2Data => void,
     handleSubmission: SF2Data => void,
-    handleDownload: SF2Data => void
+    handleDownload: SF2Data => void,
+    startIndices: Object
 };
 
 
@@ -105,6 +106,7 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
                         handleSave={this.handleSave}
                         handleDownload={this.handleDownload}
                         showHiddenColumns={false}
+                        startIndices={this.props.startIndices}
                     />
                 }
                 {this.state.sf2type === 'Library_old' &&
@@ -133,6 +135,7 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
                         handleSave={this.handleSave}
                         handleDownload={this.handleDownload}
                         showHiddenColumns={false}
+                        startIndices={this.props.startIndices}
                     />
                 }
                 {this.state.sf2type === 'Library' &&
@@ -143,6 +146,7 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
                     handleSave={this.handleSave}
                     handleDownload={this.handleDownload}
                     showHiddenColumns={false}
+                    startIndices={this.props.startIndices}
                 />
                 }
             </div>

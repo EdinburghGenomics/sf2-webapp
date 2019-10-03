@@ -21,16 +21,12 @@ import {
 import {
     getSF2,
     updateTables,
-    calculateEGIDPrefix,
-    calculateEGSampleID,
-    calculateEGIDIndex,
-    calculateEGPoolID,
     getInitialTables,
-    calculateEGLibraryID,
     calculateWellID,
     createFrozenGrid,
     getInitialInformationTableGrids,
-    calculateFrozenGrids
+    calculateFrozenGrids,
+    getAllRowsWithSampleAndLibraryIDs
 } from '../../../functions/lib';
 
 
@@ -57,7 +53,8 @@ type LibrarySF2Props = {
     shouldDisableSave: boolean,
     updateShouldDisableSubmit: (string, boolean) => void,
     updateSaveDisabled: Tables => void,
-    disableSaveButton: Tables => void
+    disableSaveButton: Tables => void,
+    startIndices: Object
 };
 
 
@@ -92,17 +89,27 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
         }
         this.tableTypes.push('LibraryInformation');
 
-        this.errors = new Map(this.tableTypes.map((_, tableTypeIndex) => {return [tableTypeIndex, true]}));
+        this.errors = new Map(
+            this.tableTypes.map(
+                tableType => [this.tableNames.get(tableType), true]
+            )
+        );
 
         this.state = {
             libraryInformationData: new Map(),
             warnings: []
         };
 
+        this.allRowsWithSampleAndLibraryIDs = getAllRowsWithSampleAndLibraryIDs(
+            this.props.initialState,
+            this.props.startIndices
+        );
+
         const libraryInformationFrozenGrids = calculateFrozenGrids(
-            this.getAllRowsWithLibraryIDs(),
+            this.allRowsWithSampleAndLibraryIDs,
             this.props.initialState.containerTypeIsPlate,
-            this.getLibraryInformationFrozenGridRowsToReturn
+            this.getLibraryInformationFrozenGridRowsToReturn,
+            this.props.initialState.projectID
         );
 
         const primerInformationFrozenGrids = [{id: 0, grid: createFrozenGrid(
@@ -147,15 +154,14 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
 
     handleDownload = () : void => {
         this.props.handleDownload(
-            getSF2(this.formType, this.tables, this.frozenGrids)
+            getSF2(this.formType, this.tables)
         );
     };
 
 
     updateHasErrors = (tableName : string, hasErrors : boolean) : void => {
         this.props.updateShouldDisableSubmit(tableName, hasErrors);
-        const tableIndex = R.indexOf(tableName, this.tableTypes);
-        this.errors.set(tableIndex, hasErrors);
+        this.errors.set(this.tableNames.get(tableName), hasErrors);
     };
 
 
@@ -238,67 +244,6 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
     };
 
 
-    getAllRowsWithLibraryIDs = () => {
-
-        const egIDPrefix = calculateEGIDPrefix(this.props.initialState.projectID);
-
-        const numberOfSamplesInPools = Object.assign({},
-            ...Object.entries(JSON.parse(this.props.initialState.numberOfSamplesOrLibrariesInPools))
-                .map(([k, v]) => ({[parseInt(k,10)]: parseInt(v,10)}))
-        );
-
-        const unpooledSampleIndices = R.range(1, parseInt(this.props.initialState.numberOfUnpooledSamplesOrLibraries, 10) + 1);
-
-        const unpooledSampleRows = unpooledSampleIndices.map(i => {
-            const egIDIndex = calculateEGIDIndex(i);
-            const unpooledCell = {
-                'index': i,
-                'name': 'unpooled-'+i.toString(),
-                'egSubmissionID': calculateEGSampleID(egIDPrefix, egIDIndex),
-                'wellIndex': i,
-                'egWellID': calculateWellID(i-1)
-            };
-            return(unpooledCell);
-        });
-
-        const poolIndices = R.range(1, parseInt(this.props.initialState.numberOfPools, 10) + 1);
-
-        const pooledSampleRows = poolIndices.map(
-            p => {
-                const sampleIndicesInPool = R.range(1, numberOfSamplesInPools[p] + 1);
-                return sampleIndicesInPool.map(
-                    i => {
-                        const wellIndex = p + parseInt(this.props.initialState.numberOfUnpooledSamplesOrLibraries, 10);
-                        const egIDIndex = calculateEGIDIndex(p);
-                        const pooledCell = {
-                            'index': i,
-                            'name': 'pool' + p.toString() + '-' + i.toString(),
-                            'egSubmissionID': calculateEGPoolID(egIDPrefix, egIDIndex),
-                            'wellIndex': wellIndex,
-                            'egWellID': calculateWellID(wellIndex-1)
-                        };
-                        return(pooledCell);
-                    }
-                );
-            }
-        );
-
-        const allRows = R.flatten([unpooledSampleRows, pooledSampleRows]);
-
-        const allRowsWithLibraryIDs = allRows.map((r, i) => {
-            const egIDIndex = calculateEGIDIndex(i+1);
-            return R.assoc(
-                'egLibraryID',
-                calculateEGLibraryID(egIDPrefix, egIDIndex),
-                r
-            )
-        });
-
-        return(allRowsWithLibraryIDs);
-
-    };
-
-
     updateRow = (currentWellOffset : number, row : Row) : Row => {
 
         const newWellIndex = row.wellIndex - currentWellOffset;
@@ -308,35 +253,6 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
             R.assoc('wellIndex', newWellIndex),
             R.assoc('egWellID', newWellID)
         )(row);
-
-    };
-
-
-    splitRows = (wellsPerPlate : number, rows : Grid) : Grids => {
-
-        const sortedRows = R.sort((a, b) => a.wellIndex - b.wellIndex)(rows);
-
-        let splitRows = [];
-        let currentPlate = [];
-        let currentWellOffset = 0;
-        let currentPlateMaximum = wellsPerPlate;
-
-        sortedRows.forEach(row => {
-
-            if (row.wellIndex > currentPlateMaximum) {
-                currentWellOffset = currentPlateMaximum;
-                currentPlateMaximum += wellsPerPlate;
-                splitRows = splitRows.concat([currentPlate]);
-                currentPlate = [this.updateRow(currentWellOffset, row)];
-            } else {
-                currentPlate = currentPlate.concat([this.updateRow(currentWellOffset, row)]);
-            }
-
-        });
-
-        splitRows = splitRows.concat([currentPlate]);
-
-        return splitRows;
 
     };
 
@@ -522,7 +438,7 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
                     frozenColumns={this.frozenLibraryInformationColumns}
                     frozenGrids={libraryInformationFrozenGrids.map(x=>x.grid)}
                     initialState={this.props.initialState}
-                    numberOfRows={this.getAllRowsWithLibraryIDs().length}
+                    numberOfRows={this.allRowsWithSampleAndLibraryIDs.length}
                     initialGrids={libraryInformationInitialGrids}
                     handleSubmission={this.handleSubmission}
                     handleSave={this.handleSave}
@@ -535,6 +451,7 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
                     shouldDisableSave={this.props.shouldDisableSave}
                     updateHasErrors={R.curry(this.updateHasErrors)('LibraryInformation')}
                     tableType={'LibraryInformation'}
+                    validator={this.validate}
                 />;
 
             } else {

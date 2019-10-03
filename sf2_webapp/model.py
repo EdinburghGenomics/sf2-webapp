@@ -69,6 +69,10 @@ def sf2metadata_record_to_dict(record):
 def send_email(email_config, web_config, project_id, query_string, email_details, stage):
     """Send an e-mail"""
 
+    print(type(web_config))
+    print(web_config)
+    print(stage)
+    
     sf2_url = 'https://{address}:{port}?{query_string}'.format(
         address=web_config._asdict()[stage].address,
         port=web_config._asdict()[stage].port,
@@ -291,6 +295,34 @@ class ProjectSetup:
 
         return index_dict
 
+        sample_names = [sample.name for sample in samples]
+        sample_index_strings = [re.sub(r"^\d+\w\w", r"", sample_name) for sample_name in sample_names]
+        stripped_sample_index_strings = [re.sub(r"L01$", r"", sample_index_string) for sample_index_string in sample_index_strings]
+        sample_indices = [int(float(x)) for x in stripped_sample_index_strings]
+
+        sampleOrLibraryStartIndex = max(sample_indices) + 1 if len(sample_indices) > 0 else 1
+        
+        #for s in samples:
+            #print(s.udf['SLX Identifier'])
+
+        ss = [s.udf['SLX Identifier'] for s in samples if 'SLX Identifier' in s.udf]
+
+        #ss = ['00028ST0001', '00028STpool01', '00028STpool01', '00028STpool02', '00028STpool02']
+
+        si = lambda x: max(x) + 1 if len(x) > 0 else 1
+        
+        mu = si([int(re.sub(r"^\d+\w\w", r"", u)) for u in ss if not re.search('pool', u)])
+        mp = si([int(re.sub(r"^\d+\w\wpool", r"", u)) for u in ss if re.search('pool', u)])
+        
+        index_dict = {
+            "sampleOrLibraryStartIndex": sampleOrLibraryStartIndex,
+            "unpooledSubmissionStartIndex": mu,
+            "poolStartIndex": mp
+        }
+
+        #pprint(index_dict)
+        return index_dict
+    
 
     def process_submission(self, submission):
         """Process a project setup form submission"""

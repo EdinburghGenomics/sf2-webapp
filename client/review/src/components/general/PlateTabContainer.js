@@ -5,9 +5,15 @@ import * as R from 'ramda';
 import SF2Validator from './SF2Validator';
 import TabContainer from '../hoc/TabContainer';
 
-import { getDuplicateWarnings, getRepeatedKeys, initialiseGrids } from '../../functions/lib';
+import {
+    calculateEGIDPrefix,
+    generatePlateID,
+    getDuplicateWarnings,
+    getRepeatedKeys,
+    initialiseGrids
+} from '../../functions/lib';
 
-import type { StringMap } from '../../sf2datasheet/types/flowTypes'
+import type { Grid, StringMap } from '../../sf2datasheet/types/flowTypes'
 import type { Grids, GridWithID, Warnings, Stage1FormState } from '../../types/flowTypes'
 import type { Columns } from '../../sf2datasheet/types/flowTypes'
 
@@ -30,7 +36,8 @@ type PlateTabContainerProps = {
     shouldDisableSubmit: boolean,
     shouldDisableSave: boolean,
     updateHasErrors: boolean => void,
-    tableType: string
+    tableType: string,
+    validator?: (Array<string>, Grid) => Array<string>
 };
 
 
@@ -61,17 +68,21 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
             initialGrids = this.props.initialGrids;
         }
 
-        this.grids = initialGrids.map((x, ix) => {return {'id': ix, 'grid': x}});
+        const generatePlateIDForGridIndex = (gridIndex) => {
+           return(generatePlateID(this.props.initialState.projectID, gridIndex));
+        };
+
+        this.grids = initialGrids.map((x, ix) => {return{'id': generatePlateIDForGridIndex(ix) , 'grid': x}});
 
         this.state = {
-            errors: new Map(this.grids.map((_, gridIndex) => {return [gridIndex, true]})),
+            errors: new Map(this.grids.map((_, ix) => {return [generatePlateIDForGridIndex(ix), true]})),
             warnings: []
         };
 
     };
 
 
-    updateHasErrors = (hasErrors : boolean, id : number) : void => {
+    updateHasErrors = (hasErrors : boolean, id : string) : void => {
 
         let newErrors = R.clone(this.state.errors);
         newErrors.set(id, hasErrors);
@@ -107,8 +118,10 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
 
     updateGrids = (gridForTab : GridWithID) : void => {
 
+        const indexToUpdate = R.findIndex(R.propEq('id', gridForTab.id))(this.grids);
+
         this.grids = R.update(
-            gridForTab.id,
+            indexToUpdate,
             gridForTab,
             this.grids
         );
@@ -150,7 +163,7 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
 
             return(
                 <SF2Validator
-                    id={tabIndex}
+                    id={tabName}
                     columns={this.props.columns}
                     data={this.props.data}
                     frozenColumns={this.props.frozenColumns}
@@ -169,6 +182,7 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
                     saveDisabled={this.props.shouldDisableSave}
                     tableType={this.props.tableType}
                     warnings={this.state.warnings}
+                    validator={this.props.validator}
                 />
             );
 
@@ -177,10 +191,15 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
     };
 
 
+    generatePlateIDFromGridIndex = (_, gridIndex) => {
+        return(generatePlateID(this.props.initialState.projectID, gridIndex));
+    };
+
+
     render() {
         return(
             <TabContainer
-                tabNames={this.grids.map((grid, gridIndex) => { return('Plate ' + (gridIndex + 1).toString()) })}
+                tabNames={this.grids.map(this.generatePlateIDFromGridIndex)}
                 tabHasErrors={this.state.errors}
                 getChildComponent={this.getChildComponent}
             />

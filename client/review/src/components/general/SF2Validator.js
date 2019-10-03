@@ -13,7 +13,7 @@ import { getDuplicateMessage, getDuplicateWarnings, getRepeatedKeys, getRowID } 
 
 
 type SF2ValidatorProps = {
-    id: number,
+    id: string,
     columns: Columns,
     data?: StringMap,
     frozenColumns: Columns,
@@ -188,7 +188,7 @@ export default class SF2Validator extends React.Component<SF2ValidatorProps, Sta
             });
 
             // add warnings for duplicate IDs if necessary
-            if(this.props.disallowDuplicateIDs !== true && R.isNil(this.props.warnings))  {
+            if(this.props.disallowDuplicateIDs !== true) {
                 warnings = getDuplicateWarnings(
                     0,
                     this.props.columns,
@@ -196,9 +196,6 @@ export default class SF2Validator extends React.Component<SF2ValidatorProps, Sta
                     this.props.frozenGrid,
                     repeatedKeys
                 );
-            } else if(this.props.disallowDuplicateIDs !== true) {
-                const rowIDs = this.props.frozenGrid.map(x=>x[0].value);
-                warnings = R.filter(x=>R.contains(x.row, rowIDs), this.props.warnings);
             }
 
         }
@@ -231,11 +228,11 @@ export default class SF2Validator extends React.Component<SF2ValidatorProps, Sta
 
     getButtonDisabled = (disabledProp : Boolean) : Boolean => {
 
-        const submittedAt = document.getElementById("submittedAt").textContent;
-        console.log(submittedAt);
+        const submittedAtElement = document.getElementById("submittedAt");
+        const submittedAt = R.propOr('', 'textContent')(submittedAtElement);
         return submittedAt.length > 0 || disabledProp;
 
-    }
+    };
 
 
     render() {

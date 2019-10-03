@@ -16,7 +16,7 @@ type Stage1FormProps = {
 
 
 export default class Stage1Form extends React.Component<Stage1FormProps, Stage1FormState> {
-    state = {
+    initState = {
         projectID: '',
         sf2type: 'Sample',
         containerTypeIsPlate: false,
@@ -41,6 +41,7 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
         reissueIsEnabled: false
     };
 
+    state = this.initState;
 
     // Helper functions for event handlers
 
@@ -124,7 +125,12 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
 
 
     handleSF2TypeChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
-        this.handleChange(event, 'sf2type');
+        this.setState(
+            R.pipe(
+                R.assoc('sf2type', event.target.value),
+                R.assoc('projectID', this.state.projectID)
+            )(this.initState)
+        );
     };
 
 
@@ -159,6 +165,9 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
     toggleHasPools = () => {
         this.setState({
             sf2HasPools: !this.state.sf2HasPools,
+            numberOfPools: "",
+            numberOfSamplesOrLibrariesInPool: {},
+            numberOfSamplesOrLibrariesInPoolIsInvalid: {},
             numberOfPoolsAndUnpooledSamplesIsInvalid: false
         });
     };
@@ -174,7 +183,8 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
     toggleHasUnpooledSamplesOrLibraries = () => {
         this.setState({
             sf2HasUnpooledSamplesOrLibraries: !this.state.sf2HasUnpooledSamplesOrLibraries,
-            numberOfPoolsAndUnpooledSamplesIsInvalid: false
+            numberOfUnpooledSamplesOrLibraries: "",
+            numUnpooledSamplesOrLibrariesIsInvalid: false
         });
     };
 
@@ -186,7 +196,9 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
 
     toggleHasCustomPrimers = () => {
         this.setState({
-            sf2HasCustomPrimers: !this.state.sf2HasCustomPrimers
+            sf2HasCustomPrimers: !this.state.sf2HasCustomPrimers,
+            numberOfCustomPrimers: "",
+            numCustomPrimersIsInvalid: false
         });
     };
 

@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import ReactDOM from 'react-dom';
+import * as R from 'ramda';
 
 import Stage3Modal from './components/stage3/Stage3Modal';
 import Stage3SF2Container from './components/stage3/Stage3SF2Container';
@@ -19,12 +20,32 @@ type AppState = {
 
 export default class App extends React.Component<AppProps, AppState> {
     initialState = {}
+
+
     state = {
         stage2ModalIsActive: false,
         queryString: '',
         submittedAt: '',
         sf2: {}
     };
+
+
+    startIndices = {
+        "sampleOrLibrary": "1",
+        "unpooledSubmission": "1",
+        "pool": "1"
+    };
+
+
+    getStartIndices = R.pipe(
+        R.pick(R.keys(this.startIndices).map(x=>x+"StartIndex")),
+        R.toPairs,
+        R.map(x=>[x[0].replace(/StartIndex$/, ""),x[1]]),
+        R.fromPairs
+    );
+
+
+    getInitialState = R.omit(R.keys(this.startIndices).map(x=>x+"StartIndex"));
 
 
     handleStage2FormSave = (saveData : Object) : void => {
@@ -178,7 +199,8 @@ export default class App extends React.Component<AppProps, AppState> {
             .then(
             json => {
                 console.log('Success (initstate):', JSON.stringify(json));
-                this.initialState = json;
+                this.initialState = this.getInitialState(json);
+                this.startIndices = this.getStartIndices(json);
                 this.fetchInitData(queryString);
             }).catch(error => {
                 console.error('Error (initstate):', error);
@@ -210,7 +232,7 @@ export default class App extends React.Component<AppProps, AppState> {
             json => {
                 console.log('Success (initdata):', JSON.stringify(json));
                 this.setState({'submittedAt': json.submittedAt, 'sf2': json.sf2}, () => {
-                    ReactDOM.render(<Stage3SF2Container initState={this.initialState} initialSF2Data={this.state.sf2} handleSubmission={this.handleStage3FormSubmission} handleSave={this.handleStage3FormSave} handleDownload={this.handleStage3FormSaveForDownload} />, document.getElementById('stage3Container'));
+                    ReactDOM.render(<Stage3SF2Container initState={this.initialState} initialSF2Data={this.state.sf2} handleSubmission={this.handleStage3FormSubmission} handleSave={this.handleStage3FormSave} handleDownload={this.handleStage3FormSaveForDownload} startIndices={this.startIndices} />, document.getElementById('stage3Container'));
                 });
             }).catch(error => {
                 console.error('Error (initdata):', error);
@@ -225,7 +247,6 @@ export default class App extends React.Component<AppProps, AppState> {
         const queryString = window.location.search.replace(/^\?/,'');
 
         this.setState({'queryString': queryString}, () => {
-            console.log('fetching init state');
             this.fetchInitState(queryString);
         });
 

@@ -2,17 +2,18 @@
 import React from 'react';
 
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
+import { generatePlateID } from "../../functions/lib";
 
 
 type TabContainerProps = {
     tabNames: Array<string>,
-    tabHasErrors: Map<number, boolean>,
+    tabHasErrors: Map<string, boolean>,
     getChildComponent: string => Object
 };
 
 
 type TabContainerState = {
-    activeTab: number
+    activeTab: string
 };
 
 
@@ -23,37 +24,37 @@ export default class TabContainer extends React.Component<TabContainerProps, Tab
         super(props);
 
         this.state = {
-            activeTab: 0
+            activeTab: this.props.tabNames[0]
         };
 
     };
 
 
-    setActiveTab = (tabIndex : number) : void => {
-        if (this.state.activeTab !== tabIndex) {
+    setActiveTab = (tabName : string) : void => {
+        if (this.state.activeTab !== tabName) {
             this.setState({
-                activeTab: tabIndex
+                activeTab: tabName
             });
         }
     };
 
 
-    createNavItem = (tabName: string, tabIndex: number): Object => {
+    createNavItem = (tabName: string): Object => {
 
-        const key = "navItem" + tabIndex.toString();
-        const textColour = this.props.tabHasErrors.get(tabIndex) ? 'red' : 'green';
+        const key = "navItem" + tabName;
+        const textColour = this.props.tabHasErrors.get(tabName) ? 'red' : 'green';
 
         const tick = '\u2713';
         const cross = '\u2717';
-        const textPrefix = this.props.tabHasErrors.get(tabIndex) ? cross : tick;
+        const textPrefix = this.props.tabHasErrors.get(tabName) ? cross : tick;
         const fullTabName = textPrefix + ' ' + tabName;
 
         return (
             <NavItem key={key}>
                 <NavLink
-                    className={this.state.activeTab === tabIndex ? 'active' : ''}
+                    className={this.state.activeTab === tabName ? 'active' : ''}
                     onClick={() => {
-                        this.setActiveTab(tabIndex);
+                        this.setActiveTab(tabName);
                     }}
                 >
                     <span style={{color: textColour}}>{fullTabName}</span>
@@ -64,13 +65,13 @@ export default class TabContainer extends React.Component<TabContainerProps, Tab
     };
 
 
-    createTabPane = (tabName: string, tabIndex: number): Object => {
+    createTabPane = (tabName: string): Object => {
 
         if (this.props.tabNames === undefined) {
             return (<div key={tabName}>Error: no tabs to display</div>)
         } else {
             return (
-                <TabPane tabId={tabIndex} key={tabName}>
+                <TabPane tabId={tabName} key={tabName}>
                     <Row>
                         <Col sm="12">
                             {this.props.getChildComponent(tabName)}

@@ -388,9 +388,12 @@ export const splitRows = (wellsPerPlate : number, rows : Grid) : Grids => {
 };
 
 
-export const calculateFrozenGrids = (allRowsWithIDs : Object, containerTypeIsPlate : boolean, getRowsToReturn : (Array<Object>) => Array<Object>) : Grids => {
+export const calculateFrozenGrids = (allRowsWithIDs : Object, containerTypeIsPlate : boolean, getRowsToReturn : (Array<Object>) => Array<Object>, projectID : string) : Grids => {
 
-    const getGridToReturn = (x, ix) => { return {id: ix, grid: x} };
+    const getGridToReturn = (grid, gridIndex) => {
+        const id = containerTypeIsPlate ? generatePlateID(projectID, gridIndex) : gridIndex.toString();
+        return {id: id, grid: grid}
+    };
 
     let frozenGrids = [];
 
@@ -407,5 +410,90 @@ export const calculateFrozenGrids = (allRowsWithIDs : Object, containerTypeIsPla
     }
 
     return frozenGrids;
+
+};
+
+
+export const generatePlateID = (projectID, plateIndex) => {
+    const platePrefix = calculateEGIDPrefix(projectID);
+    const plateIndexString = (plateIndex + 1).toString().padStart(2, '0');
+    return(platePrefix + 'PLATE' + plateIndexString);
+};
+
+
+export const getAllRowsWithSampleAndLibraryIDs = (initialState, startIndices) => {
+
+    const egIDPrefix = calculateEGIDPrefix(initialState.projectID);
+
+    const parseIntDefaultZero = x => parseInt(x, 10) || 0;
+
+    const numUnpooledSamplesOrLibraries =
+        parseIntDefaultZero(initialState.numberOfUnpooledSamplesOrLibraries) +
+        parseIntDefaultZero(initialState.numberOfSamplesOrLibraries);
+
+    const numPools = parseIntDefaultZero(initialState.numberOfPools);
+
+    const numSamplesOrLibrariesInPools = R.map(
+        parseIntDefaultZero
+    )(JSON.parse(R.propOr("{}", "numberOfSamplesOrLibrariesInPools")(initialState)));
+
+    const sampleOrLibraryStart = parseIntDefaultZero(startIndices.sampleOrLibrary);
+    const unpooledSubmissionStart = parseIntDefaultZero(startIndices.unpooledSubmission);
+    const poolStart = parseIntDefaultZero(startIndices.pool);
+
+    const unpooledSampleIndices = R.range(
+        unpooledSubmissionStart,
+        unpooledSubmissionStart + numUnpooledSamplesOrLibraries
+    );
+
+    const unpooledSampleRows = unpooledSampleIndices.map(i => {
+        const egIDIndex = calculateEGIDIndex(i);
+        const wellIndex = i - unpooledSubmissionStart + 1;
+        const unpooledCell = {
+            'index': i,
+            'name': 'unpooled-'+i.toString(),
+            'egSubmissionID': calculateEGSampleID(egIDPrefix, egIDIndex),
+            'wellIndex': wellIndex,
+            'egWellID': calculateWellID(wellIndex-1)
+        };
+        return(unpooledCell);
+    });
+
+    const poolIndices = R.range(
+        poolStart,
+        poolStart + numPools
+    );
+
+    const pooledSampleRows = poolIndices.map(
+        p => {
+            const sampleIndicesInPool = R.range(1, numSamplesOrLibrariesInPools[p - poolStart + 1] + 1);
+            return sampleIndicesInPool.map(
+                i => {
+                    const wellIndex = p + numUnpooledSamplesOrLibraries - poolStart + 1;
+                    const egIDIndex = calculateEGIDIndex(p);
+                    const pooledCell = {
+                        'index': i,
+                        'name': 'pool' + p.toString() + '-' + i.toString(),
+                        'egSubmissionID': calculateEGPoolID(egIDPrefix, egIDIndex),
+                        'wellIndex': wellIndex,
+                        'egWellID': calculateWellID(wellIndex-1)
+                    };
+                    return(pooledCell);
+                }
+            );
+        }
+    );
+
+    const allRows = R.flatten([unpooledSampleRows, pooledSampleRows]);
+
+    const allRowsWithSampleAndLibraryIDs = allRows.map((r, i) => {
+        const egIDIndex = calculateEGIDIndex(i + sampleOrLibraryStart);
+        return R.pipe(
+            R.assoc('egLibraryID', calculateEGLibraryID(egIDPrefix, egIDIndex)),
+            R.assoc('egSampleID', calculateEGSampleID(egIDPrefix, egIDIndex))
+        )(r)
+    });
+
+    return(allRowsWithSampleAndLibraryIDs);
 
 };

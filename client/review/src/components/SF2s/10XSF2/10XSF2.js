@@ -14,12 +14,10 @@ import { naBarcodeSet_options } from '../../../constants/options';
 import {
     getSF2,
     updateTables,
-    calculateEGIDPrefix,
-    calculateEGSampleID,
-    calculateEGIDIndex,
-    calculateEGPoolID,
     getInitialTables,
-    getInitialInformationTableGrids
+    getInitialInformationTableGrids,
+    calculateFrozenGrids,
+    getAllRowsWithSampleAndLibraryIDs
 } from '../../../functions/lib';
 
 import { SF2DefaultProps, withDisableHandler } from "../../hoc/DisableHandler";
@@ -43,7 +41,8 @@ type TenXSF2Props = {
     shouldDisableSave: boolean,
     updateShouldDisableSubmit: (string, boolean) => void,
     updateSaveDisabled: Tables => void,
-    disableSaveButton: Tables => void
+    disableSaveButton: Tables => void,
+    startIndices: Object
 };
 
 
@@ -63,69 +62,28 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
             warnings: []
         };
 
+        this.allRowsWithSampleAndLibraryIDs = getAllRowsWithSampleAndLibraryIDs(
+            this.props.initialState,
+            this.props.startIndices
+        );
+
+        const tenXSampleInformationFrozenGrids = calculateFrozenGrids(
+            this.allRowsWithSampleAndLibraryIDs,
+            false,
+            this.getTenXSampleInformationFrozenGridRowsToReturn,
+            this.props.initialState.projectID
+        );
+
         this.frozenGrids = [
-            {name: '10XSampleInformation', grids: [this.calculateFrozenGrid()]}
+            {name: '10XSampleInformation', grids: tenXSampleInformationFrozenGrids}
         ];
 
     };
 
 
-    calculateFrozenGrid = () => {
-
-        const egIDPrefix = calculateEGIDPrefix(this.props.initialState.projectID);
-
-        const numberOfSamplesInPools = Object.assign({},
-            ...Object.entries(JSON.parse(this.props.initialState.numberOfSamplesOrLibrariesInPools))
-                .map(([k, v]) => ({[parseInt(k,10)]: parseInt(v,10)}))
-        );
-
-        const unpooledSampleIndices = R.range(1, parseInt(this.props.initialState.numberOfUnpooledSamplesOrLibraries, 10) + 1);
-
-        const unpooledSampleRows = unpooledSampleIndices.map(i => {
-            const egIDIndex = calculateEGIDIndex(i);
-            return {
-                'index': i,
-                'name': 'unpooled-'+i.toString(),
-                'egSubmissionID': calculateEGSampleID(egIDPrefix, egIDIndex)
-            }
-        });
-
-        const poolIndices = R.range(1, parseInt(this.props.initialState.numberOfPools, 10) + 1);
-
-        const pooledSampleRows = poolIndices.map(
-            p => {
-                const sampleIndicesInPool = R.range(1, numberOfSamplesInPools[p] + 1);
-                return sampleIndicesInPool.map(
-                    i => {
-                        const egIDIndex = calculateEGIDIndex(p);
-                        return {
-                            'index': i,
-                            'name': 'pool' + p.toString() + '-' + i.toString(),
-                            'egSubmissionID': calculateEGPoolID(egIDPrefix, egIDIndex)
-                        }
-                    }
-                );
-            }
-        );
-
-        const allRows = R.flatten([unpooledSampleRows, pooledSampleRows]);
-
-        const allRowsWithSampleIDs = allRows.map((r, i) => {
-            const egIDIndex = calculateEGIDIndex(i+1);
-            return R.assoc(
-                'egSampleID',
-                calculateEGSampleID(egIDPrefix, egIDIndex),
-                r
-            )
-        });
-
-        const allRowsWithIDs = allRowsWithSampleIDs.map(row => {
-            return [{value: row.egSampleID}, {value: row.egSubmissionID}];
-        });
-
-        return {id: 0, grid: allRowsWithIDs};
-
-    };
+    getTenXSampleInformationFrozenGridRowsToReturn = (rowsWithIDs : Array<Object>) : Array<Object> => rowsWithIDs.map(row => {
+        return [{value: row.egSampleID}, {value: row.egSubmissionID}];
+    });
 
 
     handleSave = () : void => {
@@ -232,4 +190,4 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
 
 
 //$FlowFixMe
-export default withConfirmHandler(withDisableHandler(withDownloadHandler(withShowDocumentationHandler(TenXSF2))));
+export default withConfirmHandler(withDisableHandler(withShowDocumentationHandler(TenXSF2)));
