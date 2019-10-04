@@ -1077,7 +1077,6 @@ class LIMSUploader:
 
         samples_dict = get_samples_dict_func(self.json_dict)
 
-
         frozen_rows = samples_dict['frozen_rows']
         table_rows = samples_dict['table_rows']
         sf2_type = processed_json_dict['sf2_type']
@@ -1123,7 +1122,7 @@ class LIMSUploader:
             plate_ids = set([x[-1]['value'] for x in frozen_rows])
             plates = {}
             sample_upload_dicts = [
-                {'container': self.create_container(container_type, container_id=x[0]), 'project': self.project, 'name': x[0], 'position': x[2], 'udf': x[1]}
+                {'container': self.create_container(container_type, container_id=x[3]), 'project': self.project, 'name': x[0], 'position': x[2], 'udf': x[1]}
                 for x in sample_upload_tuples
             ]
 
