@@ -1092,7 +1092,7 @@ class LIMSUploader:
             self.create_sample_udfs_for_upload(
                 x[1],
                 sf2_type=sf2_type,
-                eg_submission_id=(x[0][1]['value'] if self.has_pools else None)
+                eg_submission_id=(x[0][1]['value'] if self.has_pools or sf2_type=='LibrarySF2' else None)
             ) for x in zipped_sample_rows
         ]
 
