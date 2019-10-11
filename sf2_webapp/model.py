@@ -62,7 +62,8 @@ def sf2metadata_record_to_dict(record):
         "cm": record[18],
         "sampleOrLibraryStartIndex": str(record[19]),
         "unpooledSubmissionStartIndex": str(record[20]),
-        "poolStartIndex": str(record[21])
+        "poolStartIndex": str(record[21]),
+        "containerStartIndex": str(record[22])
     }
 
 
@@ -273,54 +274,37 @@ class ProjectSetup:
     def get_index_dict(self, project_id):
         samples = self.lims.get_samples(projectname=project_id)
 
-        sample_names = [sample.name for sample in samples]
-        sample_index_strings = [re.sub(r"^\d+\w\w", r"", sample_name) for sample_name in sample_names]
+        sample_index_strings = [re.sub(r"^\d+\w\w", r"", sample.name) for sample in samples]
         stripped_sample_index_strings = [re.sub(r"L01$", r"", sample_index_string) for sample_index_string in sample_index_strings]
-        sample_indices = [int(float(x)) for x in stripped_sample_index_strings]
-
-        sampleOrLibraryStartIndex = max(sample_indices) + 1 if len(sample_indices) > 0 else 1
 
         slx_identifiers = [s.udf['SLX Identifier'] for s in samples if 'SLX Identifier' in s.udf]
 
-        start_indices = lambda x: max(x) + 1 if len(x) > 0 else 1
+        unpooled_submission_index_strings = [re.sub(r"^\d+\w\w", r"", slx_identifier) for slx_identifier in slx_identifiers if not re.search('pool', slx_identifier)]
 
-        unpooled_submission_start_indices = start_indices([int(re.sub(r"^\d+\w\w", r"", slx_identifier)) for slx_identifier in slx_identifiers if not re.search('pool', slx_identifier)])
-        pool_start_indices = start_indices([int(re.sub(r"^\d+\w\wpool", r"", slx_identifier)) for slx_identifier in slx_identifiers if re.search('pool', slx_identifier)])
+        pool_index_strings = [re.sub(r"^\d+\w\wpool", r"", slx_identifier) for slx_identifier in slx_identifiers if re.search('pool', slx_identifier)]
 
-        index_dict = {
-            "sampleOrLibraryStartIndex": sampleOrLibraryStartIndex,
-            "unpooledSubmissionStartIndex": unpooled_submission_start_indices,
-            "poolStartIndex": pool_start_indices
-        }
+        container_names = LIMSUploader.get_container_names_for_samples(self.lims, samples)
 
-        return index_dict
+        container_index_strings = [re.sub(r"^\w{2}", "", c[-4:]) for c in container_names]
 
-        sample_names = [sample.name for sample in samples]
-        sample_index_strings = [re.sub(r"^\d+\w\w", r"", sample_name) for sample_name in sample_names]
-        stripped_sample_index_strings = [re.sub(r"L01$", r"", sample_index_string) for sample_index_string in sample_index_strings]
-        sample_indices = [int(float(x)) for x in stripped_sample_index_strings]
+        def get_next_index_from_index_strings(index_strings):
+            indices = [int(float(x)) for x in index_strings]
+            next_index = max(indices) + 1 if len(indices) > 0 else 1
+            return next_index
 
-        sampleOrLibraryStartIndex = max(sample_indices) + 1 if len(sample_indices) > 0 else 1
-        
-        #for s in samples:
-            #print(s.udf['SLX Identifier'])
+        index_dict = dict(zip(
+            ['sampleOrLibraryStartIndex',
+             'unpooledSubmissionStartIndex',
+             'poolStartIndex',
+             'containerStartIndex'],
+            (get_next_index_from_index_strings(x) for x in [
+                stripped_sample_index_strings,
+                unpooled_submission_index_strings,
+                pool_index_strings,
+                container_index_strings
+            ])
+        ))
 
-        ss = [s.udf['SLX Identifier'] for s in samples if 'SLX Identifier' in s.udf]
-
-        #ss = ['00028ST0001', '00028STpool01', '00028STpool01', '00028STpool02', '00028STpool02']
-
-        si = lambda x: max(x) + 1 if len(x) > 0 else 1
-        
-        mu = si([int(re.sub(r"^\d+\w\w", r"", u)) for u in ss if not re.search('pool', u)])
-        mp = si([int(re.sub(r"^\d+\w\wpool", r"", u)) for u in ss if re.search('pool', u)])
-        
-        index_dict = {
-            "sampleOrLibraryStartIndex": sampleOrLibraryStartIndex,
-            "unpooledSubmissionStartIndex": mu,
-            "poolStartIndex": mp
-        }
-
-        #pprint(index_dict)
         return index_dict
     
 
@@ -348,16 +332,18 @@ class ProjectSetup:
             index_dict = {
                 "sampleOrLibraryStartIndex": 1,
                 "unpooledSubmissionStartIndex": 1,
-                "poolStartIndex": 1
+                "poolStartIndex": 1,
+                "containerStartIndex": 1
             }
 
         sampleOrLibraryStartIndex = index_dict['sampleOrLibraryStartIndex']
         unpooledSubmissionStartIndex = index_dict['unpooledSubmissionStartIndex']
         poolStartIndex = index_dict['poolStartIndex']
+        containerStartIndex = index_dict['containerStartIndex']
 
         with self.database_connection.cursor() as cur:
             cur.execute(
-                "INSERT INTO onlinesf2.sf2metadata (querystring, appversion, datecreated, reissueof, projectid, sf2type, containertypeisplate, numberofsamplesorlibraries, sf2isdualindex, barcodesetisna, sf2haspools, numberofpools, sf2hascustomprimers, numberofcustomprimers, hasunpooledsamplesorlibraries, numberofunpooledsamplesorlibraries, numberofsamplesorlibrariesinpools, comments, sampleorlibrarystartindex, unpooledsubmissionstartindex, poolstartindex) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                "INSERT INTO onlinesf2.sf2metadata (querystring, appversion, datecreated, reissueof, projectid, sf2type, containertypeisplate, numberofsamplesorlibraries, sf2isdualindex, barcodesetisna, sf2haspools, numberofpools, sf2hascustomprimers, numberofcustomprimers, hasunpooledsamplesorlibraries, numberofunpooledsamplesorlibraries, numberofsamplesorlibrariesinpools, comments, sampleorlibrarystartindex, unpooledsubmissionstartindex, poolstartindex, containerstartindex) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                 [
                     query_string,
                     app_version,
@@ -379,7 +365,8 @@ class ProjectSetup:
                     submission_dict['cm'],
                     sampleOrLibraryStartIndex,
                     unpooledSubmissionStartIndex,
-                    poolStartIndex
+                    poolStartIndex,
+                    containerStartIndex
                 ]
             )
 
@@ -994,6 +981,18 @@ class LIMSUploader:
         frozen_row_length = len(frozen_grid['grids'][0]['grid'][0])
 
         return(new_dict)
+
+
+    @staticmethod
+    def get_container_names_for_samples(lims, samples):
+
+        artifacts = [s.artifact for s in samples]
+        lims.get_batch(artifacts)
+        containers = set([a.container for a in artifacts])
+        lims.get_batch(containers)
+        container_names = set([c.name for c in containers])
+
+        return container_names
 
 
     def create_container(self, type_name, container_id):

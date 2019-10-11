@@ -57,8 +57,8 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "onlinesf2-dev" <<-
         comments text,
         sampleOrLibraryStartIndex integer,
         unpooledSubmissionStartIndex integer,
-        poolStartIndex integer
-        
+        poolStartIndex integer,
+        containerStartIndex integer
     );
 
     CREATE TABLE onlinesf2.sf2data (
