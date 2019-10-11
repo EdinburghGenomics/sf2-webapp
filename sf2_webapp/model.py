@@ -70,10 +70,6 @@ def sf2metadata_record_to_dict(record):
 def send_email(email_config, web_config, project_id, query_string, email_details, stage):
     """Send an e-mail"""
 
-    print(type(web_config))
-    print(web_config)
-    print(stage)
-    
     sf2_url = 'https://{address}:{port}?{query_string}'.format(
         address=web_config._asdict()[stage].address,
         port=web_config._asdict()[stage].port,
@@ -271,7 +267,7 @@ class ProjectSetup:
         )
 
 
-    def get_index_dict(self, project_id):
+    def get_index_dict(self, project_id, container_type_is_plate):
         samples = self.lims.get_samples(projectname=project_id)
 
         sample_index_strings = [re.sub(r"^\d+\w\w", r"", sample.name) for sample in samples]
@@ -285,7 +281,10 @@ class ProjectSetup:
 
         container_names = LIMSUploader.get_container_names_for_samples(self.lims, samples)
 
-        container_index_strings = [re.sub(r"^\w{2}", "", c[-4:]) for c in container_names]
+        if container_type_is_plate:
+            container_index_strings = [c[-2:] for c in container_names if re.search(r"PLATE", c)]
+        else:
+            container_index_strings = [c[-4:] for c in container_names if not re.search(r"PLATE", c)]
 
         def get_next_index_from_index_strings(index_strings):
             indices = [int(float(x)) for x in index_strings]
@@ -306,7 +305,7 @@ class ProjectSetup:
         ))
 
         return index_dict
-    
+
 
     def process_submission(self, submission):
         """Process a project setup form submission"""
@@ -314,9 +313,10 @@ class ProjectSetup:
         submission_str = as_ascii(submission);
         submission_dict = json.loads(submission_str);
         query_string = generate_query_string()
-        index_dict = self.get_index_dict(submission_dict['pid'])
 
-        submission_dt = self.load_submission_into_db(submission_dict, query_string, index_dict=None)
+        index_dict = self.get_index_dict(submission_dict['pid'], submission_dict['ctp'])
+
+        submission_dt = self.load_submission_into_db(submission_dict, query_string, index_dict=index_dict)
         self.send_notification_email(submission_dict, query_string)
 
         return datetime_to_json(submission_dt)
@@ -436,7 +436,7 @@ class ProjectSetup:
 
         new_query_string = generate_query_string()
 
-        index_dict = self.get_index_dict(project_id)
+        index_dict = self.get_index_dict(project_id, new_record_dict['ctp'])
 
         self.load_submission_into_db(
             submission_dict=new_record_dict,
