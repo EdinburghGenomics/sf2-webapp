@@ -1,14 +1,14 @@
 // @flow
 import React from 'react';
+import * as R from 'ramda';
 
 import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap';
-import { generatePlateID } from "../../functions/lib";
 
 
 type TabContainerProps = {
     tabNames: Array<string>,
-    tabHasErrors: Map<string, boolean>,
-    getChildComponent: string => Object
+    getChildComponent: string => Object,
+    updateSomeTabHasErrors: boolean => void
 };
 
 
@@ -18,7 +18,7 @@ type TabContainerState = {
 
 
 export default class TabContainer extends React.Component<TabContainerProps, TabContainerState> {
-
+    tabErrors: Object;
 
     constructor (props : Object) {
         super(props);
@@ -26,6 +26,19 @@ export default class TabContainer extends React.Component<TabContainerProps, Tab
         this.state = {
             activeTab: this.props.tabNames[0]
         };
+
+        this.tabErrors = R.fromPairs(this.props.tabNames.map(x => [x, true]));
+
+    };
+
+
+    updateHasErrors = (id : string, hasErrors : boolean) : void => {
+
+        this.tabErrors = R.assoc(id, hasErrors, this.tabErrors);
+
+        this.props.updateSomeTabHasErrors(
+            R.any(R.identity, R.values(this.tabErrors))
+        );
 
     };
 
@@ -42,11 +55,11 @@ export default class TabContainer extends React.Component<TabContainerProps, Tab
     createNavItem = (tabName: string): Object => {
 
         const key = "navItem" + tabName;
-        const textColour = this.props.tabHasErrors.get(tabName) ? 'red' : 'green';
+        const textColour = this.tabErrors[tabName] ? 'red' : 'green';
 
         const tick = '\u2713';
         const cross = '\u2717';
-        const textPrefix = this.props.tabHasErrors.get(tabName) ? cross : tick;
+        const textPrefix = this.tabErrors[tabName] ? cross : tick;
         const fullTabName = textPrefix + ' ' + tabName;
 
         return (
@@ -74,7 +87,7 @@ export default class TabContainer extends React.Component<TabContainerProps, Tab
                 <TabPane tabId={tabName} key={tabName}>
                     <Row>
                         <Col sm="12">
-                            {this.props.getChildComponent(tabName)}
+                            {this.props.getChildComponent(tabName, this.updateHasErrors)}
                         </Col>
                     </Row>
                 </TabPane>
@@ -94,21 +107,19 @@ export default class TabContainer extends React.Component<TabContainerProps, Tab
 
             // don't display tabs if there is only one thing to display
             const firstTabName = this.props.tabNames[0];
-            return (this.props.getChildComponent(firstTabName));
+            return (this.props.getChildComponent(firstTabName, this.updateHasErrors));
 
         } else {
 
+            const tabPanes = this.props.tabNames.map((tabName) => this.createTabPane(tabName));
+            const navItems = this.props.tabNames.map((tabName) => this.createNavItem(tabName));
+
             return (
                 <div>
-                    <Nav tabs>
-                        {
-                            this.props.tabNames.map((tabName, tabIndex) => this.createNavItem(tabName, tabIndex))
-                        }
+                    <Nav tabs>{navItems}
                     </Nav>
                     <TabContent activeTab={this.state.activeTab}>
-                        {
-                            this.props.tabNames.map((tabName, tabIndex) => this.createTabPane(tabName, tabIndex))
-                        }
+                        {tabPanes}
                     </TabContent>
                 </div>
             );

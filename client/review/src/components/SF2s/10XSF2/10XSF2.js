@@ -75,7 +75,7 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
         );
 
         this.frozenGrids = [
-            {name: '10XSampleInformation', grids: tenXSampleInformationFrozenGrids}
+            {name: this.tableTypes[0], grids: tenXSampleInformationFrozenGrids}
         ];
 
     };
@@ -114,7 +114,7 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
 
     makeTableFromGridWithID = (gridWithID : GridWithID) : Table => {
         const grids = [gridWithID];
-        return {name: '10XSampleInformation', grids: grids};
+        return {name: this.tableTypes[0], grids: grids};
     };
 
 
@@ -158,14 +158,14 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
         const initialGrids = getInitialInformationTableGrids(
             initialTables,
             this.frozenGrids,
-            '10XSampleInformation'
+            this.tableTypes[0]
         );
 
         const tenXSampleInformationFrozenGrid = this.frozenGrids[0].grids[0].grid;
 
         return (
             <SF2Validator
-                id={0}
+                id={this.tableTypes[0]}
                 columns={this.initialiseColumns(this.props.initialState)}
                 frozenColumns={frozenTenXSampleInformationColumns}
                 frozenGrid={tenXSampleInformationFrozenGrid}
@@ -175,7 +175,7 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
                 handleSave={this.handleSave}
                 handleDownload={this.handleDownload}
                 showDocumentation={this.props.showDocumentation}
-                updateHasErrors={R.curry(this.updateHasErrors)(this.tableTypes[0])}
+                updateHasErrors={this.updateHasErrors}
                 updateGrids={this.updateTablesFromGridWithID}
                 updateWarningList={this.updateWarnings}
                 showHiddenColumns={this.props.showHiddenColumns}

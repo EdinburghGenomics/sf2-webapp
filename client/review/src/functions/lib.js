@@ -497,3 +497,9 @@ export const getAllRowsWithSampleAndLibraryIDs = (initialState, startIndices) =>
     return(allRowsWithSampleAndLibraryIDs);
 
 };
+
+
+export const generateContainerOffset = containerStartIndex => {
+    return R.isNil(containerStartIndex) ? 0 :
+        parseInt(containerStartIndex, 10) - 1;
+};

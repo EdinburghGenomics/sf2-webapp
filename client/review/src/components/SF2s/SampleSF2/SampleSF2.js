@@ -54,7 +54,7 @@ class SampleSF2 extends React.Component<SampleSF2Props> {
     frozenGrids = [];
     tableTypes = ['SampleInformation'];
     formType = 'SampleSF2';
-    errors = new Map([[0, true]]);
+    errors = {};
 
     frozenSampleInformationColumns = this.props.initialState.containerTypeIsPlate ?
         frozenSampleInformationColumns.concat([{value: 'Well ID', width: 100}]) :
@@ -116,8 +116,7 @@ class SampleSF2 extends React.Component<SampleSF2Props> {
 
     updateHasErrors = (tableName : string, hasErrors : boolean) : void => {
         this.props.updateShouldDisableSubmit(tableName, hasErrors);
-        const tableIndex = R.indexOf(tableName, this.tableTypes);
-        this.errors.set(tableIndex, hasErrors);
+        this.errors[tableName] = hasErrors;
     };
 
 
@@ -206,6 +205,7 @@ class SampleSF2 extends React.Component<SampleSF2Props> {
             shouldDisableSave={this.props.shouldDisableSave}
             updateHasErrors={R.curry(this.updateHasErrors)('SampleInformation')}
             tableType={this.tableTypes[0]}
+            containerStartIndex={this.props.startIndices['container']}
         />;
 
         if (this.props.initialState.containerTypeIsPlate) {

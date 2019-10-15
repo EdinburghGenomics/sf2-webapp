@@ -24,7 +24,7 @@ type SF2ValidatorProps = {
     handleSave: () => void,
     handleDownload: () => void,
     showDocumentation: () => {},
-    updateHasErrors: (boolean, number) => void,
+    updateHasErrors: (string, boolean) => void,
     updateGrids: GridWithID => void,
     updateWarningList?: Warnings => void,
     showHiddenColumns: boolean,
@@ -76,9 +76,9 @@ export default class SF2Validator extends React.Component<SF2ValidatorProps, Sta
 
         // tell the parent component when the error status changes
         if(errors.length === 0 && (this.state.errors.length > 0 || initialising === true)) {
-            this.props.updateHasErrors(false, this.props.id);
+            this.props.updateHasErrors(this.props.id, false);
         } else if(errors.length > 0 && this.state.errors.length === 0) {
-            this.props.updateHasErrors(true, this.props.id);
+            this.props.updateHasErrors(this.props.id, true);
         }
 
         if (!R.equals(errors, this.state.errors)) {

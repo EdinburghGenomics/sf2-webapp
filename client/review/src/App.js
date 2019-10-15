@@ -33,7 +33,8 @@ export default class App extends React.Component<AppProps, AppState> {
     startIndices = {
         "sampleOrLibrary": "1",
         "unpooledSubmission": "1",
-        "pool": "1"
+        "pool": "1",
+        "container": "1"
     };
 
 
@@ -44,7 +45,7 @@ export default class App extends React.Component<AppProps, AppState> {
         R.fromPairs
     );
 
-
+    
     getInitialState = R.omit(R.keys(this.startIndices).map(x=>x+"StartIndex"));
 
 

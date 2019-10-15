@@ -6,11 +6,11 @@ import SF2Validator from './SF2Validator';
 import TabContainer from '../hoc/TabContainer';
 
 import {
-    calculateEGIDPrefix,
     generatePlateID,
     getDuplicateWarnings,
     getRepeatedKeys,
-    initialiseGrids
+    initialiseGrids,
+    generateContainerOffset
 } from '../../functions/lib';
 
 import type { Grid, StringMap } from '../../sf2datasheet/types/flowTypes'
@@ -37,12 +37,12 @@ type PlateTabContainerProps = {
     shouldDisableSave: boolean,
     updateHasErrors: boolean => void,
     tableType: string,
-    validator?: (Array<string>, Grid) => Array<string>
+    validator?: (Array<string>, Grid) => Array<string>,
+    containerStartIndex?: string
 };
 
 
 type PlateTabContainerState = {
-    errors: Map<number, boolean>,
     warnings: Warnings
 };
 
@@ -68,32 +68,21 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
             initialGrids = this.props.initialGrids;
         }
 
-        const generatePlateIDForGridIndex = (gridIndex) => {
-           return(generatePlateID(this.props.initialState.projectID, gridIndex));
+        const generatePlateIDForGridIndex = (gridIndex, containerOffset) => {
+           return(
+               generatePlateID(this.props.initialState.projectID, gridIndex + containerOffset)
+           );
         };
 
-        this.grids = initialGrids.map((x, ix) => {return{'id': generatePlateIDForGridIndex(ix) , 'grid': x}});
+        const containerOffset = generateContainerOffset(this.props.containerStartIndex);
+
+        const plateIDs = initialGrids.map((_, ix) => {return generatePlateIDForGridIndex(ix, containerOffset)});
+
+        this.grids = initialGrids.map((x, ix) => {return{'id': plateIDs[ix] , 'grid': x}});
 
         this.state = {
-            errors: new Map(this.grids.map((_, ix) => {return [generatePlateIDForGridIndex(ix), true]})),
             warnings: []
         };
-
-    };
-
-
-    updateHasErrors = (hasErrors : boolean, id : string) : void => {
-
-        let newErrors = R.clone(this.state.errors);
-        newErrors.set(id, hasErrors);
-
-        const someDataSheetHasErrors = R.any(R.identity, Array.from(newErrors.values()));
-
-        this.setState({
-            errors: newErrors
-        });
-
-        this.props.updateHasErrors(someDataSheetHasErrors);
 
     };
 
@@ -151,9 +140,10 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
     };
 
 
-    getChildComponent = (tabName : string) : Object => {
+    getChildComponent = (tabName : string, updateHasErrors : (string, boolean) => void) : Object => {
 
-        const tabIndex = parseInt(R.match(/\d+$/, tabName), 10) - 1;
+        const tabIndex = parseInt(R.match(/\d+$/, tabName), 10) -
+            generateContainerOffset(this.props.containerStartIndex) - 1;
 
         if(R.isNil(this.grids) || R.isNil(this.props.frozenGrids)) {
 
@@ -174,7 +164,7 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
                     handleSave={this.handleSave}
                     handleDownload={this.props.handleDownload}
                     showDocumentation={this.props.showDocumentation}
-                    updateHasErrors={this.updateHasErrors}
+                    updateHasErrors={updateHasErrors}
                     updateGrids={this.updateGrids}
                     showHiddenColumns={this.props.showHiddenColumns}
                     topRowNumber={1}
@@ -192,7 +182,8 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
 
 
     generatePlateIDFromGridIndex = (_, gridIndex) => {
-        return(generatePlateID(this.props.initialState.projectID, gridIndex));
+        const updatedGridIndex = gridIndex + generateContainerOffset(this.props.containerStartIndex);
+        return(generatePlateID(this.props.initialState.projectID, updatedGridIndex));
     };
 
 
@@ -200,8 +191,8 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
         return(
             <TabContainer
                 tabNames={this.grids.map(this.generatePlateIDFromGridIndex)}
-                tabHasErrors={this.state.errors}
                 getChildComponent={this.getChildComponent}
+                updateSomeTabHasErrors={this.props.updateHasErrors}
             />
         );
     }

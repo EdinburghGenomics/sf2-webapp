@@ -31,7 +31,8 @@ export default class App extends React.Component<AppProps, AppState> {
     startIndices = {
         "sampleOrLibrary": "1",
         "unpooledSubmission": "1",
-        "pool": "1"
+        "pool": "1",
+        "container": "1"
     };
 
 

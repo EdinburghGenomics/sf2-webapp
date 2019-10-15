@@ -96,7 +96,7 @@ export default class Stage3SF2Container extends React.Component<Stage3SF2Contain
     render() {
         return(
             <div>
-                <h2>{this.state.sf2type} SF2 Submission Form</h2>
+                <h2>{this.state.sf2type} SF2 Submission Review</h2>
                 {<Stage1FormStateSummary {...this.state}/>}
                 {this.state.sf2type === 'Sample' &&
                     <SampleSF2
@@ -104,6 +104,7 @@ export default class Stage3SF2Container extends React.Component<Stage3SF2Contain
                         initialSF2Data={this.initialSF2Data}
                         handleSubmission={this.handleSubmission}
                         handleSave={this.handleSave}
+                        handleDownload={this.handleDownload}
                         showHiddenColumns={true}
                         startIndices={this.props.startIndices}
                     />
@@ -133,7 +134,7 @@ export default class Stage3SF2Container extends React.Component<Stage3SF2Contain
                         handleSubmission={this.handleSubmission}
                         handleSave={this.handleSave}
                         handleDownload={this.handleDownload}
-                        showHiddenColumns={false}
+                        showHiddenColumns={true}
                         startIndices={this.props.startIndices}
                     />
                 }
@@ -144,7 +145,7 @@ export default class Stage3SF2Container extends React.Component<Stage3SF2Contain
                     handleSubmission={this.handleSubmission}
                     handleSave={this.handleSave}
                     handleDownload={this.handleDownload}
-                    showHiddenColumns={false}
+                    showHiddenColumns={true}
                     startIndices={this.props.startIndices}
                 />
                 }
