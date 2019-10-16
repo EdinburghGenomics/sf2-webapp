@@ -108,9 +108,7 @@ class SampleSF2 extends React.Component<SampleSF2Props> {
 
 
     handleDownload = () : void => {
-        this.props.handleDownload(
-            getSF2(this.formType, this.tables)
-        );
+        this.props.handleDownload(getSF2(this.formType, this.tables, this.frozenGrids));
     };
 
 

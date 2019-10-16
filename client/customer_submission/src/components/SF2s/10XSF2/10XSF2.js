@@ -100,7 +100,7 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
 
     handleDownload = () : void => {
         this.props.handleDownload(
-            getSF2(this.formType, this.tables)
+            getSF2(this.formType, this.tables, this.frozenGrids)
         );
     };
 

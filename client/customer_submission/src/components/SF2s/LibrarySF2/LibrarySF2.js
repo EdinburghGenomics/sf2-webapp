@@ -154,7 +154,7 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
 
     handleDownload = () : void => {
         this.props.handleDownload(
-            getSF2(this.formType, this.tables)
+            getSF2(this.formType, this.tables, this.frozenGrids)
         );
     };
 

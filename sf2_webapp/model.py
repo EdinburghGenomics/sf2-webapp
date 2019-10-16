@@ -5,9 +5,9 @@ import functools
 import itertools
 import json
 import re
-import uuid
-
 import smtplib
+import time
+import uuid
 import email.utils
 import email.mime.text
 
@@ -624,6 +624,18 @@ class SF2:
         )
 
         return datetime_to_json(save_dt)
+
+
+    def get_filename_for_download(self, query_string):
+        """Generate a filename for the downloaded tsv file"""
+
+        metadata_record = self.get_latest_sf2metadata_record_with_query_string(query_string)
+
+        project_id = metadata_record[5]
+        sf2_type = metadata_record[6] + "SF2"
+        fn_suffix = time.strftime("%Y%m%d_%H%M%S_gmt.tsv", time.gmtime())
+
+        return '-'.join([project_id, sf2_type, fn_suffix])
 
 
     def process_get_download(self, query_string):
