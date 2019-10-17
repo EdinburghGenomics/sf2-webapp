@@ -216,6 +216,11 @@ class TsvGenerator:
 
         if 'grids' in tables:
             for grid, frozen_grid in zip(tables['grids'], frozen_grids['grids']):
+
+                if re.search(r"PLATE", grid['id']):
+                    lines.append(str(grid['id']))
+                    lines.append("")
+
                 lines.extend(TsvGenerator.json_to_tsv(grid, frozen_grid, sf2_rows, sf2_frozen_rows, has_plates, table_name=table_name))
 
         elif 'grid' in tables:
