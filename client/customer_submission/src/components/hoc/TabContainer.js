@@ -7,7 +7,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Row, Col } from 'reactstrap
 
 type TabContainerProps = {
     tabNames: Array<string>,
-    getChildComponent: string => Object,
+    getChildComponent: (string, (string, boolean) => void) => Object,
     updateSomeTabHasErrors: boolean => void
 };
 
@@ -20,14 +20,24 @@ type TabContainerState = {
 export default class TabContainer extends React.Component<TabContainerProps, TabContainerState> {
     tabErrors: Object;
 
+
     constructor (props : Object) {
         super(props);
 
+        const initialTabErrors = R.fromPairs(this.props.tabNames.map(x => [x, true]));
+
         this.state = {
-            activeTab: this.props.tabNames[0]
+            activeTab: this.props.tabNames[0],
+            tabErrors: initialTabErrors
         };
 
-        this.tabErrors = R.fromPairs(this.props.tabNames.map(x => [x, true]));
+        // why do we have both this.state.tabErrors and this.tabErrors?
+        // we need to update this.state.tabErrors to tell the react component to update the UI
+        // we also need this.tabErrors to handle the case where updateHasErrors is called twice
+        // in quick succession (i.e. during initialisation) and the second call comes while the
+        // state update triggered by the first call is still in progress, leading to an inaccurate
+        // value in this.state.tabErrors
+        this.tabErrors = initialTabErrors;
 
     };
 
@@ -36,9 +46,13 @@ export default class TabContainer extends React.Component<TabContainerProps, Tab
 
         this.tabErrors = R.assoc(id, hasErrors, this.tabErrors);
 
-        this.props.updateSomeTabHasErrors(
-            R.any(R.identity, R.values(this.tabErrors))
-        );
+        const updateSomeTabHasErrors = () => {
+            this.props.updateSomeTabHasErrors(
+                R.any(R.identity, R.values(this.tabErrors))
+            );
+        };
+
+        this.setState({tabErrors: this.tabErrors}, updateSomeTabHasErrors);
 
     };
 

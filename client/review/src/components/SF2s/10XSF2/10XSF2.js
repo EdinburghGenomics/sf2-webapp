@@ -52,7 +52,6 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
     frozenGrids = [];
     tableTypes = ['10XSampleInformation'];
     formType = '10XSF2';
-    errors = new Map([[0, true]]);
 
 
     constructor (props : Object) {
@@ -70,12 +69,14 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
         const tenXSampleInformationFrozenGrids = calculateFrozenGrids(
             this.allRowsWithSampleAndLibraryIDs,
             false,
-            this.getTenXSampleInformationFrozenGridRowsToReturn,
-            this.props.initialState.projectID
+            this.getTenXSampleInformationFrozenGridRowsToReturn
         );
 
         this.frozenGrids = [
-            {name: this.tableTypes[0], grids: tenXSampleInformationFrozenGrids}
+            {
+                name: this.tableTypes[0],
+                grids: tenXSampleInformationFrozenGrids.map(x=>{return{id: "0", grid: x}})
+            }
         ];
 
     };
@@ -100,15 +101,8 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
 
     handleDownload = () : void => {
         this.props.handleDownload(
-            getSF2(this.formType, this.tables)
+            getSF2(this.formType, this.tables, this.frozenGrids)
         );
-    };
-
-
-    updateHasErrors = (tableName : string, hasErrors : boolean) : void => {
-        this.props.updateShouldDisableSubmit(tableName, hasErrors);
-        const tableIndex = R.indexOf(tableName, this.tableTypes);
-        this.errors.set(tableIndex, hasErrors);
     };
 
 
@@ -165,7 +159,7 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
 
         return (
             <SF2Validator
-                id={this.tableTypes[0]}
+                id={"0"}
                 columns={this.initialiseColumns(this.props.initialState)}
                 frozenColumns={frozenTenXSampleInformationColumns}
                 frozenGrid={tenXSampleInformationFrozenGrid}
@@ -175,7 +169,7 @@ class TenXSF2 extends React.Component<TenXSF2Props> {
                 handleSave={this.handleSave}
                 handleDownload={this.handleDownload}
                 showDocumentation={this.props.showDocumentation}
-                updateHasErrors={this.updateHasErrors}
+                updateHasErrors={(_,e) => this.props.updateShouldDisableSubmit(e)}
                 updateGrids={this.updateTablesFromGridWithID}
                 updateWarningList={this.updateWarnings}
                 showHiddenColumns={this.props.showHiddenColumns}

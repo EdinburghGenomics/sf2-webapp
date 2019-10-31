@@ -118,8 +118,8 @@ class TsvGenerator:
             'Your Sample ID',
             'Genus_Species_NCBITaxonID',
             'Reference Genome',
-            'Conc (ng/\u03BCl)',
-            'Volume (\u03BCl)',
+            'Conc (ng/ul)',
+            'Volume (ul)',
             'Quantification Method',
             'Yield (ng)',
             'Image Available',
@@ -146,10 +146,10 @@ class TsvGenerator:
         '10XSampleInformation': [
             'Your 10X Sample ID',
             '10X Genomics Barcode Set',
-            '10X Sample Conc. (ng/\u03BCl)',
+            '10X Sample Conc. (ng/ul)',
             'Pool Concentration',
             'Pool Size',
-            '10X Sample Vol. (\u03BCl)',
+            '10X Sample Vol. (ul)',
             'Genus_Species_TaxonID',
             'Quantification Method',
             'Image Available',
@@ -161,8 +161,8 @@ class TsvGenerator:
         ],
         'PrimerInformation': [
             'Your Primer ID',
-            'Primer Conc. (\u03BCM)',
-            'Primer Vol. (\u03BCl)',
+            'Primer Conc. (uM)',
+            'Primer Vol. (ul)',
             'Storage Buffer',
             'Custom Primer details',
             'Primer Sequence',
@@ -171,8 +171,8 @@ class TsvGenerator:
         'LibraryInformation': [
             'Your Library ID',
             'Species_TaxonID',
-            'Library Conc. (ng/\u03BCl)',
-            'Library Vol. (\u03BCl)',
+            'Library Conc. (ng/ul)',
+            'Library Vol. (ul)',
             'Quantification Method',
             'Image Available',
             'Storage Buffer',
@@ -208,10 +208,6 @@ class TsvGenerator:
 
         if 'name' in tables:
             lines.append(str(tables['name']))
-            lines.append("")
-
-        if 'id' in tables and has_plates:
-            lines.append(str(tables['id']))
             lines.append("")
 
         if 'grids' in tables:

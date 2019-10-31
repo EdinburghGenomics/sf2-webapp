@@ -21,14 +21,12 @@ type AppState = {
 export default class App extends React.Component<AppProps, AppState> {
     initialState = {}
 
-
     state = {
         stage2ModalIsActive: false,
         queryString: '',
         submittedAt: '',
         sf2: {}
     };
-
 
     startIndices = {
         "sampleOrLibrary": "1",
@@ -45,11 +43,11 @@ export default class App extends React.Component<AppProps, AppState> {
         R.fromPairs
     );
 
-    
+
     getInitialState = R.omit(R.keys(this.startIndices).map(x=>x+"StartIndex"));
 
 
-    handleStage2FormSave = (saveData : Object) : void => {
+    handleFormSave = (saveData : Object) : void => {
 
         const fullSaveData = {
             queryString: this.state.queryString,
@@ -60,7 +58,7 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
 
-    handleStage3FormSaveForDownload = (saveData : Object) : void => {
+    handleFormSaveForDownload = (saveData : Object) : void => {
 
         const fullSaveData = {
             queryString: this.state.queryString,
@@ -71,7 +69,7 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
 
-    handleStage3FormSubmission = (submissionData : Object) : void => {
+    handleFormSubmission = (submissionData : Object) : void => {
 
         const fullSubmissionData = {
             queryString: this.state.queryString,
@@ -233,7 +231,7 @@ export default class App extends React.Component<AppProps, AppState> {
             json => {
                 console.log('Success (initdata):', JSON.stringify(json));
                 this.setState({'submittedAt': json.submittedAt, 'sf2': json.sf2}, () => {
-                    ReactDOM.render(<Stage3SF2Container initState={this.initialState} initialSF2Data={this.state.sf2} handleSubmission={this.handleStage3FormSubmission} handleSave={this.handleStage3FormSave} handleDownload={this.handleStage3FormSaveForDownload} startIndices={this.startIndices} />, document.getElementById('stage3Container'));
+                    ReactDOM.render(<Stage3SF2Container initState={this.initialState} initialSF2Data={this.state.sf2} handleSubmission={this.handleFormSubmission} handleSave={this.handleFormSave} handleDownload={this.handleFormSaveForDownload} startIndices={this.startIndices} />, document.getElementById('stage3Container'));
                 });
             }).catch(error => {
                 console.error('Error (initdata):', error);

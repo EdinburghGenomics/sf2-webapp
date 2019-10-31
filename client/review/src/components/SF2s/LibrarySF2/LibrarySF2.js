@@ -3,7 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 
 import SF2Validator from '../../general/SF2Validator';
-import PlateTabContainer from "../../general/PlateTabContainer";
+import PlateTabContainer from '../../general/PlateTabContainer';
 
 
 import {
@@ -26,19 +26,29 @@ import {
     createFrozenGrid,
     getInitialInformationTableGrids,
     calculateFrozenGrids,
-    getAllRowsWithSampleAndLibraryIDs
+    getAllRowsWithSampleAndLibraryIDs,
+    addContainerIDs,
+    getContainerIDs
 } from '../../../functions/lib';
 
 
 import { SF2DefaultProps, withDisableHandler } from "../../hoc/DisableHandler";
-import { withDownloadHandler } from "../../hoc/DownloadHandler";
 import { withConfirmHandler } from "../../hoc/ConfirmHandler";
+import { withDownloadHandler } from "../../hoc/DownloadHandler";
 import { withShowDocumentationHandler } from "../../hoc/ShowDocumentationHandler";
 import TabContainer from "../../hoc/TabContainer";
 
 
-import type {SF2Data, Table, Tables, Stage1FormState, GridWithID, Grids, Warnings} from '../../../types/flowTypes';
-import type {Row, Columns, Grid, StringMap} from '../../../sf2datasheet/types/flowTypes';
+import type {
+    SF2Data,
+    Table,
+    Tables,
+    Stage1FormState,
+    GridWithID,
+    Warnings,
+    GridWithIDs
+} from '../../../types/flowTypes';
+import type {Row, Columns, StringMap} from '../../../sf2datasheet/types/flowTypes';
 
 
 type LibrarySF2Props = {
@@ -70,11 +80,10 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
     tableTypes = [];
     frozenGrids = [];
     formType = 'LibrarySF2';
-    errors = {};
-    tableNames = new Map([
-        [ 'PrimerInformation', 'Primer Information' ],
-        [ 'LibraryInformation', 'Library Information' ]
-    ]);
+    tableNames = {
+        'PrimerInformation': 'Primer Information',
+        'LibraryInformation': 'Library Information'
+    };
 
     frozenLibraryInformationColumns = this.props.initialState.containerTypeIsPlate ?
         frozenLibraryInformationColumns.concat([{value: 'Well ID', width: 100}]) :
@@ -89,12 +98,6 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
         }
         this.tableTypes.push('LibraryInformation');
 
-        this.errors = R.fromPairs(
-            this.tableTypes.map(
-                tableType => [this.tableNames.get(tableType), true]
-            )
-        );
-
         this.state = {
             libraryInformationData: new Map(),
             warnings: []
@@ -108,11 +111,10 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
         const libraryInformationFrozenGrids = calculateFrozenGrids(
             this.allRowsWithSampleAndLibraryIDs,
             this.props.initialState.containerTypeIsPlate,
-            this.getLibraryInformationFrozenGridRowsToReturn,
-            this.props.initialState.projectID
+            this.getLibraryInformationFrozenGridRowsToReturn
         );
 
-        const primerInformationFrozenGrids = [{id: 0, grid: createFrozenGrid(
+        const primerInformationFrozenGrids = [{id: "0", grid: createFrozenGrid(
             this.props.initialState.numberOfCustomPrimers,
             frozenPrimerInformationColumns,
             this.props.initialState.projectID,
@@ -122,9 +124,18 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
             false
         )}];
 
+        const containerIDs = getContainerIDs(
+            libraryInformationFrozenGrids,
+            this.props.startIndices.container,
+            this.props.initialState.containerTypeIsPlate,
+            this.props.initialState.projectID
+        );
+
+        const libraryInformationFrozenGridWithIDs = addContainerIDs(containerIDs, libraryInformationFrozenGrids);
+
         this.frozenGrids = [
             {name: 'PrimerInformation', grids: primerInformationFrozenGrids},
-            {name: 'LibraryInformation', grids: libraryInformationFrozenGrids}
+            {name: 'LibraryInformation', grids: libraryInformationFrozenGridWithIDs}
         ];
 
     };
@@ -154,25 +165,18 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
 
     handleDownload = () : void => {
         this.props.handleDownload(
-            getSF2(this.formType, this.tables)
+            getSF2(this.formType, this.tables, this.frozenGrids)
         );
     };
 
 
-    updateHasErrors = (tableName : string, hasErrors : boolean) : void => {
-        this.props.updateShouldDisableSubmit(tableName, hasErrors);
-        this.errors[this.tableNames.get(tableName)] = hasErrors;
-    };
-
-
-    makeTableFromGrids = (tableType : string, grids : Grids) : Table => {
-        return {name: tableType, grids: grids};
+    makeTableFromGridWithIDs = (tableType : string, gridWithIDs : GridWithIDs) : Table => {
+        return {name: tableType, grids: gridWithIDs};
     };
 
 
     makeTableFromGridWithID = (tableType : string, gridWithID : GridWithID) : Table => {
-        const grids = [gridWithID];
-        return this.makeTableFromGrids(tableType, grids);
+        return this.makeTableFromGridWithIDs(tableType, [gridWithID]);
     };
 
 
@@ -208,6 +212,7 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
 
 
     updateTables = (table: Table) : void => {
+
         this.tables = updateTables(table, this.tables);
         this.props.updateSaveDisabled(this.tables);
 
@@ -227,8 +232,8 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
     };
 
 
-    updateTablesFromGrids = (tableType : string, grids : Grids) : void => {
-        const table = this.makeTableFromGrids(tableType, grids);
+    updateTablesFromGridWithIDs = (tableType : string, gridWithIDs : GridWithIDs) : void => {
+        const table = this.makeTableFromGridWithIDs(tableType, gridWithIDs);
         this.updateTables(table);
     };
 
@@ -267,7 +272,7 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
 
 
     getTableNames = () : Array<string> => {
-        return this.tableTypes.map(t => { const tn = this.tableNames.get(t); return tn === undefined ? 'Unknown' : tn});
+        return this.tableTypes.map(t => { const tn = this.tableNames[t]; return tn === undefined ? 'Unknown' : tn});
     };
 
 
@@ -381,7 +386,7 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
     ).grids;
 
 
-    getPrimerInformationTable = (updateHasErrors : (boolean, Object) => void) => {
+    getPrimerInformationTable = (updateHasErrors : (string, boolean) => void) => {
 
         const primerInformationInitialGrid = this.getInitialInformationTableGrids(
             this.frozenGrids,
@@ -391,7 +396,7 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
         const primerInformationFrozenGrid = this.getFrozenGrids('PrimerInformation')[0].grid;
 
         return <SF2Validator
-            id={'Primer Information'}
+            id={"0"}
             columns={primerInformationColumns}
             frozenColumns={frozenPrimerInformationColumns}
             frozenGrid={primerInformationFrozenGrid}
@@ -401,7 +406,7 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
             handleSave={this.handleSave}
             handleDownload={this.handleDownload}
             showDocumentation={this.props.showDocumentation}
-            updateHasErrors={updateHasErrors}
+            updateHasErrors={(_, e) => updateHasErrors('Primer Information', e)}
             updateGrids={R.curry(this.updateTablesFromGridWithID)('PrimerInformation')}
             updateWarningList={this.updateWarnings}
             showHiddenColumns={this.props.showHiddenColumns}
@@ -415,77 +420,81 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
     };
 
 
-    getChildComponent = (tabName : string, updateHasErrors : (boolean, Object) => void) : Object => {
+    getChildComponent = (tabName : string, updateHasErrors : (string, boolean) => void) : Object => {
+
+        if (R.isNil(updateHasErrors)) {
+            updateHasErrors = (_, e) => this.props.updateShouldDisableSubmit(e);
+        }
 
         if (tabName === 'Primer Information') {
 
             return this.getPrimerInformationTable(updateHasErrors);
 
-        } else if (tabName === 'Library Information'){
+        } else if (tabName === 'Library Information') {
 
             const libraryInformationInitialGrids = this.getInitialInformationTableGrids(
                 this.frozenGrids,
                 'LibraryInformation'
             );
 
-            const libraryInformationFrozenGrids = this.getFrozenGrids('LibraryInformation');
+            const libraryInformationFrozenGridWithIDs = this.getFrozenGrids('LibraryInformation');
+
+            const containerIDs = libraryInformationFrozenGridWithIDs.map(x => x.id);
+
+            const libraryInformationInitialGridWithIDs = addContainerIDs(containerIDs, libraryInformationInitialGrids);
+
+            const tubeLibraryInformation = <SF2Validator
+                id={"0"}
+                columns={this.initialiseColumns(this.props.initialState)}
+                data={this.state.libraryInformationData}
+                frozenColumns={this.frozenLibraryInformationColumns}
+                frozenGrid={libraryInformationFrozenGridWithIDs[0].grid}
+                initialState={this.props.initialState}
+                initialGrid={libraryInformationInitialGrids[0]}
+                handleSubmission={this.handleSubmission}
+                handleSave={this.handleSave}
+                handleDownload={this.handleDownload}
+                showDocumentation={this.props.showDocumentation}
+                updateHasErrors={(_, e) => updateHasErrors(tabName, e)}
+                updateGrids={R.curry(this.updateTablesFromGridWithID)('LibraryInformation')}
+                updateWarningList={this.updateWarnings}
+                showHiddenColumns={this.props.showHiddenColumns}
+                topRowNumber={1}
+                submitDisabled={this.props.shouldDisableSubmit}
+                saveDisabled={this.props.shouldDisableSave}
+                tableType={tabName}
+                validator={this.validate}
+            />;
+
+            const plateLibraryInformation = <PlateTabContainer
+                columns={this.initialiseColumns(this.props.initialState)}
+                data={this.state.libraryInformationData}
+                frozenColumns={this.frozenLibraryInformationColumns}
+                frozenGridWithIDs={libraryInformationFrozenGridWithIDs}
+                initialState={this.props.initialState}
+                numberOfRows={this.allRowsWithSampleAndLibraryIDs.length}
+                initialGridWithIDs={libraryInformationInitialGridWithIDs}
+                handleSubmission={this.handleSubmission}
+                handleSave={this.handleSave}
+                handleDownload={this.handleDownload}
+                showDocumentation={this.props.showDocumentation}
+                showHiddenColumns={this.props.showHiddenColumns}
+                updateGridWithIDs={R.curry(this.updateTablesFromGridWithIDs)('LibraryInformation')}
+                updateWarningList={this.updateWarnings}
+                shouldDisableSubmit={this.props.shouldDisableSubmit}
+                shouldDisableSave={this.props.shouldDisableSave}
+                updateHasErrors={R.curry(updateHasErrors)(tabName)}
+                tableType={'LibraryInformation'}
+                validator={this.validate}
+            />;
 
             if (this.props.initialState.containerTypeIsPlate) {
-
-                return <PlateTabContainer
-                    columns={this.initialiseColumns(this.props.initialState)}
-                    data={this.state.libraryInformationData}
-                    frozenColumns={this.frozenLibraryInformationColumns}
-                    frozenGrids={libraryInformationFrozenGrids.map(x=>x.grid)}
-                    initialState={this.props.initialState}
-                    numberOfRows={this.allRowsWithSampleAndLibraryIDs.length}
-                    initialGrids={libraryInformationInitialGrids}
-                    handleSubmission={this.handleSubmission}
-                    handleSave={this.handleSave}
-                    handleDownload={this.handleDownload}
-                    showDocumentation={this.props.showDocumentation}
-                    showHiddenColumns={this.props.showHiddenColumns}
-                    updateGrids={R.curry(this.updateTablesFromGrids)('LibraryInformation')}
-                    updateWarningList={this.updateWarnings}
-                    shouldDisableSubmit={this.props.shouldDisableSubmit}
-                    shouldDisableSave={this.props.shouldDisableSave}
-                    updateHasErrors={R.curry(updateHasErrors)('Library Information')}
-                    tableType={'LibraryInformation'}
-                    validator={this.validate}
-                    containerStartIndex={this.props.startIndices['container']}
-                />;
-
+                return plateLibraryInformation;
             } else {
-
-                return <SF2Validator
-                    id={'Library Information'}
-                    columns={this.initialiseColumns(this.props.initialState)}
-                    data={this.state.libraryInformationData}
-                    frozenColumns={this.frozenLibraryInformationColumns}
-                    frozenGrid={libraryInformationFrozenGrids[0].grid}
-                    initialState={this.props.initialState}
-                    initialGrid={libraryInformationInitialGrids[0]}
-                    handleSubmission={this.handleSubmission}
-                    handleSave={this.handleSave}
-                    handleDownload={this.handleDownload}
-                    showDocumentation={this.props.showDocumentation}
-                    updateHasErrors={updateHasErrors}
-                    updateGrids={R.curry(this.updateTablesFromGridWithID)('LibraryInformation')}
-                    updateWarningList={this.updateWarnings}
-                    showHiddenColumns={this.props.showHiddenColumns}
-                    topRowNumber={1}
-                    submitDisabled={this.props.shouldDisableSubmit}
-                    saveDisabled={this.props.shouldDisableSave}
-                    tableType={'LibraryInformation'}
-                    validator={this.validate}
-                />;
-
+                return tubeLibraryInformation;
             }
 
-        } else {
-            return <div>unknown</div>;
         }
-
     };
 
 
@@ -493,14 +502,14 @@ class LibrarySF2 extends React.Component<LibrarySF2Props, LibrarySF2State> {
         <div>
             {
                 this.tableTypes.length < 2 &&
-                this.getChildComponent('Library Information', this.updateHasErrors)
+                this.getChildComponent('Library Information', null)
             }
             {
                 this.tableTypes.length >= 2 &&
                 <TabContainer
                     tabNames={this.getTableNames()}
                     getChildComponent={this.getChildComponent}
-                    updateSomeTabHasErrors={this.updateHasErrors}
+                    updateSomeTabHasErrors={this.props.updateShouldDisableSubmit}
                 />
             }
         </div>

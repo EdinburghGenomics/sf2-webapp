@@ -26,7 +26,7 @@ export const withDisableHandler = (WrappedSF2 : React.ComponentType<SF2Props>) :
 
     type DisableHandlerState = {
         shouldDisableSave: boolean,
-        shouldDisableSubmitForTable: Object
+        shouldDisableSubmit: boolean
     };
 
 
@@ -39,25 +39,14 @@ export const withDisableHandler = (WrappedSF2 : React.ComponentType<SF2Props>) :
             super(props);
             this.state = {
                 shouldDisableSave: true,
-                shouldDisableSubmitForTable: {}
+                shouldDisableSubmit: true
             };
         }
 
 
-        getShouldDisableSubmit = () : boolean => {
-            return R.pipe(
-                R.values,
-                R.any(R.identity)
-            )(this.state.shouldDisableSubmitForTable);
-        };
-
-
         disableSaveButton = (newTables : Tables) : void => {
-            console.log('disable save button');
             if (this.state.shouldDisableSave === false) {
-                this.setState({shouldDisableSave: true}, () => {
-                    console.log('disabling save button');
-                });
+                this.setState({shouldDisableSave: true});
             }
             this.lastSavedTables = R.clone(newTables);
         };
@@ -72,10 +61,9 @@ export const withDisableHandler = (WrappedSF2 : React.ComponentType<SF2Props>) :
         };
 
 
-        updateShouldDisableSubmit = (tableName : string, shouldDisableSubmit : boolean) : void => {
-            const newDisableSubmitForTable = R.assoc(tableName, shouldDisableSubmit, this.state.shouldDisableSubmitForTable);
-            if(!R.equals(newDisableSubmitForTable, this.state.shouldDisableSubmitForTable)) {
-                this.setState({shouldDisableSubmitForTable: newDisableSubmitForTable});
+        updateShouldDisableSubmit = (shouldDisableSubmit : boolean) : void => {
+            if(!R.equals(shouldDisableSubmit, this.state.shouldDisableSubmit)) {
+                this.setState({shouldDisableSubmit: shouldDisableSubmit});
             }
         };
 
@@ -93,7 +81,7 @@ export const withDisableHandler = (WrappedSF2 : React.ComponentType<SF2Props>) :
             return (
                 <WrappedSF2
                     shouldDisableSave={this.state.shouldDisableSave}
-                    shouldDisableSubmit={this.getShouldDisableSubmit()}
+                    shouldDisableSubmit={this.state.shouldDisableSubmit}
                     disableSaveButton={this.disableSaveButton}
                     updateSaveDisabled={this.updateSaveDisabled}
                     updateShouldDisableSubmit={this.updateShouldDisableSubmit}

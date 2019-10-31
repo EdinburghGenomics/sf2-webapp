@@ -43,11 +43,11 @@ export default class App extends React.Component<AppProps, AppState> {
         R.fromPairs
     );
 
-    
+
     getInitialState = R.omit(R.keys(this.startIndices).map(x=>x+"StartIndex"));
 
 
-    handleStage2FormSave = (saveData : Object) : void => {
+    handleFormSave = (saveData : Object) : void => {
 
         const fullSaveData = {
             queryString: this.state.queryString,
@@ -58,7 +58,7 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
 
-    handleStage2FormSaveForDownload = (saveData : Object) : void => {
+    handleFormSaveForDownload = (saveData : Object) : void => {
 
         const fullSaveData = {
             queryString: this.state.queryString,
@@ -69,7 +69,7 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
 
-    handleStage2FormSubmission = (submissionData : Object) : void => {
+    handleFormSubmission = (submissionData : Object) : void => {
 
         const fullSubmissionData = {
             queryString: this.state.queryString,
@@ -200,6 +200,7 @@ export default class App extends React.Component<AppProps, AppState> {
                 console.log('Success (initstate):', JSON.stringify(json));
                 this.initialState = this.getInitialState(json);
                 this.startIndices = this.getStartIndices(json);
+                console.log(this.startIndices);
                 this.fetchInitData(queryString);
             }).catch(error => {
                 console.error('Error (initstate):', error);
@@ -231,7 +232,7 @@ export default class App extends React.Component<AppProps, AppState> {
             json => {
                 console.log('Success (initdata):', JSON.stringify(json));
                 this.setState({'submittedAt': json.submittedAt, 'sf2': json.sf2}, () => {
-                    ReactDOM.render(<Stage2SF2Container initState={this.initialState} initialSF2Data={this.state.sf2} handleSubmission={this.handleStage2FormSubmission} handleSave={this.handleStage2FormSave} handleDownload={this.handleStage2FormSaveForDownload} startIndices={this.startIndices} />, document.getElementById('stage2Container'));
+                    ReactDOM.render(<Stage2SF2Container initState={this.initialState} initialSF2Data={this.state.sf2} handleSubmission={this.handleFormSubmission} handleSave={this.handleFormSave} handleDownload={this.handleFormSaveForDownload} startIndices={this.startIndices} />, document.getElementById('stage2Container'));
                 });
             }).catch(error => {
                 console.error('Error (initdata):', error);

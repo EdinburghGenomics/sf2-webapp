@@ -2,7 +2,7 @@
 // Helper functions for the SF2 webapp demo
 import * as R from 'ramda';
 
-import type {Columns, Grid, Row} from '../sf2datasheet/types/flowTypes';
+import type { Columns, Grid, Row } from '../sf2datasheet/types/flowTypes';
 import type { Grids, Table, Tables, SF2Data, AbbreviatedStage1FormState, Stage1FormState } from '../types/flowTypes';
 
 
@@ -292,9 +292,11 @@ export const getRepeatedKeys = (colIndex: number, grid : Grid) : Array<string> =
 
 export const getRowID = (rowIndex : number, colIndex : number, grid : Grid) : string => {
 
-    return R.isNil(grid) ?
-        (rowIndex + 1).toString() :
-        grid[rowIndex][colIndex].value;
+    if (R.isNil(grid) || R.isNil(grid[rowIndex])) {
+        return (rowIndex + 1).toString();
+    } else {
+        return grid[rowIndex][colIndex].value;
+    }
 
 };
 
@@ -349,15 +351,15 @@ export const getInitialInformationTableGrids = (initialTables : Tables, frozenGr
 
 export const updateRow = (currentWellOffset : number, row : Row) : Row => {
 
-        const newWellIndex = row.wellIndex - currentWellOffset;
-        const newWellID = calculateWellID(newWellIndex-1);
+    const newWellIndex = row.wellIndex - currentWellOffset;
+    const newWellID = calculateWellID(newWellIndex-1);
 
-        return R.pipe(
-            R.assoc('wellIndex', newWellIndex),
-            R.assoc('egWellID', newWellID)
-        )(row);
+    return R.pipe(
+        R.assoc('wellIndex', newWellIndex),
+        R.assoc('egWellID', newWellID)
+    )(row);
 
-    };
+};
 
 
 export const splitRows = (wellsPerPlate : number, rows : Grid) : Grids => {
@@ -388,25 +390,17 @@ export const splitRows = (wellsPerPlate : number, rows : Grid) : Grids => {
 };
 
 
-export const calculateFrozenGrids = (allRowsWithIDs : Object, containerTypeIsPlate : boolean, getRowsToReturn : (Array<Object>) => Array<Object>, projectID : string) : Grids => {
-
-    const getGridToReturn = (grid, gridIndex) => {
-        const id = containerTypeIsPlate ? generatePlateID(projectID, gridIndex) : gridIndex.toString();
-        return {id: id, grid: grid}
-    };
+export const calculateFrozenGrids = (allRowsWithIDs : Object, containerTypeIsPlate : boolean, getRowsToReturn : (Array<Object>) => Array<Object>) : Grids => {
 
     let frozenGrids = [];
 
     if(containerTypeIsPlate) {
         frozenGrids = R.pipe(
-                R.curry(splitRows)(96),
-                R.map(getRowsToReturn)
-            )(allRowsWithIDs).map(getGridToReturn);
+            R.curry(splitRows)(96),
+            R.map(getRowsToReturn)
+        )(allRowsWithIDs);
     } else {
-        frozenGrids = [R.pipe(
-                getRowsToReturn,
-                x => getGridToReturn(x, 0)
-            )(allRowsWithIDs)];
+        frozenGrids = [getRowsToReturn(allRowsWithIDs)];
     }
 
     return frozenGrids;
@@ -447,6 +441,7 @@ export const getAllRowsWithSampleAndLibraryIDs = (initialState, startIndices) =>
     );
 
     const unpooledSampleRows = unpooledSampleIndices.map(i => {
+
         const egIDIndex = calculateEGIDIndex(i);
         const wellIndex = i - unpooledSubmissionStart + 1;
         const unpooledCell = {
@@ -456,7 +451,9 @@ export const getAllRowsWithSampleAndLibraryIDs = (initialState, startIndices) =>
             'wellIndex': wellIndex,
             'egWellID': calculateWellID(wellIndex-1)
         };
+
         return(unpooledCell);
+
     });
 
     const poolIndices = R.range(
@@ -502,4 +499,33 @@ export const getAllRowsWithSampleAndLibraryIDs = (initialState, startIndices) =>
 export const generateContainerOffset = containerStartIndex => {
     return R.isNil(containerStartIndex) ? 0 :
         parseInt(containerStartIndex, 10) - 1;
+};
+
+
+export const addContainerIDs = (containerIDs, grids) => {
+    return R.zip(containerIDs, grids)
+        .map(x => {return{id: x[0], grid: x[1]}});
+};
+
+
+export const getContainerIDs = (frozenGrids, containerStartIndex, containerTypeIsPlate, projectID) => {
+
+    const getContainerID = (grid, gridIndex) => {
+        const adjustedGridIndex = gridIndex + parseInt(containerStartIndex, 10) - 1;
+        return containerTypeIsPlate ? generatePlateID(projectID, adjustedGridIndex) : gridIndex.toString();
+    };
+
+    return frozenGrids.map(getContainerID);
+
+};
+
+
+export const getContainerIDsFromSF2Data = (tableType, sf2Data) => {
+
+    return R.pipe(
+        R.find(R.propEq('name', tableType)),
+        R.prop('grids'),
+        R.map(R.prop('id'))
+    )(sf2Data.frozenGrids);
+
 };

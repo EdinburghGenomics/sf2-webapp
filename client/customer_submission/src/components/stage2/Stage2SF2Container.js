@@ -58,6 +58,8 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
     constructor (props : Object) {
         super(props);
 
+        console.log(props);
+
         if (!R.isNil(this.props.initState)) {
             this.state = inflateStage1FormState(this.props.initState);
         }

@@ -15,7 +15,7 @@ import TabContainer from '../../hoc/TabContainer';
 type LibrarySF2TabContainerProps = {
 //     columns: Columns,
 //     frozenColumns: Columns,
-//     initialGrids?: Array<Grid>,
+//     initialGridWithIDs?: Array<Grid>,
 //     initialState: Stage1FormState,
 //     handleSubmission: Array<Grid> => void,
 //     handleSave: Array<Grid> => void,
@@ -44,16 +44,16 @@ export default class LibrarySF2TabContainer extends React.Component<LibrarySF2Ta
 
         // this.maxRowsPerGrid = 96;
         //
-        // if(this.props.initialGrids === undefined || R.equals(this.props.initialGrids, [])) {
-        //     this.grids = initialiseGrids(this.props.initialState.numberOfSamplesOrLibraries, this.maxRowsPerGrid);
+        // if(this.props.initialGridWithIDs === undefined || R.equals(this.props.initialGridWithIDs, [])) {
+        //     this.gridWithIDs = initialiseGrids(this.props.initialState.numberOfSamplesOrLibraries, this.maxRowsPerGrid);
         // } else {
-        //     this.grids = this.props.initialGrids
+        //     this.gridWithIDs = this.props.initialGridWithIDs
         // }
 
         this.state = {
             activeTab: 0,
             errors: new Map([[0, true], [1, true], [2, true]]),
-            // errors: new Map(this.grids.map((grid, gridIndex) => {return [gridIndex, true]})),
+            // errors: new Map(this.gridWithIDs.map((grid, gridIndex) => {return [gridIndex, true]})),
             shouldDisableSubmit: true,
             shouldDisableSave: true
         };
@@ -133,11 +133,11 @@ export default class LibrarySF2TabContainer extends React.Component<LibrarySF2Ta
                 // columns={this.props.columns}
                 // frozenColumns={this.props.frozenColumns}
                 // initialState={this.props.initialState}
-                // initialGrid={this.grids[tabIndex]}
+                // initialGrid={this.gridWithIDs[tabIndex]}
                 // handleSubmission={this.handleSubmission}
                 // handleSave={this.handleSave}
                 // updateHasErrors={this.updateHasErrors}
-                // updateGrids={this.updateGrids}
+                // updateGridWithIDs={this.updateGridWithIDs}
                 // showHiddenColumns={this.props.showHiddenColumns}
                 // topRowNumber={(tabIndex * this.maxRowsPerGrid) + 1}
                 // submitDisabled={this.state.shouldDisableSubmit}

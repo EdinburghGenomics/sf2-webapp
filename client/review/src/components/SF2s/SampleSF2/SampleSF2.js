@@ -18,7 +18,9 @@ import {
     getInitialTables,
     getInitialInformationTableGrids,
     calculateFrozenGrids,
-    getAllRowsWithSampleAndLibraryIDs
+    getAllRowsWithSampleAndLibraryIDs,
+    addContainerIDs,
+    getContainerIDs
 } from '../../../functions/lib';
 
 
@@ -28,7 +30,7 @@ import { withDownloadHandler } from "../../hoc/DownloadHandler";
 import { withShowDocumentationHandler } from "../../hoc/ShowDocumentationHandler";
 
 
-import type { SF2Data, Table, Tables, Stage1FormState, GridWithID, Grids, Warnings } from '../../../types/flowTypes';
+import type { SF2Data, Table, Tables, Stage1FormState, GridWithID, GridWithIDs, Warnings } from '../../../types/flowTypes';
 
 
 type SampleSF2Props = {
@@ -51,10 +53,9 @@ type SampleSF2Props = {
 class SampleSF2 extends React.Component<SampleSF2Props> {
     static defaultProps = SF2DefaultProps;
     tables = [];
-    frozenGrids = [];
     tableTypes = ['SampleInformation'];
+    frozenGrids = [];
     formType = 'SampleSF2';
-    errors = {};
 
     frozenSampleInformationColumns = this.props.initialState.containerTypeIsPlate ?
         frozenSampleInformationColumns.concat([{value: 'Well ID', width: 100}]) :
@@ -76,12 +77,20 @@ class SampleSF2 extends React.Component<SampleSF2Props> {
         const sampleInformationFrozenGrids = calculateFrozenGrids(
             this.allRowsWithSampleAndLibraryIDs,
             this.props.initialState.containerTypeIsPlate,
-            this.getSampleInformationFrozenGridRowsToReturn,
+            this.getSampleInformationFrozenGridRowsToReturn
+        );
+
+        const containerIDs = getContainerIDs(
+            sampleInformationFrozenGrids,
+            this.props.startIndices.container,
+            this.props.initialState.containerTypeIsPlate,
             this.props.initialState.projectID
         );
 
+        const sampleInformationFrozenGridWithIDs = addContainerIDs(containerIDs, sampleInformationFrozenGrids);
+
         this.frozenGrids = [
-            {name: 'SampleInformation', grids: sampleInformationFrozenGrids}
+            {name: 'SampleInformation', grids: sampleInformationFrozenGridWithIDs}
         ];
 
     };
@@ -108,20 +117,12 @@ class SampleSF2 extends React.Component<SampleSF2Props> {
 
 
     handleDownload = () : void => {
-        this.props.handleDownload(
-            getSF2(this.formType, this.tables)
-        );
+        this.props.handleDownload(getSF2(this.formType, this.tables, this.frozenGrids));
     };
 
 
-    updateHasErrors = (tableName : string, hasErrors : boolean) : void => {
-        this.props.updateShouldDisableSubmit(tableName, hasErrors);
-        this.errors[tableName] = hasErrors;
-    };
-
-
-    makeTableFromGrids = (grids : Grids) : Table => {
-        return {name: 'SampleInformation', grids: grids};
+    makeTableFromGridWithIDs = (gridWithIDs : GridWithIDs) : Table => {
+        return {name: 'SampleInformation', grids: gridWithIDs};
     };
 
 
@@ -140,7 +141,7 @@ class SampleSF2 extends React.Component<SampleSF2Props> {
     updateTablesFromGridWithID = R.pipe(this.makeTableFromGridWithID, this.updateTables);
 
 
-    updateTablesFromGrids = R.pipe(this.makeTableFromGrids, this.updateTables);
+    updateTablesFromGridWithIDs = R.pipe(this.makeTableFromGridWithIDs, this.updateTables);
 
 
     updateWarnings = (warnings : Warnings) : void => {
@@ -164,20 +165,24 @@ class SampleSF2 extends React.Component<SampleSF2Props> {
             'SampleInformation'
         );
 
-        const sampleInformationFrozenGrids = this.frozenGrids[0].grids.map(x=>x.grid);
+        const sampleInformationFrozenGridWithIDs = this.frozenGrids[0].grids;
+
+        const containerIDs = sampleInformationFrozenGridWithIDs.map(x=>x.id);
+
+        const initialGridWithIDs = addContainerIDs(containerIDs, initialGrids);
 
         const tubeSampleInformation = <SF2Validator
             id={"0"}
             columns={sampleInformationColumns}
             frozenColumns={frozenSampleInformationColumns}
-            frozenGrid={sampleInformationFrozenGrids[0]}
+            frozenGrid={sampleInformationFrozenGridWithIDs[0].grid}
             initialState={this.props.initialState}
             initialGrid={initialGrids[0]}
             handleSubmission={this.handleSubmission}
             handleSave={this.handleSave}
             handleDownload={this.handleDownload}
             showDocumentation={this.props.showDocumentation}
-            updateHasErrors={R.curry(this.updateHasErrors)('SampleInformation')}
+            updateHasErrors={(_,e) => this.props.updateShouldDisableSubmit(e)}
             updateGrids={this.updateTablesFromGridWithID}
             updateWarningList={this.updateWarnings}
             showHiddenColumns={this.props.showHiddenColumns}
@@ -190,22 +195,21 @@ class SampleSF2 extends React.Component<SampleSF2Props> {
         const plateSampleInformation = <PlateTabContainer
             columns={sampleInformationColumns}
             frozenColumns={this.frozenSampleInformationColumns}
-            frozenGrids={sampleInformationFrozenGrids}
+            frozenGridWithIDs={sampleInformationFrozenGridWithIDs}
             initialState={this.props.initialState}
             numberOfRows={this.allRowsWithSampleAndLibraryIDs.length}
-            initialGrids={initialGrids}
+            initialGridWithIDs={initialGridWithIDs}
             handleSubmission={this.handleSubmission}
             handleSave={this.handleSave}
             handleDownload={this.handleDownload}
             showDocumentation={this.props.showDocumentation}
             showHiddenColumns={this.props.showHiddenColumns}
-            updateGrids={this.updateTablesFromGrids}
+            updateGridWithIDs={this.updateTablesFromGridWithIDs}
             updateWarningList={this.updateWarnings}
             shouldDisableSubmit={this.props.shouldDisableSubmit}
             shouldDisableSave={this.props.shouldDisableSave}
-            updateHasErrors={R.curry(this.updateHasErrors)('SampleInformation')}
+            updateHasErrors={this.props.updateShouldDisableSubmit}
             tableType={this.tableTypes[0]}
-            containerStartIndex={this.props.startIndices['container']}
         />;
 
         if (this.props.initialState.containerTypeIsPlate) {

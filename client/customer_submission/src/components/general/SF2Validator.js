@@ -62,11 +62,21 @@ export default class SF2Validator extends React.Component<SF2ValidatorProps, Sta
 
 
     componentDidMount() {
-        this.checkGridForErrors(true);
+        this.checkGridForErrors();
     }
 
 
-    checkGridForErrors = (initialising : boolean) : void => {
+    updateParentErrors = () => {
+        // tell the parent component when the error status changes
+        if(this.state.errors.length === 0) {
+            this.props.updateHasErrors(this.props.id, false);
+        } else if(this.state.errors.length > 0) {
+            this.props.updateHasErrors(this.props.id, true);
+        }
+    };
+
+
+    checkGridForErrors = () : void => {
 
         // check the grid for errors
         const validationResults = this.getValidationResults();
@@ -74,22 +84,18 @@ export default class SF2Validator extends React.Component<SF2ValidatorProps, Sta
         const errors = validationResults.errors;
         const warnings = validationResults.warnings;
 
-        // tell the parent component when the error status changes
-        if(errors.length === 0 && (this.state.errors.length > 0 || initialising === true)) {
-            this.props.updateHasErrors(this.props.id, false);
-        } else if(errors.length > 0 && this.state.errors.length === 0) {
-            this.props.updateHasErrors(this.props.id, true);
-        }
-
         if (!R.equals(errors, this.state.errors)) {
-            this.setState({errors: errors});
+            this.setState({errors: errors}, this.updateParentErrors);
+        } else {
+            this.updateParentErrors();
         }
 
         if (!R.equals(warnings, this.state.warnings)) {
-            this.setState({warnings: warnings});
-            if(!R.isNil(this.props.updateWarningList)) {
-                this.props.updateWarningList(warnings);
-            }
+            this.setState({warnings: warnings}, () => {
+                if(!R.isNil(this.props.updateWarningList)) {
+                    this.props.updateWarningList(warnings);
+                }
+            })
         }
 
     };
@@ -111,7 +117,7 @@ export default class SF2Validator extends React.Component<SF2ValidatorProps, Sta
 
         this.grid = newGrid;
         this.updateParentGrids();
-        this.checkGridForErrors(false);
+        this.checkGridForErrors();
 
     };
 
@@ -185,6 +191,7 @@ export default class SF2Validator extends React.Component<SF2ValidatorProps, Sta
                 });
 
                 errors = errors.concat(rowErrors);
+
             });
 
             // add warnings for duplicate IDs if necessary

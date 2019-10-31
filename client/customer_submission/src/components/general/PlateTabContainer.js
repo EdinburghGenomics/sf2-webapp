@@ -6,24 +6,23 @@ import SF2Validator from './SF2Validator';
 import TabContainer from '../hoc/TabContainer';
 
 import {
-    generatePlateID,
     getDuplicateWarnings,
     getRepeatedKeys,
     initialiseGrids,
-    generateContainerOffset
+    addContainerIDs
 } from '../../functions/lib';
 
-import type { Grid, StringMap } from '../../sf2datasheet/types/flowTypes'
-import type { Grids, GridWithID, Warnings, Stage1FormState } from '../../types/flowTypes'
-import type { Columns } from '../../sf2datasheet/types/flowTypes'
+import type { Grid, StringMap } from '../../sf2datasheet/types/flowTypes';
+import type { GridWithID, GridWithIDs, Warnings, Stage1FormState } from '../../types/flowTypes';
+import type { Columns } from '../../sf2datasheet/types/flowTypes';
 
 
 type PlateTabContainerProps = {
     columns: Columns,
     data?: StringMap,
     frozenColumns: Columns,
-    frozenGrids: Grids,
-    initialGrids?: Grids,
+    frozenGridWithIDs: GridWithIDs,
+    initialGridWithIDs?: GridWithIDs,
     initialState: Stage1FormState,
     numberOfRows: number,
     handleSubmission: () => void,
@@ -31,14 +30,13 @@ type PlateTabContainerProps = {
     handleDownload: () => void,
     showDocumentation: () => {},
     showHiddenColumns: boolean,
-    updateGrids: Grids => void,
+    updateGridWithIDs: GridWithIDs => void,
     updateWarningList?: Warnings => void,
     shouldDisableSubmit: boolean,
     shouldDisableSave: boolean,
     updateHasErrors: boolean => void,
     tableType: string,
-    validator?: (Array<string>, Grid) => Array<string>,
-    containerStartIndex?: string
+    validator?: (Array<string>, Grid) => Array<string>
 };
 
 
@@ -49,10 +47,10 @@ type PlateTabContainerState = {
 
 export default class PlateTabContainer extends React.Component<PlateTabContainerProps, PlateTabContainerState> {
     maxRowsPerGrid: number;
-    grids: Array<GridWithID>;
+    gridWithIDs: GridWithIDs;
 
 
-    grids = [];
+    gridWithIDs = [];
 
 
     constructor (props : Object) {
@@ -60,25 +58,13 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
 
         this.maxRowsPerGrid = 96;
 
-        let initialGrids = [];
-
-        if(this.props.initialGrids === undefined || R.equals(this.props.initialGrids, [])) {
-            initialGrids = initialiseGrids(this.props.numberOfRows, this.maxRowsPerGrid);
+        if(this.props.initialGridWithIDs === undefined || R.equals(this.props.initialGridWithIDs, [])) {
+            const initialGrids = initialiseGrids(this.props.numberOfRows, this.maxRowsPerGrid);
+            const initialContainerIDs = R.map(R.prop('id'), this.props.frozenGridWithIDs);
+            this.gridWithIDs = addContainerIDs(initialContainerIDs, initialGrids);
         } else {
-            initialGrids = this.props.initialGrids;
+            this.gridWithIDs = this.props.initialGridWithIDs;
         }
-
-        const generatePlateIDForGridIndex = (gridIndex, containerOffset) => {
-           return(
-               generatePlateID(this.props.initialState.projectID, gridIndex + containerOffset)
-           );
-        };
-
-        const containerOffset = generateContainerOffset(this.props.containerStartIndex);
-
-        const plateIDs = initialGrids.map((_, ix) => {return generatePlateIDForGridIndex(ix, containerOffset)});
-
-        this.grids = initialGrids.map((x, ix) => {return{'id': plateIDs[ix] , 'grid': x}});
 
         this.state = {
             warnings: []
@@ -87,11 +73,16 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
     };
 
 
-    getNewWarnings = (columns : Columns, grids : Grids, frozenGrids : Grids) : Warnings => {
+    getNewWarnings = (columns : Columns, grids : GridWithIDs, frozenGrids : GridWithIDs) : Warnings => {
 
-        const gridArrays = grids.map(g => g.grid);
-        const overallGrid = R.unnest(gridArrays);
-        const overallFrozenGrid = R.unnest(frozenGrids);
+        const getOverallGrid = R.pipe(
+            R.pluck('grid'),
+            R.unnest
+        );
+
+        const overallGrid = getOverallGrid(grids);
+        const overallFrozenGrid = getOverallGrid(frozenGrids);
+
         const repeatedKeys = getRepeatedKeys(0, overallGrid);
 
         return getDuplicateWarnings(
@@ -107,17 +98,17 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
 
     updateGrids = (gridForTab : GridWithID) : void => {
 
-        const indexToUpdate = R.findIndex(R.propEq('id', gridForTab.id))(this.grids);
+        const indexToUpdate = R.findIndex(R.propEq('id', gridForTab.id))(this.gridWithIDs);
 
-        this.grids = R.update(
+        this.gridWithIDs = R.update(
             indexToUpdate,
             gridForTab,
-            this.grids
+            this.gridWithIDs
         );
 
-        this.props.updateGrids(this.grids);
+        this.props.updateGridWithIDs(this.gridWithIDs);
 
-        const newWarnings = this.getNewWarnings(this.props.columns, this.grids, this.props.frozenGrids);
+        const newWarnings = this.getNewWarnings(this.props.columns, this.gridWithIDs, this.props.frozenGridWithIDs);
 
         if(!R.equals(this.state.warnings, newWarnings)) {
             this.setState({warnings: newWarnings});
@@ -142,10 +133,14 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
 
     getChildComponent = (tabName : string, updateHasErrors : (string, boolean) => void) : Object => {
 
-        const tabIndex = parseInt(R.match(/\d+$/, tabName), 10) -
-            generateContainerOffset(this.props.containerStartIndex) - 1;
+        const getGridWithMatchingID = (id, grids) => {
+            return R.find(R.propEq('id', id))(grids).grid;
+        };
 
-        if(R.isNil(this.grids) || R.isNil(this.props.frozenGrids)) {
+        const frozenGrid = getGridWithMatchingID(tabName, this.props.frozenGridWithIDs);
+        const grid = getGridWithMatchingID(tabName, this.gridWithIDs);
+
+        if(R.isNil(this.gridWithIDs) || R.isNil(this.props.frozenGridWithIDs)) {
 
             return <div>No grid to display</div>
 
@@ -158,8 +153,8 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
                     data={this.props.data}
                     frozenColumns={this.props.frozenColumns}
                     initialState={this.props.initialState}
-                    frozenGrid={this.props.frozenGrids[tabIndex]}
-                    initialGrid={this.grids[tabIndex].grid}
+                    frozenGrid={frozenGrid}
+                    initialGrid={grid}
                     handleSubmission={this.handleSubmission}
                     handleSave={this.handleSave}
                     handleDownload={this.props.handleDownload}
@@ -181,16 +176,10 @@ export default class PlateTabContainer extends React.Component<PlateTabContainer
     };
 
 
-    generatePlateIDFromGridIndex = (_, gridIndex) => {
-        const updatedGridIndex = gridIndex + generateContainerOffset(this.props.containerStartIndex);
-        return(generatePlateID(this.props.initialState.projectID, updatedGridIndex));
-    };
-
-
     render() {
         return(
             <TabContainer
-                tabNames={this.grids.map(this.generatePlateIDFromGridIndex)}
+                tabNames={R.map(R.prop('id'), this.gridWithIDs)}
                 getChildComponent={this.getChildComponent}
                 updateSomeTabHasErrors={this.props.updateHasErrors}
             />

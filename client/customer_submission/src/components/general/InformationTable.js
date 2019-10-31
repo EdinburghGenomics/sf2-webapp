@@ -70,13 +70,13 @@ const InformationTable = (props : InformationTableProps) => {
             frozenColumns={props.frozenColumns}
             initialState={props.initialState}
             numberOfRows={props.numberOfRows}
-            initialGrids={initialGrids}
+            initialGridWithIDs={initialGrids}
             handleSubmission={props.handleSubmission}
             handleSave={props.handleSave}
             handleDownload={props.handleDownload}
             showDocumentation={props.showDocumentation}
             showHiddenColumns={props.showHiddenColumns}
-            updateGrids={updateGrids}
+            updateGridWithIDs={updateGrids}
             shouldDisableSubmit={props.shouldDisableSubmit}
             shouldDisableSave={props.shouldDisableSave}
             updateHasErrors={updateHasErrors}
