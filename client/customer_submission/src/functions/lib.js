@@ -519,13 +519,3 @@ export const getContainerIDs = (frozenGrids, containerStartIndex, containerTypeI
 
 };
 
-
-export const getContainerIDsFromSF2Data = (tableType, sf2Data) => {
-
-    return R.pipe(
-        R.find(R.propEq('name', tableType)),
-        R.prop('grids'),
-        R.map(R.prop('id'))
-    )(sf2Data.frozenGrids);
-
-};

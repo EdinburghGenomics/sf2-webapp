@@ -32,7 +32,6 @@ export const withShowDocumentationHandler = (WrappedSF2 : React.ComponentType<SF
 
 
         showDocumentation = () : void => {
-            console.log('here');
             this.setState({
                 documentationModalActive: true
             });

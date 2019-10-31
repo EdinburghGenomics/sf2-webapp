@@ -555,8 +555,6 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
 
     renderNumberOf10XSamplesInPoolsInputs = () => {
         if(this.state.sf2HasPools === true && this.state.numberOfPools > 0) {
-            console.log(parseInt(this.state.numberOfPools, 10));
-            console.log(typeof(this.state.numberOfPools));
             return(
                 <FormGroup>
                     {R.range(1, parseInt(this.state.numberOfPools, 10) + 1).map(
@@ -660,8 +658,6 @@ export default class Stage1Form extends React.Component<Stage1FormProps, Stage1F
 
     renderNumberOfLibrariesInPoolsInputs = () => {
         if(this.state.sf2HasPools === true && this.state.numberOfPools > 0) {
-            console.log(parseInt(this.state.numberOfPools, 10));
-            console.log(typeof(this.state.numberOfPools));
             return(
                 <FormGroup>
                     {R.range(1, parseInt(this.state.numberOfPools, 10) + 1).map(
