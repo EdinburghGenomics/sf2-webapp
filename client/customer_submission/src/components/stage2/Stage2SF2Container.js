@@ -107,24 +107,7 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
                         startIndices={this.props.startIndices}
                     />
                 }
-                {this.state.sf2type === 'Library_old' &&
-                    <LibrarySF2Old
-                        initialState={this.state}
-                        initialSF2Data={this.initialSF2Data}
-                        handleSubmission={this.handleSubmission}
-                        handleSave={this.handleSave}
-                        showHiddenColumns={false}
-                    />
-                }
-                {this.state.sf2type === '10X_old' &&
-                    <TenXSF2Old
-                        initialState={this.state}
-                        initialSF2Data={this.initialSF2Data}
-                        handleSubmission={this.handleSubmission}
-                        handleSave={this.handleSave}
-                        showHiddenColumns={false}
-                    />
-                }
+             
                 {this.state.sf2type === '10X' &&
                     <TenXSF2
                         initialState={this.state}
