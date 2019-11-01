@@ -1,0 +1,1976 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the stage1 form correctly with no arguments 1`] = `
+<Stage1Form
+  setFormUrl={[Function]}
+>
+  <div
+    style={
+      Object {
+        "maxWidth": "640px",
+      }
+    }
+  >
+    <h2>
+      Project Setup
+    </h2>
+    <br />
+    <Form
+      onSubmit={[Function]}
+      tag="form"
+    >
+      <form
+        className=""
+        onSubmit={[Function]}
+      >
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="projectID"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="projectID"
+              >
+                Project ID
+              </label>
+            </Label>
+            <Input
+              autoComplete="off"
+              id="projectID"
+              name="projectID"
+              onChange={[Function]}
+              onInput={[Function]}
+              placeholder="Enter the ID for the new project here"
+              style={Object {}}
+              type="text"
+              value=""
+            >
+              <input
+                autoComplete="off"
+                className="form-control"
+                id="projectID"
+                name="projectID"
+                onChange={[Function]}
+                onInput={[Function]}
+                placeholder="Enter the ID for the new project here"
+                style={Object {}}
+                type="text"
+                value=""
+              />
+            </Input>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="sf2Type"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="sf2Type"
+              >
+                SF2 Type
+              </label>
+            </Label>
+            <Input
+              id="sf2TypeSelector"
+              name="sf2Type"
+              onChange={[Function]}
+              type="select"
+            >
+              <select
+                className="form-control"
+                id="sf2TypeSelector"
+                name="sf2Type"
+                onChange={[Function]}
+              >
+                <option
+                  value="Sample"
+                >
+                  Sample
+                </option>
+                <option
+                  value="Library"
+                >
+                  Library
+                </option>
+                <option
+                  value="10X"
+                >
+                  10X
+                </option>
+              </select>
+            </Input>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+              >
+                Sample SF2 Options
+              </label>
+            </Label>
+            <FormGroup
+              tag="div"
+            >
+              <div
+                className="position-relative form-group"
+              >
+                <Label
+                  for="containerType"
+                  tag="label"
+                  widths={
+                    Array [
+                      "xs",
+                      "sm",
+                      "md",
+                      "lg",
+                      "xl",
+                    ]
+                  }
+                >
+                  <label
+                    className=""
+                    htmlFor="containerType"
+                  >
+                    Container Type
+                  </label>
+                </Label>
+                <Input
+                  id="containerType"
+                  name="containerType"
+                  onChange={[Function]}
+                  type="select"
+                >
+                  <select
+                    className="form-control"
+                    id="containerType"
+                    name="containerType"
+                    onChange={[Function]}
+                  >
+                    <option
+                      value="Tube"
+                    >
+                      Tube
+                    </option>
+                    <option
+                      value="Plate"
+                    >
+                      Plate
+                    </option>
+                  </select>
+                </Input>
+              </div>
+            </FormGroup>
+            <FormGroup
+              tag="div"
+            >
+              <div
+                className="position-relative form-group"
+              >
+                <Label
+                  for="numSamplesOrLibraries"
+                  tag="label"
+                  widths={
+                    Array [
+                      "xs",
+                      "sm",
+                      "md",
+                      "lg",
+                      "xl",
+                    ]
+                  }
+                >
+                  <label
+                    className=""
+                    htmlFor="numSamplesOrLibraries"
+                  >
+                    Number of samples
+                  </label>
+                </Label>
+                <Input
+                  id="numSamplesOrLibraries"
+                  min="0"
+                  name="numSamplesOrLibraries"
+                  onChange={[Function]}
+                  onInput={[Function]}
+                  placeholder="Enter the number of samples here"
+                  step="1"
+                  style={Object {}}
+                  type="number"
+                  value=""
+                >
+                  <input
+                    className="form-control"
+                    id="numSamplesOrLibraries"
+                    min="0"
+                    name="numSamplesOrLibraries"
+                    onChange={[Function]}
+                    onInput={[Function]}
+                    placeholder="Enter the number of samples here"
+                    step="1"
+                    style={Object {}}
+                    type="number"
+                    value=""
+                  />
+                </Input>
+              </div>
+            </FormGroup>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="comments"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="comments"
+              >
+                Comments
+              </label>
+            </Label>
+            <Input
+              id="comments"
+              name="comments"
+              type="textarea"
+            >
+              <textarea
+                className="form-control"
+                id="comments"
+                name="comments"
+              />
+            </Input>
+          </div>
+        </FormGroup>
+        <br />
+        <Button
+          color="secondary"
+          tag="button"
+        >
+          <button
+            className="btn btn-secondary"
+            onClick={[Function]}
+          >
+            Submit
+          </button>
+        </Button>
+        <span>
+             
+        </span>
+        <Button
+          color="secondary"
+          disabled={true}
+          tag="button"
+        >
+          <button
+            className="btn btn-secondary disabled"
+            disabled={true}
+            onClick={[Function]}
+          >
+            Reissue
+          </button>
+        </Button>
+      </form>
+    </Form>
+  </div>
+</Stage1Form>
+`;
+
+exports[`shows a visual warning when the form is submitted with an empty number of Samples or Libraries 1`] = `
+<Stage1Form
+  setFormUrl={[Function]}
+>
+  <div
+    style={
+      Object {
+        "maxWidth": "640px",
+      }
+    }
+  >
+    <h2>
+      Project Setup
+    </h2>
+    <br />
+    <Form
+      onSubmit={[Function]}
+      tag="form"
+    >
+      <form
+        className=""
+        onSubmit={[Function]}
+      >
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="projectID"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="projectID"
+              >
+                Project ID
+              </label>
+            </Label>
+            <Input
+              autoComplete="off"
+              id="projectID"
+              name="projectID"
+              onChange={[Function]}
+              onInput={[Function]}
+              placeholder="Enter the ID for the new project here"
+              style={
+                Object {
+                  "backgroundColor": "#f8d7da",
+                }
+              }
+              type="text"
+              value=""
+            >
+              <input
+                autoComplete="off"
+                className="form-control"
+                id="projectID"
+                name="projectID"
+                onChange={[Function]}
+                onInput={[Function]}
+                placeholder="Enter the ID for the new project here"
+                style={
+                  Object {
+                    "backgroundColor": "#f8d7da",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </Input>
+            <span
+              style={
+                Object {
+                  "color": "#f83244",
+                }
+              }
+            >
+              Project ID is a required field, and must take the form 12345_Surname_Forename.
+            </span>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="sf2Type"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="sf2Type"
+              >
+                SF2 Type
+              </label>
+            </Label>
+            <Input
+              id="sf2TypeSelector"
+              name="sf2Type"
+              onChange={[Function]}
+              type="select"
+            >
+              <select
+                className="form-control"
+                id="sf2TypeSelector"
+                name="sf2Type"
+                onChange={[Function]}
+              >
+                <option
+                  value="Sample"
+                >
+                  Sample
+                </option>
+                <option
+                  value="Library"
+                >
+                  Library
+                </option>
+                <option
+                  value="10X"
+                >
+                  10X
+                </option>
+              </select>
+            </Input>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+              >
+                Sample SF2 Options
+              </label>
+            </Label>
+            <FormGroup
+              tag="div"
+            >
+              <div
+                className="position-relative form-group"
+              >
+                <Label
+                  for="containerType"
+                  tag="label"
+                  widths={
+                    Array [
+                      "xs",
+                      "sm",
+                      "md",
+                      "lg",
+                      "xl",
+                    ]
+                  }
+                >
+                  <label
+                    className=""
+                    htmlFor="containerType"
+                  >
+                    Container Type
+                  </label>
+                </Label>
+                <Input
+                  id="containerType"
+                  name="containerType"
+                  onChange={[Function]}
+                  type="select"
+                >
+                  <select
+                    className="form-control"
+                    id="containerType"
+                    name="containerType"
+                    onChange={[Function]}
+                  >
+                    <option
+                      value="Tube"
+                    >
+                      Tube
+                    </option>
+                    <option
+                      value="Plate"
+                    >
+                      Plate
+                    </option>
+                  </select>
+                </Input>
+              </div>
+            </FormGroup>
+            <FormGroup
+              tag="div"
+            >
+              <div
+                className="position-relative form-group"
+              >
+                <Label
+                  for="numSamplesOrLibraries"
+                  tag="label"
+                  widths={
+                    Array [
+                      "xs",
+                      "sm",
+                      "md",
+                      "lg",
+                      "xl",
+                    ]
+                  }
+                >
+                  <label
+                    className=""
+                    htmlFor="numSamplesOrLibraries"
+                  >
+                    Number of samples
+                  </label>
+                </Label>
+                <Input
+                  id="numSamplesOrLibraries"
+                  min="0"
+                  name="numSamplesOrLibraries"
+                  onChange={[Function]}
+                  onInput={[Function]}
+                  placeholder="Enter the number of samples here"
+                  step="1"
+                  style={
+                    Object {
+                      "backgroundColor": "#f8d7da",
+                    }
+                  }
+                  type="number"
+                  value=""
+                >
+                  <input
+                    className="form-control"
+                    id="numSamplesOrLibraries"
+                    min="0"
+                    name="numSamplesOrLibraries"
+                    onChange={[Function]}
+                    onInput={[Function]}
+                    placeholder="Enter the number of samples here"
+                    step="1"
+                    style={
+                      Object {
+                        "backgroundColor": "#f8d7da",
+                      }
+                    }
+                    type="number"
+                    value=""
+                  />
+                </Input>
+                <span
+                  style={
+                    Object {
+                      "color": "#f83244",
+                    }
+                  }
+                >
+                   is a required field, and must be a positive integer.
+                </span>
+              </div>
+            </FormGroup>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="comments"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="comments"
+              >
+                Comments
+              </label>
+            </Label>
+            <Input
+              id="comments"
+              name="comments"
+              type="textarea"
+            >
+              <textarea
+                className="form-control"
+                id="comments"
+                name="comments"
+              />
+            </Input>
+          </div>
+        </FormGroup>
+        <br />
+        <Button
+          color="secondary"
+          tag="button"
+        >
+          <button
+            className="btn btn-secondary"
+            onClick={[Function]}
+          >
+            Submit
+          </button>
+        </Button>
+        <span>
+             
+        </span>
+        <Button
+          color="secondary"
+          disabled={true}
+          tag="button"
+        >
+          <button
+            className="btn btn-secondary disabled"
+            disabled={true}
+            onClick={[Function]}
+          >
+            Reissue
+          </button>
+        </Button>
+      </form>
+    </Form>
+  </div>
+</Stage1Form>
+`;
+
+exports[`shows a visual warning when the form is submitted with an empty project ID 1`] = `
+<Stage1Form
+  setFormUrl={[Function]}
+>
+  <div
+    style={
+      Object {
+        "maxWidth": "640px",
+      }
+    }
+  >
+    <h2>
+      Project Setup
+    </h2>
+    <br />
+    <Form
+      onSubmit={[Function]}
+      tag="form"
+    >
+      <form
+        className=""
+        onSubmit={[Function]}
+      >
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="projectID"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="projectID"
+              >
+                Project ID
+              </label>
+            </Label>
+            <Input
+              autoComplete="off"
+              id="projectID"
+              name="projectID"
+              onChange={[Function]}
+              onInput={[Function]}
+              placeholder="Enter the ID for the new project here"
+              style={
+                Object {
+                  "backgroundColor": "#f8d7da",
+                }
+              }
+              type="text"
+              value=""
+            >
+              <input
+                autoComplete="off"
+                className="form-control"
+                id="projectID"
+                name="projectID"
+                onChange={[Function]}
+                onInput={[Function]}
+                placeholder="Enter the ID for the new project here"
+                style={
+                  Object {
+                    "backgroundColor": "#f8d7da",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </Input>
+            <span
+              style={
+                Object {
+                  "color": "#f83244",
+                }
+              }
+            >
+              Project ID is a required field, and must take the form 12345_Surname_Forename.
+            </span>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="sf2Type"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="sf2Type"
+              >
+                SF2 Type
+              </label>
+            </Label>
+            <Input
+              id="sf2TypeSelector"
+              name="sf2Type"
+              onChange={[Function]}
+              type="select"
+            >
+              <select
+                className="form-control"
+                id="sf2TypeSelector"
+                name="sf2Type"
+                onChange={[Function]}
+              >
+                <option
+                  value="Sample"
+                >
+                  Sample
+                </option>
+                <option
+                  value="Library"
+                >
+                  Library
+                </option>
+                <option
+                  value="10X"
+                >
+                  10X
+                </option>
+              </select>
+            </Input>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+              >
+                Sample SF2 Options
+              </label>
+            </Label>
+            <FormGroup
+              tag="div"
+            >
+              <div
+                className="position-relative form-group"
+              >
+                <Label
+                  for="containerType"
+                  tag="label"
+                  widths={
+                    Array [
+                      "xs",
+                      "sm",
+                      "md",
+                      "lg",
+                      "xl",
+                    ]
+                  }
+                >
+                  <label
+                    className=""
+                    htmlFor="containerType"
+                  >
+                    Container Type
+                  </label>
+                </Label>
+                <Input
+                  id="containerType"
+                  name="containerType"
+                  onChange={[Function]}
+                  type="select"
+                >
+                  <select
+                    className="form-control"
+                    id="containerType"
+                    name="containerType"
+                    onChange={[Function]}
+                  >
+                    <option
+                      value="Tube"
+                    >
+                      Tube
+                    </option>
+                    <option
+                      value="Plate"
+                    >
+                      Plate
+                    </option>
+                  </select>
+                </Input>
+              </div>
+            </FormGroup>
+            <FormGroup
+              tag="div"
+            >
+              <div
+                className="position-relative form-group"
+              >
+                <Label
+                  for="numSamplesOrLibraries"
+                  tag="label"
+                  widths={
+                    Array [
+                      "xs",
+                      "sm",
+                      "md",
+                      "lg",
+                      "xl",
+                    ]
+                  }
+                >
+                  <label
+                    className=""
+                    htmlFor="numSamplesOrLibraries"
+                  >
+                    Number of samples
+                  </label>
+                </Label>
+                <Input
+                  id="numSamplesOrLibraries"
+                  min="0"
+                  name="numSamplesOrLibraries"
+                  onChange={[Function]}
+                  onInput={[Function]}
+                  placeholder="Enter the number of samples here"
+                  step="1"
+                  style={
+                    Object {
+                      "backgroundColor": "#f8d7da",
+                    }
+                  }
+                  type="number"
+                  value=""
+                >
+                  <input
+                    className="form-control"
+                    id="numSamplesOrLibraries"
+                    min="0"
+                    name="numSamplesOrLibraries"
+                    onChange={[Function]}
+                    onInput={[Function]}
+                    placeholder="Enter the number of samples here"
+                    step="1"
+                    style={
+                      Object {
+                        "backgroundColor": "#f8d7da",
+                      }
+                    }
+                    type="number"
+                    value=""
+                  />
+                </Input>
+                <span
+                  style={
+                    Object {
+                      "color": "#f83244",
+                    }
+                  }
+                >
+                   is a required field, and must be a positive integer.
+                </span>
+              </div>
+            </FormGroup>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="comments"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="comments"
+              >
+                Comments
+              </label>
+            </Label>
+            <Input
+              id="comments"
+              name="comments"
+              type="textarea"
+            >
+              <textarea
+                className="form-control"
+                id="comments"
+                name="comments"
+              />
+            </Input>
+          </div>
+        </FormGroup>
+        <br />
+        <Button
+          color="secondary"
+          tag="button"
+        >
+          <button
+            className="btn btn-secondary"
+            onClick={[Function]}
+          >
+            Submit
+          </button>
+        </Button>
+        <span>
+             
+        </span>
+        <Button
+          color="secondary"
+          disabled={true}
+          tag="button"
+        >
+          <button
+            className="btn btn-secondary disabled"
+            disabled={true}
+            onClick={[Function]}
+          >
+            Reissue
+          </button>
+        </Button>
+      </form>
+    </Form>
+  </div>
+</Stage1Form>
+`;
+
+exports[`shows number of pools input when the SF2 type of library is selected and library has pools is selected 1`] = `
+<Stage1Form
+  setFormUrl={[Function]}
+>
+  <div
+    style={
+      Object {
+        "maxWidth": "640px",
+      }
+    }
+  >
+    <h2>
+      Project Setup
+    </h2>
+    <br />
+    <Form
+      onSubmit={[Function]}
+      tag="form"
+    >
+      <form
+        className=""
+        onSubmit={[Function]}
+      >
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="projectID"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="projectID"
+              >
+                Project ID
+              </label>
+            </Label>
+            <Input
+              autoComplete="off"
+              id="projectID"
+              name="projectID"
+              onChange={[Function]}
+              onInput={[Function]}
+              placeholder="Enter the ID for the new project here"
+              style={Object {}}
+              type="text"
+              value=""
+            >
+              <input
+                autoComplete="off"
+                className="form-control"
+                id="projectID"
+                name="projectID"
+                onChange={[Function]}
+                onInput={[Function]}
+                placeholder="Enter the ID for the new project here"
+                style={Object {}}
+                type="text"
+                value=""
+              />
+            </Input>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="sf2Type"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="sf2Type"
+              >
+                SF2 Type
+              </label>
+            </Label>
+            <Input
+              id="sf2TypeSelector"
+              name="sf2Type"
+              onChange={[Function]}
+              type="select"
+            >
+              <select
+                className="form-control"
+                id="sf2TypeSelector"
+                name="sf2Type"
+                onChange={[Function]}
+              >
+                <option
+                  value="Sample"
+                >
+                  Sample
+                </option>
+                <option
+                  value="Library"
+                >
+                  Library
+                </option>
+                <option
+                  value="10X"
+                >
+                  10X
+                </option>
+              </select>
+            </Input>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+              >
+                Library SF2 Options
+              </label>
+            </Label>
+            <FormGroup
+              tag="div"
+            >
+              <div
+                className="position-relative form-group"
+              >
+                <FormGroup
+                  check={true}
+                  tag="div"
+                >
+                  <div
+                    className="position-relative form-check"
+                  >
+                    <Label
+                      check={true}
+                      tag="label"
+                      widths={
+                        Array [
+                          "xs",
+                          "sm",
+                          "md",
+                          "lg",
+                          "xl",
+                        ]
+                      }
+                    >
+                      <label
+                        className="form-check-label"
+                      >
+                        <Input
+                          checked={false}
+                          id="platesCheckLibrary"
+                          name="platesCheckLibrary"
+                          onChange={[Function]}
+                          type="checkbox"
+                        >
+                          <input
+                            checked={false}
+                            className="form-check-input"
+                            id="platesCheckLibrary"
+                            name="platesCheckLibrary"
+                            onChange={[Function]}
+                            type="checkbox"
+                          />
+                        </Input>
+                         
+                        Customer is sending plates (leave unchecked if customer is sending tubes)
+                      </label>
+                    </Label>
+                  </div>
+                </FormGroup>
+                <FormGroup
+                  check={true}
+                  tag="div"
+                >
+                  <div
+                    className="position-relative form-check"
+                  >
+                    <Label
+                      check={true}
+                      tag="label"
+                      widths={
+                        Array [
+                          "xs",
+                          "sm",
+                          "md",
+                          "lg",
+                          "xl",
+                        ]
+                      }
+                    >
+                      <label
+                        className="form-check-label"
+                      >
+                        <Input
+                          checked={false}
+                          id="primerCheck"
+                          name="primerCheck"
+                          onChange={[Function]}
+                          type="checkbox"
+                        >
+                          <input
+                            checked={false}
+                            className="form-check-input"
+                            id="primerCheck"
+                            name="primerCheck"
+                            onChange={[Function]}
+                            type="checkbox"
+                          />
+                        </Input>
+                         
+                        SF2 has custom primers
+                      </label>
+                    </Label>
+                  </div>
+                </FormGroup>
+                <FormGroup
+                  check={true}
+                  tag="div"
+                >
+                  <div
+                    className="position-relative form-check"
+                  >
+                    <Label
+                      check={true}
+                      tag="label"
+                      widths={
+                        Array [
+                          "xs",
+                          "sm",
+                          "md",
+                          "lg",
+                          "xl",
+                        ]
+                      }
+                    >
+                      <label
+                        className="form-check-label"
+                      >
+                        <Input
+                          checked={false}
+                          id="unpooledCheckLibrary"
+                          name="unpooledCheckLibrary"
+                          onChange={[Function]}
+                          type="checkbox"
+                        >
+                          <input
+                            checked={false}
+                            className="form-check-input"
+                            id="unpooledCheckLibrary"
+                            name="unpooledCheckLibrary"
+                            onChange={[Function]}
+                            type="checkbox"
+                          />
+                        </Input>
+                         
+                        SF2 has unpooled libraries
+                      </label>
+                    </Label>
+                  </div>
+                </FormGroup>
+                <FormGroup
+                  check={true}
+                  tag="div"
+                >
+                  <div
+                    className="position-relative form-check"
+                  >
+                    <Label
+                      check={true}
+                      tag="label"
+                      widths={
+                        Array [
+                          "xs",
+                          "sm",
+                          "md",
+                          "lg",
+                          "xl",
+                        ]
+                      }
+                    >
+                      <label
+                        className="form-check-label"
+                      >
+                        <Input
+                          checked={true}
+                          id="poolCheck"
+                          name="poolCheck"
+                          onChange={[Function]}
+                          type="checkbox"
+                        >
+                          <input
+                            checked={true}
+                            className="form-check-input"
+                            id="poolCheck"
+                            name="poolCheck"
+                            onChange={[Function]}
+                            type="checkbox"
+                          />
+                        </Input>
+                         
+                        SF2 has pools
+                      </label>
+                    </Label>
+                  </div>
+                </FormGroup>
+                <FormGroup
+                  tag="div"
+                >
+                  <div
+                    className="position-relative form-group"
+                  >
+                    <div
+                      style={
+                        Object {
+                          "marginTop": "10px",
+                        }
+                      }
+                    >
+                      <Label
+                        for="numPools"
+                        tag="label"
+                        widths={
+                          Array [
+                            "xs",
+                            "sm",
+                            "md",
+                            "lg",
+                            "xl",
+                          ]
+                        }
+                      >
+                        <label
+                          className=""
+                          htmlFor="numPools"
+                        >
+                          Number of Pools
+                        </label>
+                      </Label>
+                      <Input
+                        id="numPools"
+                        min="0"
+                        name="numPools"
+                        onChange={[Function]}
+                        placeholder="Enter the number of pools here"
+                        step="1"
+                        style={Object {}}
+                        type="number"
+                      >
+                        <input
+                          className="form-control"
+                          id="numPools"
+                          min="0"
+                          name="numPools"
+                          onChange={[Function]}
+                          placeholder="Enter the number of pools here"
+                          step="1"
+                          style={Object {}}
+                          type="number"
+                        />
+                      </Input>
+                    </div>
+                  </div>
+                </FormGroup>
+              </div>
+            </FormGroup>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="comments"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="comments"
+              >
+                Comments
+              </label>
+            </Label>
+            <Input
+              id="comments"
+              name="comments"
+              type="textarea"
+            >
+              <textarea
+                className="form-control"
+                id="comments"
+                name="comments"
+              />
+            </Input>
+          </div>
+        </FormGroup>
+        <br />
+        <Button
+          color="secondary"
+          tag="button"
+        >
+          <button
+            className="btn btn-secondary"
+            onClick={[Function]}
+          >
+            Submit
+          </button>
+        </Button>
+        <span>
+             
+        </span>
+        <Button
+          color="secondary"
+          disabled={true}
+          tag="button"
+        >
+          <button
+            className="btn btn-secondary disabled"
+            disabled={true}
+            onClick={[Function]}
+          >
+            Reissue
+          </button>
+        </Button>
+      </form>
+    </Form>
+  </div>
+</Stage1Form>
+`;
+
+exports[`shows the library options when the SF2 type of library is selected 1`] = `
+<Stage1Form
+  setFormUrl={[Function]}
+>
+  <div
+    style={
+      Object {
+        "maxWidth": "640px",
+      }
+    }
+  >
+    <h2>
+      Project Setup
+    </h2>
+    <br />
+    <Form
+      onSubmit={[Function]}
+      tag="form"
+    >
+      <form
+        className=""
+        onSubmit={[Function]}
+      >
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="projectID"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="projectID"
+              >
+                Project ID
+              </label>
+            </Label>
+            <Input
+              autoComplete="off"
+              id="projectID"
+              name="projectID"
+              onChange={[Function]}
+              onInput={[Function]}
+              placeholder="Enter the ID for the new project here"
+              style={Object {}}
+              type="text"
+              value=""
+            >
+              <input
+                autoComplete="off"
+                className="form-control"
+                id="projectID"
+                name="projectID"
+                onChange={[Function]}
+                onInput={[Function]}
+                placeholder="Enter the ID for the new project here"
+                style={Object {}}
+                type="text"
+                value=""
+              />
+            </Input>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="sf2Type"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="sf2Type"
+              >
+                SF2 Type
+              </label>
+            </Label>
+            <Input
+              id="sf2TypeSelector"
+              name="sf2Type"
+              onChange={[Function]}
+              type="select"
+            >
+              <select
+                className="form-control"
+                id="sf2TypeSelector"
+                name="sf2Type"
+                onChange={[Function]}
+              >
+                <option
+                  value="Sample"
+                >
+                  Sample
+                </option>
+                <option
+                  value="Library"
+                >
+                  Library
+                </option>
+                <option
+                  value="10X"
+                >
+                  10X
+                </option>
+              </select>
+            </Input>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+              >
+                Library SF2 Options
+              </label>
+            </Label>
+            <FormGroup
+              tag="div"
+            >
+              <div
+                className="position-relative form-group"
+              >
+                <FormGroup
+                  check={true}
+                  tag="div"
+                >
+                  <div
+                    className="position-relative form-check"
+                  >
+                    <Label
+                      check={true}
+                      tag="label"
+                      widths={
+                        Array [
+                          "xs",
+                          "sm",
+                          "md",
+                          "lg",
+                          "xl",
+                        ]
+                      }
+                    >
+                      <label
+                        className="form-check-label"
+                      >
+                        <Input
+                          checked={false}
+                          id="platesCheckLibrary"
+                          name="platesCheckLibrary"
+                          onChange={[Function]}
+                          type="checkbox"
+                        >
+                          <input
+                            checked={false}
+                            className="form-check-input"
+                            id="platesCheckLibrary"
+                            name="platesCheckLibrary"
+                            onChange={[Function]}
+                            type="checkbox"
+                          />
+                        </Input>
+                         
+                        Customer is sending plates (leave unchecked if customer is sending tubes)
+                      </label>
+                    </Label>
+                  </div>
+                </FormGroup>
+                <FormGroup
+                  check={true}
+                  tag="div"
+                >
+                  <div
+                    className="position-relative form-check"
+                  >
+                    <Label
+                      check={true}
+                      tag="label"
+                      widths={
+                        Array [
+                          "xs",
+                          "sm",
+                          "md",
+                          "lg",
+                          "xl",
+                        ]
+                      }
+                    >
+                      <label
+                        className="form-check-label"
+                      >
+                        <Input
+                          checked={false}
+                          id="primerCheck"
+                          name="primerCheck"
+                          onChange={[Function]}
+                          type="checkbox"
+                        >
+                          <input
+                            checked={false}
+                            className="form-check-input"
+                            id="primerCheck"
+                            name="primerCheck"
+                            onChange={[Function]}
+                            type="checkbox"
+                          />
+                        </Input>
+                         
+                        SF2 has custom primers
+                      </label>
+                    </Label>
+                  </div>
+                </FormGroup>
+                <FormGroup
+                  check={true}
+                  tag="div"
+                >
+                  <div
+                    className="position-relative form-check"
+                  >
+                    <Label
+                      check={true}
+                      tag="label"
+                      widths={
+                        Array [
+                          "xs",
+                          "sm",
+                          "md",
+                          "lg",
+                          "xl",
+                        ]
+                      }
+                    >
+                      <label
+                        className="form-check-label"
+                      >
+                        <Input
+                          checked={false}
+                          id="unpooledCheckLibrary"
+                          name="unpooledCheckLibrary"
+                          onChange={[Function]}
+                          type="checkbox"
+                        >
+                          <input
+                            checked={false}
+                            className="form-check-input"
+                            id="unpooledCheckLibrary"
+                            name="unpooledCheckLibrary"
+                            onChange={[Function]}
+                            type="checkbox"
+                          />
+                        </Input>
+                         
+                        SF2 has unpooled libraries
+                      </label>
+                    </Label>
+                  </div>
+                </FormGroup>
+                <FormGroup
+                  check={true}
+                  tag="div"
+                >
+                  <div
+                    className="position-relative form-check"
+                  >
+                    <Label
+                      check={true}
+                      tag="label"
+                      widths={
+                        Array [
+                          "xs",
+                          "sm",
+                          "md",
+                          "lg",
+                          "xl",
+                        ]
+                      }
+                    >
+                      <label
+                        className="form-check-label"
+                      >
+                        <Input
+                          checked={false}
+                          id="poolCheck"
+                          name="poolCheck"
+                          onChange={[Function]}
+                          type="checkbox"
+                        >
+                          <input
+                            checked={false}
+                            className="form-check-input"
+                            id="poolCheck"
+                            name="poolCheck"
+                            onChange={[Function]}
+                            type="checkbox"
+                          />
+                        </Input>
+                         
+                        SF2 has pools
+                      </label>
+                    </Label>
+                  </div>
+                </FormGroup>
+              </div>
+            </FormGroup>
+          </div>
+        </FormGroup>
+        <FormGroup
+          tag="div"
+        >
+          <div
+            className="position-relative form-group"
+          >
+            <Label
+              for="comments"
+              tag="label"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <label
+                className=""
+                htmlFor="comments"
+              >
+                Comments
+              </label>
+            </Label>
+            <Input
+              id="comments"
+              name="comments"
+              type="textarea"
+            >
+              <textarea
+                className="form-control"
+                id="comments"
+                name="comments"
+              />
+            </Input>
+          </div>
+        </FormGroup>
+        <br />
+        <Button
+          color="secondary"
+          tag="button"
+        >
+          <button
+            className="btn btn-secondary"
+            onClick={[Function]}
+          >
+            Submit
+          </button>
+        </Button>
+        <span>
+             
+        </span>
+        <Button
+          color="secondary"
+          disabled={true}
+          tag="button"
+        >
+          <button
+            className="btn btn-secondary disabled"
+            disabled={true}
+            onClick={[Function]}
+          >
+            Reissue
+          </button>
+        </Button>
+      </form>
+    </Form>
+  </div>
+</Stage1Form>
+`;

@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the DocumentationViewer correctly with required arguments 1`] = `
+<div>
+  <DocumentationModal
+    active={false}
+    onCancel={[Function]}
+  >
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      fade={true}
+      isOpen={false}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      role="dialog"
+      style={
+        Object {
+          "minWidth": "95%",
+        }
+      }
+      zIndex={1050}
+    />
+  </DocumentationModal>
+  <wrappedComponent
+    showDocumentation={[Function]}
+  >
+    <div>
+      test
+    </div>
+  </wrappedComponent>
+</div>
+`;

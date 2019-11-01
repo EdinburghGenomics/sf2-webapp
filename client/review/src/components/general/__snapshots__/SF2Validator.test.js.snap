@@ -1,0 +1,981 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the SF2Validator correctly with required arguments 1`] = `
+<SF2Validator
+  columns={
+    Array [
+      Object {
+        "id": "yourSampleID",
+        "validation": "required",
+        "value": "Your Sample ID",
+        "width": 335,
+      },
+    ]
+  }
+  frozenColumns={
+    Array [
+      Object {
+        "id": "yourSampleID",
+        "validation": "required",
+        "value": "Your Sample ID",
+        "width": 335,
+      },
+    ]
+  }
+  frozenGrid={
+    Array [
+      Array [
+        Object {
+          "value": "test",
+        },
+      ],
+    ]
+  }
+  handleDownload={[Function]}
+  handleSave={[Function]}
+  handleSubmission={[Function]}
+  id="0"
+  initialGrid={
+    Array [
+      Array [
+        Object {
+          "readonly": false,
+          "value": "",
+        },
+      ],
+    ]
+  }
+  initialState={
+    Object {
+      "containerTypeIsPlate": false,
+      "errors": Array [],
+      "projectID": "test",
+      "sf2type": "Sample",
+      "submitDisabled": true,
+      "warnings": Array [],
+    }
+  }
+  saveDisabled={true}
+  showDocumentation={[Function]}
+  showHiddenColumns={true}
+  submitDisabled={true}
+  tableType="SampleInformation"
+  topRowNumber={1}
+  updateGrids={[Function]}
+  updateHasErrors={[Function]}
+>
+  <div>
+    <span>
+      Please enter the details of your 
+      samples
+       in the grid below. Fields marked with * are required. Please click 
+      <a
+        href="#"
+        onClick={[Function]}
+      >
+        here
+      </a>
+       for more information on how to use this form.
+    </span>
+    <SF2DataSheetWrapper
+      columns={
+        Array [
+          Object {
+            "id": "yourSampleID",
+            "validation": "required",
+            "value": "Your Sample ID",
+            "width": 335,
+          },
+        ]
+      }
+      containerTypeIsPlate={false}
+      frozenColumns={
+        Array [
+          Object {
+            "id": "yourSampleID",
+            "validation": "required",
+            "value": "Your Sample ID",
+            "width": 335,
+          },
+        ]
+      }
+      frozenGrid={
+        Array [
+          Array [
+            Object {
+              "value": "test",
+            },
+          ],
+        ]
+      }
+      id="0"
+      initialGrid={
+        Array [
+          Array [
+            Object {
+              "readonly": false,
+              "value": "",
+            },
+          ],
+        ]
+      }
+      onUpdateGrid={[Function]}
+      projectID="test"
+      sf2type="Sample"
+      showHiddenColumns={true}
+      tableType="SampleInformation"
+      topRowNumber={1}
+    >
+      <SF2DataSheet
+        bodyHeight={55}
+        bottomPadding={140}
+        columns={
+          Array [
+            Object {
+              "id": "yourSampleID",
+              "validation": "required",
+              "value": "Your Sample ID",
+              "width": 335,
+            },
+          ]
+        }
+        frozenColumns={
+          Array [
+            Object {
+              "id": "yourSampleID",
+              "validation": "required",
+              "value": "Your Sample ID",
+              "width": 335,
+            },
+          ]
+        }
+        frozenGrid={
+          Array [
+            Array [
+              Object {
+                "value": "test",
+              },
+            ],
+          ]
+        }
+        id="0"
+        initialBodyGrid={
+          Array [
+            Array [
+              Object {
+                "readonly": false,
+                "value": "",
+              },
+            ],
+          ]
+        }
+        onUpdateBodyGrid={[Function]}
+        rowColours={null}
+        showHiddenColumns={true}
+        uuid="0"
+        width="97vw"
+      >
+        <div
+          style={
+            Object {
+              "height": "auto",
+              "overflow": "hidden",
+              "width": 989,
+            }
+          }
+        >
+          <span>
+            <UndoRedoPanel
+              onRedo={[Function]}
+              onUndo={[Function]}
+              redoEnabled={false}
+              undoEnabled={false}
+              uuid="undoRedo"
+            >
+              <div>
+                <button
+                  data-uuid="undoRedo"
+                  disabled={true}
+                  onClick={[Function]}
+                >
+                  Undo
+                </button>
+                <button
+                  data-uuid="undoRedo"
+                  disabled={true}
+                  onClick={[Function]}
+                >
+                  Redo
+                </button>
+              </div>
+            </UndoRedoPanel>
+            <ControlPanel
+              disabled={true}
+              onFillCell={[Function]}
+              onFillRow={[Function]}
+              uuid="0"
+            >
+              <div>
+                <button
+                  data-uuid="0"
+                  disabled={true}
+                  onClick={[Function]}
+                >
+                  Fill down row
+                </button>
+                <button
+                  data-uuid="0"
+                  disabled={true}
+                  onClick={[Function]}
+                >
+                  Fill down cell
+                </button>
+              </div>
+            </ControlPanel>
+          </span>
+          <ResizableBox
+            axis="y"
+            className="box"
+            handleSize={
+              Array [
+                20,
+                20,
+              ]
+            }
+            height={250}
+            maxConstraints={
+              Array [
+                0,
+                229,
+              ]
+            }
+            minConstraints={
+              Array [
+                0,
+                220,
+              ]
+            }
+            onResize={[Function]}
+            width={989}
+          >
+            <Resizable
+              axis="y"
+              handleSize={
+                Array [
+                  20,
+                  20,
+                ]
+              }
+              height={250}
+              lockAspectRatio={false}
+              maxConstraints={
+                Array [
+                  0,
+                  229,
+                ]
+              }
+              minConstraints={
+                Array [
+                  0,
+                  220,
+                ]
+              }
+              onResize={[Function]}
+              width={989}
+            >
+              <div
+                className="box react-resizable"
+                style={
+                  Object {
+                    "height": "250px",
+                    "width": "989px",
+                  }
+                }
+              >
+                <table
+                  style={
+                    Object {
+                      "border": "0px solid grey",
+                    }
+                  }
+                >
+                  <tbody>
+                    <tr>
+                      <td
+                        style={
+                          Object {
+                            "verticalAlign": "top",
+                          }
+                        }
+                      >
+                        <div
+                          style={
+                            Object {
+                              "border": "0px solid grey",
+                            }
+                          }
+                        >
+                          <FrozenColumns
+                            frozenColumns={
+                              Array [
+                                Object {
+                                  "id": "yourSampleID",
+                                  "validation": "required",
+                                  "value": "Your Sample ID",
+                                  "width": 335,
+                                },
+                              ]
+                            }
+                            frozenRowsWidth={335}
+                          >
+                            <div
+                              style={
+                                Object {
+                                  "border": "0px solid gray",
+                                  "overflow": "hidden",
+                                  "width": 335,
+                                }
+                              }
+                            >
+                              <span
+                                className="data-grid-container"
+                                tabIndex="0"
+                              >
+                                <table
+                                  className="data-grid"
+                                >
+                                  <tbody>
+                                    <tr>
+                                      <th
+                                        className="cell read-only"
+                                        key="FrozenColumn0"
+                                      >
+                                        <div
+                                          style={
+                                            Object {
+                                              "height": "50px",
+                                              "width": 335,
+                                            }
+                                          }
+                                        >
+                                          Your Sample ID
+                                        </div>
+                                      </th>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </span>
+                            </div>
+                          </FrozenColumns>
+                        </div>
+                      </td>
+                      <td
+                        style={
+                          Object {
+                            "verticalAlign": "top",
+                          }
+                        }
+                      >
+                        <div
+                          style={
+                            Object {
+                              "border": "0px solid grey",
+                            }
+                          }
+                        >
+                          <ForwardRef(BodyHeader)
+                            bodyHeaderWidth={637}
+                            columns={
+                              Array [
+                                Object {
+                                  "id": "yourSampleID",
+                                  "validation": "required",
+                                  "value": "Your Sample ID",
+                                  "width": 335,
+                                },
+                              ]
+                            }
+                          >
+                            <div
+                              style={
+                                Object {
+                                  "border": "0px solid gray",
+                                  "overflow": "hidden",
+                                  "width": 637,
+                                }
+                              }
+                            >
+                              <span
+                                className="data-grid-container"
+                                tabIndex="0"
+                              >
+                                <table
+                                  className="data-grid"
+                                >
+                                  <thead>
+                                    <tr>
+                                      <th
+                                        className="cell read-only"
+                                        key="BodyHeader0"
+                                      >
+                                        <div
+                                          id="BodyHeader0_id"
+                                          style={
+                                            Object {
+                                              "height": "50px",
+                                              "width": 334,
+                                            }
+                                          }
+                                        >
+                                          Your Sample ID
+                                        </div>
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                </table>
+                              </span>
+                            </div>
+                          </ForwardRef(BodyHeader)>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style={
+                          Object {
+                            "verticalAlign": "top",
+                          }
+                        }
+                      >
+                        <div
+                          style={
+                            Object {
+                              "border": "0px solid grey",
+                            }
+                          }
+                        >
+                          <ForwardRef(FrozenRows)
+                            bottomPadding={140}
+                            frozenColumns={
+                              Array [
+                                Object {
+                                  "id": "yourSampleID",
+                                  "validation": "required",
+                                  "value": "Your Sample ID",
+                                  "width": 335,
+                                },
+                              ]
+                            }
+                            frozenGrid={
+                              Array [
+                                Array [
+                                  Object {
+                                    "value": "test",
+                                  },
+                                ],
+                              ]
+                            }
+                            frozenRowsWidth={335}
+                            maxHeight={175}
+                          >
+                            <div
+                              style={
+                                Object {
+                                  "border": "0px solid gray",
+                                  "maxHeight": 175,
+                                  "overflow": "hidden",
+                                  "width": 335,
+                                }
+                              }
+                            >
+                              <div
+                                style={
+                                  Object {
+                                    "paddingBottom": 156,
+                                  }
+                                }
+                              >
+                                <span
+                                  className="data-grid-container"
+                                  tabIndex="0"
+                                >
+                                  <table
+                                    className="data-grid"
+                                  >
+                                    <tbody>
+                                      <tr
+                                        className="cell read-only row-handle"
+                                        key="FrozenRow0"
+                                      >
+                                        <td
+                                          key="0"
+                                        >
+                                          <span>
+                                            <span
+                                              className="value-viewer"
+                                              style={
+                                                Object {
+                                                  "width": 335,
+                                                }
+                                              }
+                                            >
+                                              test
+                                            </span>
+                                          </span>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </span>
+                              </div>
+                            </div>
+                          </ForwardRef(FrozenRows)>
+                        </div>
+                      </td>
+                      <td
+                        style={
+                          Object {
+                            "verticalAlign": "top",
+                          }
+                        }
+                      >
+                        <div
+                          style={
+                            Object {
+                              "border": "0px solid grey",
+                            }
+                          }
+                        >
+                          <BodyWrapper
+                            bodyHeight={50}
+                            bodyWidth={637}
+                            bottomPadding={140}
+                            columns={
+                              Array [
+                                Object {
+                                  "id": "yourSampleID",
+                                  "validation": "required",
+                                  "value": "Your Sample ID",
+                                  "width": 335,
+                                },
+                              ]
+                            }
+                            disableRedo={[Function]}
+                            disableUndo={[Function]}
+                            enableRedo={[Function]}
+                            enableUndo={[Function]}
+                            frozenGrid={
+                              Array [
+                                Array [
+                                  Object {
+                                    "value": "test",
+                                  },
+                                ],
+                              ]
+                            }
+                            id="0"
+                            initialBodyGrid={
+                              Array [
+                                Array [
+                                  Object {
+                                    "readonly": false,
+                                    "value": "",
+                                  },
+                                ],
+                              ]
+                            }
+                            onTick={[Function]}
+                            onUpdateBodyGrid={[Function]}
+                            rowColours={null}
+                            scrollOnClick={false}
+                            setScrollbarPresent={[Function]}
+                            updateBodyFocus={[Function]}
+                            uuid="0"
+                          >
+                            <div
+                              id="bodyWrapper"
+                              onClick={[Function]}
+                              style={
+                                Object {
+                                  "border": "0px solid grey",
+                                  "maxHeight": 190,
+                                  "overflow": "auto",
+                                  "width": 637,
+                                }
+                              }
+                            >
+                              <Body
+                                bottomPadding={140}
+                                columns={
+                                  Array [
+                                    Object {
+                                      "id": "yourSampleID",
+                                      "validation": "required",
+                                      "value": "Your Sample ID",
+                                      "width": 335,
+                                    },
+                                  ]
+                                }
+                                disableRedo={[Function]}
+                                disableUndo={[Function]}
+                                enableRedo={[Function]}
+                                enableUndo={[Function]}
+                                frozenGrid={
+                                  Array [
+                                    Array [
+                                      Object {
+                                        "value": "test",
+                                      },
+                                    ],
+                                  ]
+                                }
+                                id="0"
+                                initialBodyGrid={
+                                  Array [
+                                    Array [
+                                      Object {
+                                        "readonly": false,
+                                        "value": "",
+                                      },
+                                    ],
+                                  ]
+                                }
+                                onMove={[Function]}
+                                onUpdateBodyGrid={[Function]}
+                                rowColours={null}
+                                uuid="0"
+                              >
+                                <div
+                                  onKeyDown={[Function]}
+                                  style={
+                                    Object {
+                                      "paddingBottom": 140,
+                                      "width": 335,
+                                    }
+                                  }
+                                >
+                                  <DataSheet
+                                    cellRenderer={[Function]}
+                                    data={
+                                      Array [
+                                        Array [
+                                          Object {
+                                            "readonly": false,
+                                            "value": "",
+                                          },
+                                        ],
+                                      ]
+                                    }
+                                    dataEditor={[Function]}
+                                    onCellsChanged={[Function]}
+                                    rowRenderer={[Function]}
+                                    sheetRenderer={[Function]}
+                                    valueRenderer={[Function]}
+                                    valueViewer={[Function]}
+                                  >
+                                    <span
+                                      className="data-grid-container"
+                                      onKeyDown={[Function]}
+                                      tabIndex="0"
+                                    >
+                                      <sheetRenderer
+                                        className="data-grid"
+                                        data={
+                                          Array [
+                                            Array [
+                                              Object {
+                                                "readonly": false,
+                                                "value": "",
+                                              },
+                                            ],
+                                          ]
+                                        }
+                                      >
+                                        <table
+                                          className="data-grid"
+                                          key="dsTable_"
+                                        >
+                                          <tbody>
+                                            <rowRenderer
+                                              cells={
+                                                Array [
+                                                  Object {
+                                                    "readonly": false,
+                                                    "value": "",
+                                                  },
+                                                ]
+                                              }
+                                              key="0"
+                                              row={0}
+                                            >
+                                              <tr
+                                                className="cell"
+                                                key="dsRow__0"
+                                              >
+                                                <DataCell
+                                                  cell={
+                                                    Object {
+                                                      "readonly": false,
+                                                      "value": "",
+                                                    }
+                                                  }
+                                                  cellRenderer={[Function]}
+                                                  clearing={false}
+                                                  col={0}
+                                                  dataEditor={[Function]}
+                                                  editing={false}
+                                                  forceEdit={false}
+                                                  key="0-0"
+                                                  onChange={[Function]}
+                                                  onContextMenu={[Function]}
+                                                  onDoubleClick={[Function]}
+                                                  onKey={[Function]}
+                                                  onMouseDown={[Function]}
+                                                  onMouseOver={[Function]}
+                                                  onNavigate={[Function]}
+                                                  onRevert={[Function]}
+                                                  row={0}
+                                                  selected={false}
+                                                  valueRenderer={[Function]}
+                                                  valueViewer={[Function]}
+                                                >
+                                                  <cellRenderer
+                                                    cell={
+                                                      Object {
+                                                        "readonly": false,
+                                                        "value": "",
+                                                      }
+                                                    }
+                                                    className="cell"
+                                                    col={0}
+                                                    editing={false}
+                                                    onContextMenu={[Function]}
+                                                    onDoubleClick={[Function]}
+                                                    onMouseDown={[Function]}
+                                                    onMouseOver={[Function]}
+                                                    row={0}
+                                                    selected={false}
+                                                    style={null}
+                                                    updated={false}
+                                                  >
+                                                    <CellRenderer
+                                                      cell={
+                                                        Object {
+                                                          "readonly": false,
+                                                          "value": "",
+                                                        }
+                                                      }
+                                                      className="cell"
+                                                      col={0}
+                                                      columns={
+                                                        Array [
+                                                          Object {
+                                                            "id": "yourSampleID",
+                                                            "validation": "required",
+                                                            "value": "Your Sample ID",
+                                                            "width": 335,
+                                                          },
+                                                        ]
+                                                      }
+                                                      data-uuid="0"
+                                                      editing={false}
+                                                      id="0"
+                                                      onContextMenu={[Function]}
+                                                      onDoubleClick={[Function]}
+                                                      onMouseDown={[Function]}
+                                                      onMouseOver={[Function]}
+                                                      row={0}
+                                                      rowColours={null}
+                                                      selected={false}
+                                                      style={null}
+                                                      updated={false}
+                                                      uuid="0"
+                                                    >
+                                                      <td
+                                                        cell={
+                                                          Object {
+                                                            "readonly": false,
+                                                            "value": "",
+                                                          }
+                                                        }
+                                                        className="cell"
+                                                        col={0}
+                                                        data-uuid="0"
+                                                        editing="false"
+                                                        key="dsCell_0_0_0"
+                                                        onContextMenu={[Function]}
+                                                        onDoubleClick={[Function]}
+                                                        onMouseDown={[Function]}
+                                                        onMouseOver={[Function]}
+                                                        row={0}
+                                                        selected={false}
+                                                        style={
+                                                          Object {
+                                                            "height": 20,
+                                                            "width": 335,
+                                                          }
+                                                        }
+                                                        updated="false"
+                                                      >
+                                                        <valueViewer
+                                                          cell={
+                                                            Object {
+                                                              "readonly": false,
+                                                              "value": "",
+                                                            }
+                                                          }
+                                                          col={0}
+                                                          row={0}
+                                                          value=""
+                                                        >
+                                                          <span
+                                                            className="value-viewer"
+                                                            data-uuid="0"
+                                                          />
+                                                        </valueViewer>
+                                                      </td>
+                                                    </CellRenderer>
+                                                  </cellRenderer>
+                                                </DataCell>
+                                              </tr>
+                                            </rowRenderer>
+                                          </tbody>
+                                        </table>
+                                      </sheetRenderer>
+                                    </span>
+                                  </DataSheet>
+                                </div>
+                              </Body>
+                            </div>
+                          </BodyWrapper>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <DraggableCore
+                  allowAnyClick={false}
+                  cancel={null}
+                  disabled={false}
+                  enableUserSelectHack={true}
+                  grid={null}
+                  handle={null}
+                  key="resizableHandle"
+                  offsetParent={null}
+                  onDrag={[Function]}
+                  onMouseDown={[Function]}
+                  onStart={[Function]}
+                  onStop={[Function]}
+                  transform={null}
+                >
+                  <span
+                    className="react-resizable-handle"
+                    onMouseDown={[Function]}
+                    onMouseUp={[Function]}
+                    onTouchEnd={[Function]}
+                    onTouchStart={[Function]}
+                    style={
+                      Object {
+                        "touchAction": "none",
+                      }
+                    }
+                  />
+                </DraggableCore>
+              </div>
+            </Resizable>
+          </ResizableBox>
+        </div>
+      </SF2DataSheet>
+    </SF2DataSheetWrapper>
+    <p>
+      <em>
+        1. If the source of your samples is human or other organism covered by regulatory controls such as the Human Tissue regulations or CITES regulations we require you to affirm to us that all samples are covered by relevant licences and ethical permissions. You should note that we are not a clinical diagnostic service, and you should not use us as such.
+      </em>
+    </p>
+    <Button
+      color="secondary"
+      disabled={true}
+      onClick={[Function]}
+      tag="button"
+    >
+      <button
+        className="btn btn-secondary disabled"
+        disabled={true}
+        onClick={[Function]}
+        type="button"
+      >
+        Save
+      </button>
+    </Button>
+    <span>
+          
+    </span>
+    <Button
+      color="secondary"
+      disabled={false}
+      onClick={[Function]}
+      tag="button"
+    >
+      <button
+        className="btn btn-secondary"
+        disabled={false}
+        onClick={[Function]}
+        type="button"
+      >
+        Download
+      </button>
+    </Button>
+    <span>
+          
+    </span>
+    <Button
+      color="secondary"
+      disabled={true}
+      onClick={[Function]}
+      tag="button"
+    >
+      <button
+        className="btn btn-secondary disabled"
+        disabled={true}
+        onClick={[Function]}
+        type="button"
+      >
+        Submit
+      </button>
+    </Button>
+    <br />
+    <br />
+    <div
+      style={
+        Object {
+          "width": "1000px",
+          "wordBreak": "break-word",
+        }
+      }
+    >
+      <h5
+        style={
+          Object {
+            "color": "red",
+          }
+        }
+      >
+        Outstanding actions for SF2 table:
+      </h5>
+      <ul
+        style={
+          Object {
+            "color": "red",
+          }
+        }
+      >
+        <li
+          key="Missing value for required field, row 'test', column 'Your Sample ID'"
+        >
+          Missing value for required field, row 'test', column 'Your Sample ID'
+        </li>
+      </ul>
+    </div>
+  </div>
+</SF2Validator>
+`;

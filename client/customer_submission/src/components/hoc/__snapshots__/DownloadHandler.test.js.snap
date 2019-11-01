@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the DownloadHandler correctly with required arguments 1`] = `
+<wrappedComponent
+  handleDownload={[Function]}
+>
+  <div>
+    test
+  </div>
+</wrappedComponent>
+`;

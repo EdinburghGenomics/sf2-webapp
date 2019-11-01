@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the DisableHandler correctly with required arguments 1`] = `
+<wrappedComponent
+  disableSaveButton={[Function]}
+  shouldDisableSave={true}
+  shouldDisableSubmit={true}
+  updateSaveDisabled={[Function]}
+  updateShouldDisableSubmit={[Function]}
+>
+  <div>
+    test
+  </div>
+</wrappedComponent>
+`;

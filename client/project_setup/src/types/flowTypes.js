@@ -1,5 +1,19 @@
 // General type definitions
 
+import type { Grid } from "../sf2datasheet/types/flowTypes";
+
+export type Grids = Array<Grid>;
+export type GridWithID = { id: string, grid: Grid };
+export type GridWithIDs = Array<GridWithID>;
+
+export type Warning = { row : string, message: string };
+export type Warnings = Array<Warning>;
+
+export type Table = { name: string, grids: GridWithIDs };
+export type Tables = Array<Table>;
+
+export type SF2Data = { name: string, tables: Tables };
+
 
 export type Stage1FormState = {
     projectID: string,

@@ -4,9 +4,7 @@ import * as R from 'ramda';
 
 import Stage1FormStateSummary from '../general/Stage1FormStateSummary';
 import SampleSF2 from '../SF2s/SampleSF2/SampleSF2';
-import LibrarySF2Old from '../SF2s/LibrarySF2_old/LibrarySF2';
 import LibrarySF2 from '../SF2s/LibrarySF2/LibrarySF2';
-import TenXSF2Old from '../SF2s/10XSF2_old/10XSF2';
 import TenXSF2 from '../SF2s/10XSF2/10XSF2';
 
 import { decodeFormStateQueryString } from '../../functions/lib';
@@ -57,8 +55,6 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
 
     constructor (props : Object) {
         super(props);
-
-        console.log(props);
 
         if (!R.isNil(this.props.initState)) {
             this.state = inflateStage1FormState(this.props.initState);

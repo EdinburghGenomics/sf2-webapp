@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the TabContainer correctly with required arguments 1`] = `
+<TabContainer
+  getChildComponent={[Function]}
+  tabNames={
+    Array [
+      "test",
+    ]
+  }
+  updateSomeTabHasErrors={[Function]}
+>
+  <div>
+    test
+  </div>
+</TabContainer>
+`;

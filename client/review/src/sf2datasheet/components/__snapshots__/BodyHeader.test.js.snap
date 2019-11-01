@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Body Header correctly 1`] = `
+<ForwardRef(BodyHeader)
+  bodyWidth={100}
+  columns={
+    Array [
+      Object {
+        "value": "Your Sample ID",
+        "width": 335,
+      },
+    ]
+  }
+  scrollLeft={0}
+>
+  <div
+    style={
+      Object {
+        "border": "0px solid gray",
+        "overflow": "hidden",
+        "width": undefined,
+      }
+    }
+  >
+    <span
+      className="data-grid-container"
+      tabIndex="0"
+    >
+      <table
+        className="data-grid"
+      >
+        <thead>
+          <tr>
+            <th
+              className="cell read-only"
+              key="BodyHeader0"
+            >
+              <div
+                id="BodyHeader0_id"
+                style={
+                  Object {
+                    "height": "50px",
+                    "width": 334,
+                  }
+                }
+              >
+                Your Sample ID
+              </div>
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </span>
+  </div>
+</ForwardRef(BodyHeader)>
+`;

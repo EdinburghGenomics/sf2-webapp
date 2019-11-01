@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Control Panel correctly 1`] = `
+<ControlPanel
+  disabled={false}
+  onFillCell={[Function]}
+  onFillRow={[Function]}
+  showFillUp={true}
+  uuid="1"
+>
+  <div>
+    <button
+      data-uuid="1"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Fill down row
+    </button>
+    <button
+      data-uuid="1"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Fill down cell
+    </button>
+    <button
+      data-uuid="1"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Fill up row
+    </button>
+    <button
+      data-uuid="1"
+      disabled={false}
+      onClick={[Function]}
+    >
+      Fill up cell
+    </button>
+  </div>
+</ControlPanel>
+`;

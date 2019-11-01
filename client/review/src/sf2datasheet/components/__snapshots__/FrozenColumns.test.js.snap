@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Frozen Columns correctly 1`] = `
+<FrozenColumns
+  frozenColumns={
+    Array [
+      Object {
+        "value": "Your Sample ID",
+        "width": 335,
+      },
+    ]
+  }
+  frozenRowsWidth={335}
+>
+  <div
+    style={
+      Object {
+        "border": "0px solid gray",
+        "overflow": "hidden",
+        "width": 335,
+      }
+    }
+  >
+    <span
+      className="data-grid-container"
+      tabIndex="0"
+    >
+      <table
+        className="data-grid"
+      >
+        <tbody>
+          <tr>
+            <th
+              className="cell read-only"
+              key="FrozenColumn0"
+            >
+              <div
+                style={
+                  Object {
+                    "height": "50px",
+                    "width": 335,
+                  }
+                }
+              >
+                Your Sample ID
+              </div>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </span>
+  </div>
+</FrozenColumns>
+`;

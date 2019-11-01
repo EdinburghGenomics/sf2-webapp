@@ -519,3 +519,23 @@ export const getContainerIDs = (frozenGrids, containerStartIndex, containerTypeI
 
 };
 
+
+export const getCallbackHref = (location : Object) : string => {
+
+    // work out web service url
+    let href = '';
+    const port = parseInt(location.port, 10);
+
+    // dev environment uses port 3000, 3001, 3002, prod uses 8000, 8001, 8002
+    if(port < 4000) {
+        // running in dev environment, need to infer the web service port
+        const servPort = (port + 5000).toString();
+        href = "http://localhost:" + servPort + "/";
+    } else {
+        // running in test / production, get url from window.location
+        href = location.href;
+    }
+
+    return href;
+
+};

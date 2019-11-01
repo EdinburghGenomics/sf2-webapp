@@ -1,0 +1,2783 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the Stage2SF2Container correctly with arguments 1`] = `
+<Stage2SF2Container
+  handleDownload={[Function]}
+  handleSave={[Function]}
+  handleSubmission={[Function]}
+  initState={
+    Object {
+      "nslp": 1,
+      "pid": "12345_Test_Project",
+      "st": "Library",
+    }
+  }
+  initialSF2Data={Object {}}
+  startIndices={
+    Object {
+      "container": "1",
+      "pool": "1",
+      "sampleOrLibrary": "1",
+      "unpooledSubmission": "1",
+    }
+  }
+>
+  <div>
+    <h2>
+      Library
+       SF2 Submission Form
+    </h2>
+    <Stage1FormStateSummary
+      numberOfSamplesOrLibrariesInPools={1}
+      projectID="12345_Test_Project"
+      sf2type="Library"
+    >
+      <div>
+        <Container
+          style={
+            Object {
+              "maxWidth": "100%",
+            }
+          }
+          tag="div"
+        >
+          <div
+            className="container"
+            style={
+              Object {
+                "maxWidth": "100%",
+              }
+            }
+          >
+            <Row
+              tag="div"
+            >
+              <div
+                className="row"
+              >
+                <Col
+                  style={
+                    Object {
+                      "backgroundColor": "#E5EDF5",
+                      "border": "1px solid #C9C1D5",
+                      "color": "#5F5F5F",
+                      "padding": ".75rem",
+                    }
+                  }
+                  tag="div"
+                  widths={
+                    Array [
+                      "xs",
+                      "sm",
+                      "md",
+                      "lg",
+                      "xl",
+                    ]
+                  }
+                >
+                  <div
+                    className="col"
+                    style={
+                      Object {
+                        "backgroundColor": "#E5EDF5",
+                        "border": "1px solid #C9C1D5",
+                        "color": "#5F5F5F",
+                        "padding": ".75rem",
+                      }
+                    }
+                  >
+                    Project ID: 
+                    12345_Test_Project
+                  </div>
+                </Col>
+                <Col
+                  style={
+                    Object {
+                      "backgroundColor": "#E5EDF5",
+                      "border": "1px solid #C9C1D5",
+                      "color": "#5F5F5F",
+                      "padding": ".75rem",
+                    }
+                  }
+                  tag="div"
+                  widths={
+                    Array [
+                      "xs",
+                      "sm",
+                      "md",
+                      "lg",
+                      "xl",
+                    ]
+                  }
+                >
+                  <div
+                    className="col"
+                    style={
+                      Object {
+                        "backgroundColor": "#E5EDF5",
+                        "border": "1px solid #C9C1D5",
+                        "color": "#5F5F5F",
+                        "padding": ".75rem",
+                      }
+                    }
+                  >
+                    SF2 type: 
+                    Library
+                  </div>
+                </Col>
+                <Col
+                  style={
+                    Object {
+                      "backgroundColor": "#E5EDF5",
+                      "border": "1px solid #C9C1D5",
+                      "color": "#5F5F5F",
+                      "padding": ".75rem",
+                    }
+                  }
+                  tag="div"
+                  widths={
+                    Array [
+                      "xs",
+                      "sm",
+                      "md",
+                      "lg",
+                      "xl",
+                    ]
+                  }
+                >
+                  <div
+                    className="col"
+                    style={
+                      Object {
+                        "backgroundColor": "#E5EDF5",
+                        "border": "1px solid #C9C1D5",
+                        "color": "#5F5F5F",
+                        "padding": ".75rem",
+                      }
+                    }
+                  >
+                    Container type is plate: 
+                    no
+                  </div>
+                </Col>
+              </div>
+            </Row>
+            <div>
+              <Row
+                tag="div"
+              >
+                <div
+                  className="row"
+                >
+                  <Col
+                    style={
+                      Object {
+                        "backgroundColor": "#E5EDF5",
+                        "border": "1px solid #C9C1D5",
+                        "color": "#5F5F5F",
+                        "padding": ".75rem",
+                      }
+                    }
+                    tag="div"
+                    widths={
+                      Array [
+                        "xs",
+                        "sm",
+                        "md",
+                        "lg",
+                        "xl",
+                      ]
+                    }
+                  >
+                    <div
+                      className="col"
+                      style={
+                        Object {
+                          "backgroundColor": "#E5EDF5",
+                          "border": "1px solid #C9C1D5",
+                          "color": "#5F5F5F",
+                          "padding": ".75rem",
+                        }
+                      }
+                    >
+                      SF2 is Dual Index: 
+                      no
+                    </div>
+                  </Col>
+                  <Col
+                    style={
+                      Object {
+                        "backgroundColor": "#E5EDF5",
+                        "border": "1px solid #C9C1D5",
+                        "color": "#5F5F5F",
+                        "padding": ".75rem",
+                      }
+                    }
+                    tag="div"
+                    widths={
+                      Array [
+                        "xs",
+                        "sm",
+                        "md",
+                        "lg",
+                        "xl",
+                      ]
+                    }
+                  >
+                    <div
+                      className="col"
+                      style={
+                        Object {
+                          "backgroundColor": "#E5EDF5",
+                          "border": "1px solid #C9C1D5",
+                          "color": "#5F5F5F",
+                          "padding": ".75rem",
+                        }
+                      }
+                    >
+                      SF2 has Pools: 
+                      no
+                    </div>
+                  </Col>
+                </div>
+              </Row>
+              <Row
+                tag="div"
+              >
+                <div
+                  className="row"
+                >
+                  <Col
+                    style={
+                      Object {
+                        "backgroundColor": "#E5EDF5",
+                        "border": "1px solid #C9C1D5",
+                        "color": "#5F5F5F",
+                        "padding": ".75rem",
+                      }
+                    }
+                    tag="div"
+                    widths={
+                      Array [
+                        "xs",
+                        "sm",
+                        "md",
+                        "lg",
+                        "xl",
+                      ]
+                    }
+                  >
+                    <div
+                      className="col"
+                      style={
+                        Object {
+                          "backgroundColor": "#E5EDF5",
+                          "border": "1px solid #C9C1D5",
+                          "color": "#5F5F5F",
+                          "padding": ".75rem",
+                        }
+                      }
+                    >
+                      SF2 has Unpooled Libraries: 
+                      no
+                    </div>
+                  </Col>
+                  <Col
+                    style={
+                      Object {
+                        "backgroundColor": "#E5EDF5",
+                        "border": "1px solid #C9C1D5",
+                        "color": "#5F5F5F",
+                        "padding": ".75rem",
+                      }
+                    }
+                    tag="div"
+                    widths={
+                      Array [
+                        "xs",
+                        "sm",
+                        "md",
+                        "lg",
+                        "xl",
+                      ]
+                    }
+                  >
+                    <div
+                      className="col"
+                      style={
+                        Object {
+                          "backgroundColor": "#E5EDF5",
+                          "border": "1px solid #C9C1D5",
+                          "color": "#5F5F5F",
+                          "padding": ".75rem",
+                        }
+                      }
+                    >
+                      SF2 has Custom Primers: 
+                      no
+                    </div>
+                  </Col>
+                </div>
+              </Row>
+            </div>
+          </div>
+        </Container>
+      </div>
+    </Stage1FormStateSummary>
+    <ConfirmHandler
+      handleDownload={[Function]}
+      handleSave={[Function]}
+      handleSubmission={[Function]}
+      initialSF2Data={Object {}}
+      initialState={
+        Object {
+          "barcodeSetIsNA": undefined,
+          "containerTypeIsPlate": undefined,
+          "errors": Array [],
+          "numberOfCustomPrimers": undefined,
+          "numberOfPools": undefined,
+          "numberOfSamplesOrLibraries": undefined,
+          "numberOfSamplesOrLibrariesInPools": 1,
+          "numberOfUnpooledSamplesOrLibraries": undefined,
+          "projectID": "12345_Test_Project",
+          "sf2HasCustomPrimers": undefined,
+          "sf2HasPools": undefined,
+          "sf2HasUnpooledSamplesOrLibraries": undefined,
+          "sf2IsDualIndex": undefined,
+          "sf2type": "Library",
+          "submitDisabled": true,
+          "warnings": Array [],
+        }
+      }
+      showHiddenColumns={false}
+      startIndices={
+        Object {
+          "container": "1",
+          "pool": "1",
+          "sampleOrLibrary": "1",
+          "unpooledSubmission": "1",
+        }
+      }
+    >
+      <div>
+        <WarningModal
+          active={false}
+          onCancel={[Function]}
+          onConfirm={[Function]}
+          warnings={Array []}
+        >
+          <Modal
+            autoFocus={true}
+            backdrop={true}
+            backdropTransition={
+              Object {
+                "mountOnEnter": true,
+                "timeout": 150,
+              }
+            }
+            centered={false}
+            fade={true}
+            isOpen={false}
+            keyboard={true}
+            modalTransition={
+              Object {
+                "timeout": 300,
+              }
+            }
+            onClosed={[Function]}
+            onOpened={[Function]}
+            role="dialog"
+            style={
+              Object {
+                "minWidth": "75%",
+              }
+            }
+            zIndex={1050}
+          />
+        </WarningModal>
+        <ConfirmModal
+          active={false}
+          onCancel={[Function]}
+          onConfirm={[Function]}
+        >
+          <Modal
+            autoFocus={true}
+            backdrop={true}
+            backdropTransition={
+              Object {
+                "mountOnEnter": true,
+                "timeout": 150,
+              }
+            }
+            centered={false}
+            fade={true}
+            isOpen={false}
+            keyboard={true}
+            modalTransition={
+              Object {
+                "timeout": 300,
+              }
+            }
+            onClosed={[Function]}
+            onOpened={[Function]}
+            role="dialog"
+            style={
+              Object {
+                "minWidth": "75%",
+              }
+            }
+            zIndex={1050}
+          />
+        </ConfirmModal>
+        <DisableHandler
+          handleDownload={[Function]}
+          handleSave={[Function]}
+          handleSubmission={[Function]}
+          initialSF2Data={Object {}}
+          initialState={
+            Object {
+              "barcodeSetIsNA": undefined,
+              "containerTypeIsPlate": undefined,
+              "errors": Array [],
+              "numberOfCustomPrimers": undefined,
+              "numberOfPools": undefined,
+              "numberOfSamplesOrLibraries": undefined,
+              "numberOfSamplesOrLibrariesInPools": 1,
+              "numberOfUnpooledSamplesOrLibraries": undefined,
+              "projectID": "12345_Test_Project",
+              "sf2HasCustomPrimers": undefined,
+              "sf2HasPools": undefined,
+              "sf2HasUnpooledSamplesOrLibraries": undefined,
+              "sf2IsDualIndex": undefined,
+              "sf2type": "Library",
+              "submitDisabled": true,
+              "warnings": Array [],
+            }
+          }
+          shouldDisableSave={true}
+          shouldDisableSubmit={true}
+          showHiddenColumns={false}
+          startIndices={
+            Object {
+              "container": "1",
+              "pool": "1",
+              "sampleOrLibrary": "1",
+              "unpooledSubmission": "1",
+            }
+          }
+          updateShouldDisableSave={[Function]}
+          updateShouldDisableSubmit={[Function]}
+        >
+          <ShowDocumentationHandler
+            disableSaveButton={[Function]}
+            handleDownload={[Function]}
+            handleSave={[Function]}
+            handleSubmission={[Function]}
+            initialSF2Data={Object {}}
+            initialState={
+              Object {
+                "barcodeSetIsNA": undefined,
+                "containerTypeIsPlate": undefined,
+                "errors": Array [],
+                "numberOfCustomPrimers": undefined,
+                "numberOfPools": undefined,
+                "numberOfSamplesOrLibraries": undefined,
+                "numberOfSamplesOrLibrariesInPools": 1,
+                "numberOfUnpooledSamplesOrLibraries": undefined,
+                "projectID": "12345_Test_Project",
+                "sf2HasCustomPrimers": undefined,
+                "sf2HasPools": undefined,
+                "sf2HasUnpooledSamplesOrLibraries": undefined,
+                "sf2IsDualIndex": undefined,
+                "sf2type": "Library",
+                "submitDisabled": true,
+                "warnings": Array [],
+              }
+            }
+            shouldDisableSave={false}
+            shouldDisableSubmit={false}
+            showDocumentation={[Function]}
+            showHiddenColumns={false}
+            startIndices={
+              Object {
+                "container": "1",
+                "pool": "1",
+                "sampleOrLibrary": "1",
+                "unpooledSubmission": "1",
+              }
+            }
+            updateSaveDisabled={[Function]}
+            updateShouldDisableSubmit={[Function]}
+          >
+            <div>
+              <DocumentationModal
+                active={false}
+                onCancel={[Function]}
+              >
+                <Modal
+                  autoFocus={true}
+                  backdrop={true}
+                  backdropTransition={
+                    Object {
+                      "mountOnEnter": true,
+                      "timeout": 150,
+                    }
+                  }
+                  centered={false}
+                  fade={true}
+                  isOpen={false}
+                  keyboard={true}
+                  modalTransition={
+                    Object {
+                      "timeout": 300,
+                    }
+                  }
+                  onClosed={[Function]}
+                  onOpened={[Function]}
+                  role="dialog"
+                  style={
+                    Object {
+                      "minWidth": "95%",
+                    }
+                  }
+                  zIndex={1050}
+                />
+              </DocumentationModal>
+              <LibrarySF2
+                disableSaveButton={[Function]}
+                handleDownload={[Function]}
+                handleSave={[Function]}
+                handleSubmission={[Function]}
+                initialSF2Data={Object {}}
+                initialState={
+                  Object {
+                    "barcodeSetIsNA": undefined,
+                    "containerTypeIsPlate": undefined,
+                    "errors": Array [],
+                    "numberOfCustomPrimers": undefined,
+                    "numberOfPools": undefined,
+                    "numberOfSamplesOrLibraries": undefined,
+                    "numberOfSamplesOrLibrariesInPools": 1,
+                    "numberOfUnpooledSamplesOrLibraries": undefined,
+                    "projectID": "12345_Test_Project",
+                    "sf2HasCustomPrimers": undefined,
+                    "sf2HasPools": undefined,
+                    "sf2HasUnpooledSamplesOrLibraries": undefined,
+                    "sf2IsDualIndex": undefined,
+                    "sf2type": "Library",
+                    "submitDisabled": true,
+                    "warnings": Array [],
+                  }
+                }
+                shouldDisableSave={false}
+                shouldDisableSubmit={false}
+                showDocumentation={[Function]}
+                showHiddenColumns={false}
+                startIndices={
+                  Object {
+                    "container": "1",
+                    "pool": "1",
+                    "sampleOrLibrary": "1",
+                    "unpooledSubmission": "1",
+                  }
+                }
+                updateSaveDisabled={[Function]}
+                updateShouldDisableSave={[Function]}
+                updateShouldDisableSubmit={[Function]}
+              >
+                <div>
+                  <SF2Validator
+                    columns={
+                      Array [
+                        Object {
+                          "id": "yourLibraryID",
+                          "validation": "required",
+                          "value": "Your Library ID *",
+                          "width": 250,
+                        },
+                        Object {
+                          "autocompleteOptions": Array [
+                            "Acanthamoeba_castellanii_str_neff_1257118",
+                            "Acanthamoeba_lenticulata_29196",
+                            "Acyrthosiphon_pisum_7029",
+                            "Aeromonas_hydrophila_subsp_hydrophila_196023",
+                            "Anas_platyrhynchos_8839",
+                            "Anser_cygnoides_8845",
+                            "Aspergillus_fumigatus_746128",
+                            "Bos_taurus_9913",
+                            "Caenorhabditis_elegans_6239",
+                            "Candida_auris_498019",
+                            "Canis_familiaris_6915",
+                            "Capra_hircus_9925",
+                            "Cavia_porcellus_10141",
+                            "Columba_livia_8932",
+                            "Corvus_cornix_181096",
+                            "Crassostrea_gigas_29159",
+                            "Cricetulus_griseus_10029",
+                            "Cyprinus_carpio_7962",
+                            "Danio_rerio_7955",
+                            "Daphnia_pulex_6669",
+                            "Drosphila_melanogaster_7227",
+                            "Eimeria_maxima_5804",
+                            "Emiliania_huxleyi_2903",
+                            "Equus_caballus_9796",
+                            "Escherichia_coli_str_K12_substr_MG1655_511145",
+                            "Felis_catus_9685",
+                            "Gallus_gallus_9031",
+                            "Gasterosteus_aculeatus_69293",
+                            "Homo_sapiens_9606",
+                            "Hordeum_vulgare_4513",
+                            "Lawsonia_intracellularis_29546",
+                            "Lepeophtheirus_salmonis_72036",
+                            "Meleagris_gallopavo_9103",
+                            "Methylocella_silvestris_199596",
+                            "Mus_musculus_10090",
+                            "Nasonia_vitripennis_7425",
+                            "Ovis_aries_9940",
+                            "Paxillus_involutus_71150",
+                            "Plasmodium_falciparum_5833",
+                            "Poecilia_reticulata_8081",
+                            "Pseudomonas_fluorescens_294",
+                            "Methylocella_silvestris/bl2.ASM2174v1.36",
+                            "Mus_musculus/GRCm38_ens84",
+                            "Mus_musculus/NCBIM37_ens67",
+                            "Rattus_norvegicus_10116",
+                            "Saccharomyces_cerevisiae_4932",
+                            "Salmo_salar_8030",
+                            "Serratia_liquefaciens_614",
+                            "Sus_scrofa_9823",
+                            "Taeniopygia_guttata_59729",
+                            "Trypanosoma_brucei_5691",
+                            "Trypanosoma_congolense_5692",
+                            "Xenopus_tropicalis_8364",
+                            "Xiphophorus_maculatus_8083",
+                            "Metagenome_0",
+                          ],
+                          "header": Object {
+                            "superscriptText": "1",
+                            "tooltipText": "If there are multiple species, please provide multiple species names and NCBI IDs (link to Taxonomy ID presented here - provide further instructions). For unknown species please write \\"unknown\\". Additionally, if this is a metagenomics project, please select \\"metagenome\\".",
+                          },
+                          "id": "speciesTaxonID",
+                          "validation": "required",
+                          "value": "Species_TaxonID *",
+                          "width": 370,
+                        },
+                        Object {
+                          "header": Object {
+                            "required": true,
+                            "superscriptText": "",
+                          },
+                          "id": "conc",
+                          "validation": "required,number",
+                          "value": "Library Conc. (ng/μl) *",
+                          "width": 120,
+                        },
+                        Object {
+                          "header": Object {
+                            "required": true,
+                            "superscriptText": "",
+                          },
+                          "id": "libraryVolume",
+                          "validation": "required,number",
+                          "value": "Library Vol. (μl) *",
+                          "width": 100,
+                        },
+                        Object {
+                          "autocompleteOptions": Array [
+                            "Fluorometric",
+                            "Spectrophotometer",
+                            "Tapestation",
+                          ],
+                          "header": Object {
+                            "superscriptText": "",
+                            "tooltipText": "We strongly recommend a flourometer or gel electrophoresis against a mass standard for quantification of nucleic acids; please supply twice the requested.",
+                          },
+                          "id": "quantificationMethod",
+                          "validation": "required",
+                          "value": "Quantification Method *",
+                          "width": 150,
+                        },
+                        Object {
+                          "header": Object {
+                            "superscriptText": "",
+                            "tooltipText": "Please provide a gel picture, Bioanalyser trace or equivalent for each sample.",
+                          },
+                          "id": "imageAvailable",
+                          "selectOptions": Array [
+                            "Yes",
+                            "No",
+                          ],
+                          "value": "Image Available",
+                          "width": 75,
+                        },
+                        Object {
+                          "autocompleteOptions": Array [
+                            "dH2O",
+                            "10mM Tris (EB)",
+                            "TE",
+                            "low TE",
+                          ],
+                          "header": Object {
+                            "superscriptText": "",
+                            "tooltipText": "e.g. 10mM Tris",
+                          },
+                          "id": "storageBuffer",
+                          "validation": "required",
+                          "value": "Storage Buffer *",
+                          "width": 125,
+                        },
+                        Object {
+                          "id": "libraryType",
+                          "selectOptions": Array [
+                            "DNA-seq",
+                            "RNA-seq",
+                            "ChIP-seq",
+                            "RiboSeq",
+                            "RNAIP-seq",
+                            "RAD-seq",
+                            "ATAC-seq",
+                            "BIS-seq",
+                            "10X DNA",
+                            "10X RNA",
+                            "small RNA",
+                            "Targeted re-sequencing",
+                            "Metagenomics",
+                            "Amplicon",
+                            "CAGE",
+                            "Hi-C",
+                            "CRAC",
+                            "Other",
+                          ],
+                          "validation": "required",
+                          "value": "Library Type *",
+                          "width": 180,
+                        },
+                        Object {
+                          "id": "averageLibrarySize",
+                          "validation": "required",
+                          "value": "Average Library Size (bp) *",
+                          "width": 140,
+                        },
+                        Object {
+                          "formula": [Function],
+                          "header": Object {
+                            "required": true,
+                            "superscriptText": "",
+                          },
+                          "id": "estimatedMolarityCalc",
+                          "value": "Estimated Molarity (nM)",
+                          "width": 120,
+                        },
+                        Object {
+                          "id": "firstIndexI7Sequence",
+                          "validation": "required,nucleotideSequence",
+                          "value": "First Index (I7) Sequence *",
+                          "width": 140,
+                        },
+                        Object {
+                          "header": Object {
+                            "superscriptText": "",
+                          },
+                          "id": "potentialBiologicalContaminants",
+                          "value": "Potential Biological Contaminants",
+                          "width": 250,
+                        },
+                        Object {
+                          "header": Object {
+                            "superscriptText": "",
+                          },
+                          "id": "comments",
+                          "value": "Comments",
+                          "width": 1005,
+                        },
+                      ]
+                    }
+                    data={
+                      Map {
+                        "no custom primer" => "",
+                      }
+                    }
+                    frozenColumns={
+                      Array [
+                        Object {
+                          "value": "EG Library ID",
+                          "width": 130,
+                        },
+                        Object {
+                          "isSubmissionID": true,
+                          "value": "EG Submission ID",
+                          "width": 150,
+                        },
+                      ]
+                    }
+                    frozenGrid={Array []}
+                    handleDownload={[Function]}
+                    handleSave={[Function]}
+                    handleSubmission={[Function]}
+                    id="0"
+                    initialGrid={Array []}
+                    initialState={
+                      Object {
+                        "barcodeSetIsNA": undefined,
+                        "containerTypeIsPlate": undefined,
+                        "errors": Array [],
+                        "numberOfCustomPrimers": undefined,
+                        "numberOfPools": undefined,
+                        "numberOfSamplesOrLibraries": undefined,
+                        "numberOfSamplesOrLibrariesInPools": 1,
+                        "numberOfUnpooledSamplesOrLibraries": undefined,
+                        "projectID": "12345_Test_Project",
+                        "sf2HasCustomPrimers": undefined,
+                        "sf2HasPools": undefined,
+                        "sf2HasUnpooledSamplesOrLibraries": undefined,
+                        "sf2IsDualIndex": undefined,
+                        "sf2type": "Library",
+                        "submitDisabled": true,
+                        "warnings": Array [],
+                      }
+                    }
+                    saveDisabled={false}
+                    showDocumentation={[Function]}
+                    showHiddenColumns={false}
+                    submitDisabled={false}
+                    tableType="Library Information"
+                    topRowNumber={1}
+                    updateGrids={[Function]}
+                    updateHasErrors={[Function]}
+                    updateWarningList={[Function]}
+                    validator={[Function]}
+                  >
+                    <div>
+                      <span>
+                        Please enter the details of your 
+                        libraries
+                         in the grid below. Fields marked with * are required. Please click 
+                        <a
+                          href="#"
+                          onClick={[Function]}
+                        >
+                          here
+                        </a>
+                         for more information on how to use this form.
+                      </span>
+                      <SF2DataSheetWrapper
+                        columns={
+                          Array [
+                            Object {
+                              "id": "yourLibraryID",
+                              "validation": "required",
+                              "value": "Your Library ID *",
+                              "width": 250,
+                            },
+                            Object {
+                              "autocompleteOptions": Array [
+                                "Acanthamoeba_castellanii_str_neff_1257118",
+                                "Acanthamoeba_lenticulata_29196",
+                                "Acyrthosiphon_pisum_7029",
+                                "Aeromonas_hydrophila_subsp_hydrophila_196023",
+                                "Anas_platyrhynchos_8839",
+                                "Anser_cygnoides_8845",
+                                "Aspergillus_fumigatus_746128",
+                                "Bos_taurus_9913",
+                                "Caenorhabditis_elegans_6239",
+                                "Candida_auris_498019",
+                                "Canis_familiaris_6915",
+                                "Capra_hircus_9925",
+                                "Cavia_porcellus_10141",
+                                "Columba_livia_8932",
+                                "Corvus_cornix_181096",
+                                "Crassostrea_gigas_29159",
+                                "Cricetulus_griseus_10029",
+                                "Cyprinus_carpio_7962",
+                                "Danio_rerio_7955",
+                                "Daphnia_pulex_6669",
+                                "Drosphila_melanogaster_7227",
+                                "Eimeria_maxima_5804",
+                                "Emiliania_huxleyi_2903",
+                                "Equus_caballus_9796",
+                                "Escherichia_coli_str_K12_substr_MG1655_511145",
+                                "Felis_catus_9685",
+                                "Gallus_gallus_9031",
+                                "Gasterosteus_aculeatus_69293",
+                                "Homo_sapiens_9606",
+                                "Hordeum_vulgare_4513",
+                                "Lawsonia_intracellularis_29546",
+                                "Lepeophtheirus_salmonis_72036",
+                                "Meleagris_gallopavo_9103",
+                                "Methylocella_silvestris_199596",
+                                "Mus_musculus_10090",
+                                "Nasonia_vitripennis_7425",
+                                "Ovis_aries_9940",
+                                "Paxillus_involutus_71150",
+                                "Plasmodium_falciparum_5833",
+                                "Poecilia_reticulata_8081",
+                                "Pseudomonas_fluorescens_294",
+                                "Methylocella_silvestris/bl2.ASM2174v1.36",
+                                "Mus_musculus/GRCm38_ens84",
+                                "Mus_musculus/NCBIM37_ens67",
+                                "Rattus_norvegicus_10116",
+                                "Saccharomyces_cerevisiae_4932",
+                                "Salmo_salar_8030",
+                                "Serratia_liquefaciens_614",
+                                "Sus_scrofa_9823",
+                                "Taeniopygia_guttata_59729",
+                                "Trypanosoma_brucei_5691",
+                                "Trypanosoma_congolense_5692",
+                                "Xenopus_tropicalis_8364",
+                                "Xiphophorus_maculatus_8083",
+                                "Metagenome_0",
+                              ],
+                              "header": Object {
+                                "superscriptText": "1",
+                                "tooltipText": "If there are multiple species, please provide multiple species names and NCBI IDs (link to Taxonomy ID presented here - provide further instructions). For unknown species please write \\"unknown\\". Additionally, if this is a metagenomics project, please select \\"metagenome\\".",
+                              },
+                              "id": "speciesTaxonID",
+                              "validation": "required",
+                              "value": "Species_TaxonID *",
+                              "width": 370,
+                            },
+                            Object {
+                              "header": Object {
+                                "required": true,
+                                "superscriptText": "",
+                              },
+                              "id": "conc",
+                              "validation": "required,number",
+                              "value": "Library Conc. (ng/μl) *",
+                              "width": 120,
+                            },
+                            Object {
+                              "header": Object {
+                                "required": true,
+                                "superscriptText": "",
+                              },
+                              "id": "libraryVolume",
+                              "validation": "required,number",
+                              "value": "Library Vol. (μl) *",
+                              "width": 100,
+                            },
+                            Object {
+                              "autocompleteOptions": Array [
+                                "Fluorometric",
+                                "Spectrophotometer",
+                                "Tapestation",
+                              ],
+                              "header": Object {
+                                "superscriptText": "",
+                                "tooltipText": "We strongly recommend a flourometer or gel electrophoresis against a mass standard for quantification of nucleic acids; please supply twice the requested.",
+                              },
+                              "id": "quantificationMethod",
+                              "validation": "required",
+                              "value": "Quantification Method *",
+                              "width": 150,
+                            },
+                            Object {
+                              "header": Object {
+                                "superscriptText": "",
+                                "tooltipText": "Please provide a gel picture, Bioanalyser trace or equivalent for each sample.",
+                              },
+                              "id": "imageAvailable",
+                              "selectOptions": Array [
+                                "Yes",
+                                "No",
+                              ],
+                              "value": "Image Available",
+                              "width": 75,
+                            },
+                            Object {
+                              "autocompleteOptions": Array [
+                                "dH2O",
+                                "10mM Tris (EB)",
+                                "TE",
+                                "low TE",
+                              ],
+                              "header": Object {
+                                "superscriptText": "",
+                                "tooltipText": "e.g. 10mM Tris",
+                              },
+                              "id": "storageBuffer",
+                              "validation": "required",
+                              "value": "Storage Buffer *",
+                              "width": 125,
+                            },
+                            Object {
+                              "id": "libraryType",
+                              "selectOptions": Array [
+                                "DNA-seq",
+                                "RNA-seq",
+                                "ChIP-seq",
+                                "RiboSeq",
+                                "RNAIP-seq",
+                                "RAD-seq",
+                                "ATAC-seq",
+                                "BIS-seq",
+                                "10X DNA",
+                                "10X RNA",
+                                "small RNA",
+                                "Targeted re-sequencing",
+                                "Metagenomics",
+                                "Amplicon",
+                                "CAGE",
+                                "Hi-C",
+                                "CRAC",
+                                "Other",
+                              ],
+                              "validation": "required",
+                              "value": "Library Type *",
+                              "width": 180,
+                            },
+                            Object {
+                              "id": "averageLibrarySize",
+                              "validation": "required",
+                              "value": "Average Library Size (bp) *",
+                              "width": 140,
+                            },
+                            Object {
+                              "formula": [Function],
+                              "header": Object {
+                                "required": true,
+                                "superscriptText": "",
+                              },
+                              "id": "estimatedMolarityCalc",
+                              "value": "Estimated Molarity (nM)",
+                              "width": 120,
+                            },
+                            Object {
+                              "id": "firstIndexI7Sequence",
+                              "validation": "required,nucleotideSequence",
+                              "value": "First Index (I7) Sequence *",
+                              "width": 140,
+                            },
+                            Object {
+                              "header": Object {
+                                "superscriptText": "",
+                              },
+                              "id": "potentialBiologicalContaminants",
+                              "value": "Potential Biological Contaminants",
+                              "width": 250,
+                            },
+                            Object {
+                              "header": Object {
+                                "superscriptText": "",
+                              },
+                              "id": "comments",
+                              "value": "Comments",
+                              "width": 1005,
+                            },
+                          ]
+                        }
+                        data={
+                          Map {
+                            "no custom primer" => "",
+                          }
+                        }
+                        frozenColumns={
+                          Array [
+                            Object {
+                              "value": "EG Library ID",
+                              "width": 130,
+                            },
+                            Object {
+                              "isSubmissionID": true,
+                              "value": "EG Submission ID",
+                              "width": 150,
+                            },
+                          ]
+                        }
+                        frozenGrid={Array []}
+                        id="0"
+                        initialGrid={Array []}
+                        onUpdateGrid={[Function]}
+                        projectID="12345_Test_Project"
+                        sf2type="Library"
+                        showHiddenColumns={false}
+                        tableType="Library Information"
+                        topRowNumber={1}
+                      >
+                        <SF2DataSheet
+                          bodyHeight={25}
+                          bottomPadding={140}
+                          columns={
+                            Array [
+                              Object {
+                                "id": "yourLibraryID",
+                                "validation": "required",
+                                "value": "Your Library ID *",
+                                "width": 250,
+                              },
+                              Object {
+                                "autocompleteOptions": Array [
+                                  "Acanthamoeba_castellanii_str_neff_1257118",
+                                  "Acanthamoeba_lenticulata_29196",
+                                  "Acyrthosiphon_pisum_7029",
+                                  "Aeromonas_hydrophila_subsp_hydrophila_196023",
+                                  "Anas_platyrhynchos_8839",
+                                  "Anser_cygnoides_8845",
+                                  "Aspergillus_fumigatus_746128",
+                                  "Bos_taurus_9913",
+                                  "Caenorhabditis_elegans_6239",
+                                  "Candida_auris_498019",
+                                  "Canis_familiaris_6915",
+                                  "Capra_hircus_9925",
+                                  "Cavia_porcellus_10141",
+                                  "Columba_livia_8932",
+                                  "Corvus_cornix_181096",
+                                  "Crassostrea_gigas_29159",
+                                  "Cricetulus_griseus_10029",
+                                  "Cyprinus_carpio_7962",
+                                  "Danio_rerio_7955",
+                                  "Daphnia_pulex_6669",
+                                  "Drosphila_melanogaster_7227",
+                                  "Eimeria_maxima_5804",
+                                  "Emiliania_huxleyi_2903",
+                                  "Equus_caballus_9796",
+                                  "Escherichia_coli_str_K12_substr_MG1655_511145",
+                                  "Felis_catus_9685",
+                                  "Gallus_gallus_9031",
+                                  "Gasterosteus_aculeatus_69293",
+                                  "Homo_sapiens_9606",
+                                  "Hordeum_vulgare_4513",
+                                  "Lawsonia_intracellularis_29546",
+                                  "Lepeophtheirus_salmonis_72036",
+                                  "Meleagris_gallopavo_9103",
+                                  "Methylocella_silvestris_199596",
+                                  "Mus_musculus_10090",
+                                  "Nasonia_vitripennis_7425",
+                                  "Ovis_aries_9940",
+                                  "Paxillus_involutus_71150",
+                                  "Plasmodium_falciparum_5833",
+                                  "Poecilia_reticulata_8081",
+                                  "Pseudomonas_fluorescens_294",
+                                  "Methylocella_silvestris/bl2.ASM2174v1.36",
+                                  "Mus_musculus/GRCm38_ens84",
+                                  "Mus_musculus/NCBIM37_ens67",
+                                  "Rattus_norvegicus_10116",
+                                  "Saccharomyces_cerevisiae_4932",
+                                  "Salmo_salar_8030",
+                                  "Serratia_liquefaciens_614",
+                                  "Sus_scrofa_9823",
+                                  "Taeniopygia_guttata_59729",
+                                  "Trypanosoma_brucei_5691",
+                                  "Trypanosoma_congolense_5692",
+                                  "Xenopus_tropicalis_8364",
+                                  "Xiphophorus_maculatus_8083",
+                                  "Metagenome_0",
+                                ],
+                                "header": Object {
+                                  "superscriptText": "1",
+                                  "tooltipText": "If there are multiple species, please provide multiple species names and NCBI IDs (link to Taxonomy ID presented here - provide further instructions). For unknown species please write \\"unknown\\". Additionally, if this is a metagenomics project, please select \\"metagenome\\".",
+                                },
+                                "id": "speciesTaxonID",
+                                "validation": "required",
+                                "value": "Species_TaxonID *",
+                                "width": 370,
+                              },
+                              Object {
+                                "header": Object {
+                                  "required": true,
+                                  "superscriptText": "",
+                                },
+                                "id": "conc",
+                                "validation": "required,number",
+                                "value": "Library Conc. (ng/μl) *",
+                                "width": 120,
+                              },
+                              Object {
+                                "header": Object {
+                                  "required": true,
+                                  "superscriptText": "",
+                                },
+                                "id": "libraryVolume",
+                                "validation": "required,number",
+                                "value": "Library Vol. (μl) *",
+                                "width": 100,
+                              },
+                              Object {
+                                "autocompleteOptions": Array [
+                                  "Fluorometric",
+                                  "Spectrophotometer",
+                                  "Tapestation",
+                                ],
+                                "header": Object {
+                                  "superscriptText": "",
+                                  "tooltipText": "We strongly recommend a flourometer or gel electrophoresis against a mass standard for quantification of nucleic acids; please supply twice the requested.",
+                                },
+                                "id": "quantificationMethod",
+                                "validation": "required",
+                                "value": "Quantification Method *",
+                                "width": 150,
+                              },
+                              Object {
+                                "header": Object {
+                                  "superscriptText": "",
+                                  "tooltipText": "Please provide a gel picture, Bioanalyser trace or equivalent for each sample.",
+                                },
+                                "id": "imageAvailable",
+                                "selectOptions": Array [
+                                  "Yes",
+                                  "No",
+                                ],
+                                "value": "Image Available",
+                                "width": 75,
+                              },
+                              Object {
+                                "autocompleteOptions": Array [
+                                  "dH2O",
+                                  "10mM Tris (EB)",
+                                  "TE",
+                                  "low TE",
+                                ],
+                                "header": Object {
+                                  "superscriptText": "",
+                                  "tooltipText": "e.g. 10mM Tris",
+                                },
+                                "id": "storageBuffer",
+                                "validation": "required",
+                                "value": "Storage Buffer *",
+                                "width": 125,
+                              },
+                              Object {
+                                "id": "libraryType",
+                                "selectOptions": Array [
+                                  "DNA-seq",
+                                  "RNA-seq",
+                                  "ChIP-seq",
+                                  "RiboSeq",
+                                  "RNAIP-seq",
+                                  "RAD-seq",
+                                  "ATAC-seq",
+                                  "BIS-seq",
+                                  "10X DNA",
+                                  "10X RNA",
+                                  "small RNA",
+                                  "Targeted re-sequencing",
+                                  "Metagenomics",
+                                  "Amplicon",
+                                  "CAGE",
+                                  "Hi-C",
+                                  "CRAC",
+                                  "Other",
+                                ],
+                                "validation": "required",
+                                "value": "Library Type *",
+                                "width": 180,
+                              },
+                              Object {
+                                "id": "averageLibrarySize",
+                                "validation": "required",
+                                "value": "Average Library Size (bp) *",
+                                "width": 140,
+                              },
+                              Object {
+                                "formula": [Function],
+                                "header": Object {
+                                  "required": true,
+                                  "superscriptText": "",
+                                },
+                                "id": "estimatedMolarityCalc",
+                                "value": "Estimated Molarity (nM)",
+                                "width": 120,
+                              },
+                              Object {
+                                "id": "firstIndexI7Sequence",
+                                "validation": "required,nucleotideSequence",
+                                "value": "First Index (I7) Sequence *",
+                                "width": 140,
+                              },
+                              Object {
+                                "header": Object {
+                                  "superscriptText": "",
+                                },
+                                "id": "potentialBiologicalContaminants",
+                                "value": "Potential Biological Contaminants",
+                                "width": 250,
+                              },
+                              Object {
+                                "header": Object {
+                                  "superscriptText": "",
+                                },
+                                "id": "comments",
+                                "value": "Comments",
+                                "width": 1005,
+                              },
+                            ]
+                          }
+                          data={
+                            Map {
+                              "no custom primer" => "",
+                            }
+                          }
+                          frozenColumns={
+                            Array [
+                              Object {
+                                "value": "EG Library ID",
+                                "width": 130,
+                              },
+                              Object {
+                                "isSubmissionID": true,
+                                "value": "EG Submission ID",
+                                "width": 150,
+                              },
+                            ]
+                          }
+                          frozenGrid={Array []}
+                          id="0"
+                          initialBodyGrid={Array []}
+                          onUpdateBodyGrid={[Function]}
+                          rowColours={Array []}
+                          showHiddenColumns={false}
+                          uuid="0"
+                          width="97vw"
+                        >
+                          <div
+                            style={
+                              Object {
+                                "height": "auto",
+                                "overflow": "hidden",
+                                "width": 989,
+                              }
+                            }
+                          >
+                            <span>
+                              <UndoRedoPanel
+                                onRedo={[Function]}
+                                onUndo={[Function]}
+                                redoEnabled={false}
+                                undoEnabled={false}
+                                uuid="undoRedo"
+                              >
+                                <div>
+                                  <button
+                                    data-uuid="undoRedo"
+                                    disabled={true}
+                                    onClick={[Function]}
+                                  >
+                                    Undo
+                                  </button>
+                                  <button
+                                    data-uuid="undoRedo"
+                                    disabled={true}
+                                    onClick={[Function]}
+                                  >
+                                    Redo
+                                  </button>
+                                </div>
+                              </UndoRedoPanel>
+                              <ControlPanel
+                                disabled={true}
+                                onFillCell={[Function]}
+                                onFillRow={[Function]}
+                                uuid="0"
+                              >
+                                <div>
+                                  <button
+                                    data-uuid="0"
+                                    disabled={true}
+                                    onClick={[Function]}
+                                  >
+                                    Fill down row
+                                  </button>
+                                  <button
+                                    data-uuid="0"
+                                    disabled={true}
+                                    onClick={[Function]}
+                                  >
+                                    Fill down cell
+                                  </button>
+                                </div>
+                              </ControlPanel>
+                            </span>
+                            <ResizableBox
+                              axis="y"
+                              className="box"
+                              handleSize={
+                                Array [
+                                  20,
+                                  20,
+                                ]
+                              }
+                              height={250}
+                              maxConstraints={
+                                Array [
+                                  0,
+                                  199,
+                                ]
+                              }
+                              minConstraints={
+                                Array [
+                                  0,
+                                  220,
+                                ]
+                              }
+                              onResize={[Function]}
+                              width={989}
+                            >
+                              <Resizable
+                                axis="y"
+                                handleSize={
+                                  Array [
+                                    20,
+                                    20,
+                                  ]
+                                }
+                                height={250}
+                                lockAspectRatio={false}
+                                maxConstraints={
+                                  Array [
+                                    0,
+                                    199,
+                                  ]
+                                }
+                                minConstraints={
+                                  Array [
+                                    0,
+                                    220,
+                                  ]
+                                }
+                                onResize={[Function]}
+                                width={989}
+                              >
+                                <div
+                                  className="box react-resizable"
+                                  style={
+                                    Object {
+                                      "height": "250px",
+                                      "width": "989px",
+                                    }
+                                  }
+                                >
+                                  <table
+                                    style={
+                                      Object {
+                                        "border": "0px solid grey",
+                                      }
+                                    }
+                                  >
+                                    <tbody>
+                                      <tr>
+                                        <td
+                                          style={
+                                            Object {
+                                              "verticalAlign": "top",
+                                            }
+                                          }
+                                        >
+                                          <div
+                                            style={
+                                              Object {
+                                                "border": "0px solid grey",
+                                              }
+                                            }
+                                          >
+                                            <FrozenColumns
+                                              frozenColumns={
+                                                Array [
+                                                  Object {
+                                                    "value": "EG Library ID",
+                                                    "width": 130,
+                                                  },
+                                                  Object {
+                                                    "isSubmissionID": true,
+                                                    "value": "EG Submission ID",
+                                                    "width": 150,
+                                                  },
+                                                ]
+                                              }
+                                              frozenRowsWidth={280}
+                                            >
+                                              <div
+                                                style={
+                                                  Object {
+                                                    "border": "0px solid gray",
+                                                    "overflow": "hidden",
+                                                    "width": 280,
+                                                  }
+                                                }
+                                              >
+                                                <span
+                                                  className="data-grid-container"
+                                                  tabIndex="0"
+                                                >
+                                                  <table
+                                                    className="data-grid"
+                                                  >
+                                                    <tbody>
+                                                      <tr>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="FrozenColumn0"
+                                                        >
+                                                          <div
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 130,
+                                                              }
+                                                            }
+                                                          >
+                                                            EG Library ID
+                                                          </div>
+                                                        </th>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="FrozenColumn1"
+                                                        >
+                                                          <div
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 150,
+                                                              }
+                                                            }
+                                                          >
+                                                            EG Submission ID
+                                                          </div>
+                                                        </th>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                                </span>
+                                              </div>
+                                            </FrozenColumns>
+                                          </div>
+                                        </td>
+                                        <td
+                                          style={
+                                            Object {
+                                              "verticalAlign": "top",
+                                            }
+                                          }
+                                        >
+                                          <div
+                                            style={
+                                              Object {
+                                                "border": "0px solid grey",
+                                              }
+                                            }
+                                          >
+                                            <ForwardRef(BodyHeader)
+                                              bodyHeaderWidth={692}
+                                              columns={
+                                                Array [
+                                                  Object {
+                                                    "id": "yourLibraryID",
+                                                    "validation": "required",
+                                                    "value": "Your Library ID *",
+                                                    "width": 250,
+                                                  },
+                                                  Object {
+                                                    "autocompleteOptions": Array [
+                                                      "Acanthamoeba_castellanii_str_neff_1257118",
+                                                      "Acanthamoeba_lenticulata_29196",
+                                                      "Acyrthosiphon_pisum_7029",
+                                                      "Aeromonas_hydrophila_subsp_hydrophila_196023",
+                                                      "Anas_platyrhynchos_8839",
+                                                      "Anser_cygnoides_8845",
+                                                      "Aspergillus_fumigatus_746128",
+                                                      "Bos_taurus_9913",
+                                                      "Caenorhabditis_elegans_6239",
+                                                      "Candida_auris_498019",
+                                                      "Canis_familiaris_6915",
+                                                      "Capra_hircus_9925",
+                                                      "Cavia_porcellus_10141",
+                                                      "Columba_livia_8932",
+                                                      "Corvus_cornix_181096",
+                                                      "Crassostrea_gigas_29159",
+                                                      "Cricetulus_griseus_10029",
+                                                      "Cyprinus_carpio_7962",
+                                                      "Danio_rerio_7955",
+                                                      "Daphnia_pulex_6669",
+                                                      "Drosphila_melanogaster_7227",
+                                                      "Eimeria_maxima_5804",
+                                                      "Emiliania_huxleyi_2903",
+                                                      "Equus_caballus_9796",
+                                                      "Escherichia_coli_str_K12_substr_MG1655_511145",
+                                                      "Felis_catus_9685",
+                                                      "Gallus_gallus_9031",
+                                                      "Gasterosteus_aculeatus_69293",
+                                                      "Homo_sapiens_9606",
+                                                      "Hordeum_vulgare_4513",
+                                                      "Lawsonia_intracellularis_29546",
+                                                      "Lepeophtheirus_salmonis_72036",
+                                                      "Meleagris_gallopavo_9103",
+                                                      "Methylocella_silvestris_199596",
+                                                      "Mus_musculus_10090",
+                                                      "Nasonia_vitripennis_7425",
+                                                      "Ovis_aries_9940",
+                                                      "Paxillus_involutus_71150",
+                                                      "Plasmodium_falciparum_5833",
+                                                      "Poecilia_reticulata_8081",
+                                                      "Pseudomonas_fluorescens_294",
+                                                      "Methylocella_silvestris/bl2.ASM2174v1.36",
+                                                      "Mus_musculus/GRCm38_ens84",
+                                                      "Mus_musculus/NCBIM37_ens67",
+                                                      "Rattus_norvegicus_10116",
+                                                      "Saccharomyces_cerevisiae_4932",
+                                                      "Salmo_salar_8030",
+                                                      "Serratia_liquefaciens_614",
+                                                      "Sus_scrofa_9823",
+                                                      "Taeniopygia_guttata_59729",
+                                                      "Trypanosoma_brucei_5691",
+                                                      "Trypanosoma_congolense_5692",
+                                                      "Xenopus_tropicalis_8364",
+                                                      "Xiphophorus_maculatus_8083",
+                                                      "Metagenome_0",
+                                                    ],
+                                                    "header": Object {
+                                                      "superscriptText": "1",
+                                                      "tooltipText": "If there are multiple species, please provide multiple species names and NCBI IDs (link to Taxonomy ID presented here - provide further instructions). For unknown species please write \\"unknown\\". Additionally, if this is a metagenomics project, please select \\"metagenome\\".",
+                                                    },
+                                                    "id": "speciesTaxonID",
+                                                    "validation": "required",
+                                                    "value": "Species_TaxonID *",
+                                                    "width": 370,
+                                                  },
+                                                  Object {
+                                                    "header": Object {
+                                                      "required": true,
+                                                      "superscriptText": "",
+                                                    },
+                                                    "id": "conc",
+                                                    "validation": "required,number",
+                                                    "value": "Library Conc. (ng/μl) *",
+                                                    "width": 120,
+                                                  },
+                                                  Object {
+                                                    "header": Object {
+                                                      "required": true,
+                                                      "superscriptText": "",
+                                                    },
+                                                    "id": "libraryVolume",
+                                                    "validation": "required,number",
+                                                    "value": "Library Vol. (μl) *",
+                                                    "width": 100,
+                                                  },
+                                                  Object {
+                                                    "autocompleteOptions": Array [
+                                                      "Fluorometric",
+                                                      "Spectrophotometer",
+                                                      "Tapestation",
+                                                    ],
+                                                    "header": Object {
+                                                      "superscriptText": "",
+                                                      "tooltipText": "We strongly recommend a flourometer or gel electrophoresis against a mass standard for quantification of nucleic acids; please supply twice the requested.",
+                                                    },
+                                                    "id": "quantificationMethod",
+                                                    "validation": "required",
+                                                    "value": "Quantification Method *",
+                                                    "width": 150,
+                                                  },
+                                                  Object {
+                                                    "header": Object {
+                                                      "superscriptText": "",
+                                                      "tooltipText": "Please provide a gel picture, Bioanalyser trace or equivalent for each sample.",
+                                                    },
+                                                    "id": "imageAvailable",
+                                                    "selectOptions": Array [
+                                                      "Yes",
+                                                      "No",
+                                                    ],
+                                                    "value": "Image Available",
+                                                    "width": 75,
+                                                  },
+                                                  Object {
+                                                    "autocompleteOptions": Array [
+                                                      "dH2O",
+                                                      "10mM Tris (EB)",
+                                                      "TE",
+                                                      "low TE",
+                                                    ],
+                                                    "header": Object {
+                                                      "superscriptText": "",
+                                                      "tooltipText": "e.g. 10mM Tris",
+                                                    },
+                                                    "id": "storageBuffer",
+                                                    "validation": "required",
+                                                    "value": "Storage Buffer *",
+                                                    "width": 125,
+                                                  },
+                                                  Object {
+                                                    "id": "libraryType",
+                                                    "selectOptions": Array [
+                                                      "DNA-seq",
+                                                      "RNA-seq",
+                                                      "ChIP-seq",
+                                                      "RiboSeq",
+                                                      "RNAIP-seq",
+                                                      "RAD-seq",
+                                                      "ATAC-seq",
+                                                      "BIS-seq",
+                                                      "10X DNA",
+                                                      "10X RNA",
+                                                      "small RNA",
+                                                      "Targeted re-sequencing",
+                                                      "Metagenomics",
+                                                      "Amplicon",
+                                                      "CAGE",
+                                                      "Hi-C",
+                                                      "CRAC",
+                                                      "Other",
+                                                    ],
+                                                    "validation": "required",
+                                                    "value": "Library Type *",
+                                                    "width": 180,
+                                                  },
+                                                  Object {
+                                                    "id": "averageLibrarySize",
+                                                    "validation": "required",
+                                                    "value": "Average Library Size (bp) *",
+                                                    "width": 140,
+                                                  },
+                                                  Object {
+                                                    "formula": [Function],
+                                                    "header": Object {
+                                                      "required": true,
+                                                      "superscriptText": "",
+                                                    },
+                                                    "id": "estimatedMolarityCalc",
+                                                    "value": "Estimated Molarity (nM)",
+                                                    "width": 120,
+                                                  },
+                                                  Object {
+                                                    "id": "firstIndexI7Sequence",
+                                                    "validation": "required,nucleotideSequence",
+                                                    "value": "First Index (I7) Sequence *",
+                                                    "width": 140,
+                                                  },
+                                                  Object {
+                                                    "header": Object {
+                                                      "superscriptText": "",
+                                                    },
+                                                    "id": "potentialBiologicalContaminants",
+                                                    "value": "Potential Biological Contaminants",
+                                                    "width": 250,
+                                                  },
+                                                  Object {
+                                                    "header": Object {
+                                                      "superscriptText": "",
+                                                    },
+                                                    "id": "comments",
+                                                    "value": "Comments",
+                                                    "width": 1005,
+                                                  },
+                                                ]
+                                              }
+                                            >
+                                              <div
+                                                style={
+                                                  Object {
+                                                    "border": "0px solid gray",
+                                                    "overflow": "hidden",
+                                                    "width": 692,
+                                                  }
+                                                }
+                                              >
+                                                <span
+                                                  className="data-grid-container"
+                                                  tabIndex="0"
+                                                >
+                                                  <table
+                                                    className="data-grid"
+                                                  >
+                                                    <thead>
+                                                      <tr>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="BodyHeader0"
+                                                        >
+                                                          <div
+                                                            id="BodyHeader0_id"
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 249,
+                                                              }
+                                                            }
+                                                          >
+                                                            Your Library ID *
+                                                          </div>
+                                                        </th>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="BodyHeader1"
+                                                        >
+                                                          <UncontrolledTooltip
+                                                            placement="top"
+                                                            target="BodyHeader1_id"
+                                                          >
+                                                            <Tooltip
+                                                              autohide={true}
+                                                              delay={
+                                                                Object {
+                                                                  "hide": 250,
+                                                                  "show": 0,
+                                                                }
+                                                              }
+                                                              hideArrow={false}
+                                                              isOpen={false}
+                                                              placement="top"
+                                                              placementPrefix="bs-tooltip"
+                                                              target="BodyHeader1_id"
+                                                              toggle={[Function]}
+                                                            />
+                                                          </UncontrolledTooltip>
+                                                          <div
+                                                            id="BodyHeader1_id"
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 369,
+                                                              }
+                                                            }
+                                                          >
+                                                            Species_TaxonID *
+                                                          </div>
+                                                        </th>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="BodyHeader2"
+                                                        >
+                                                          <div
+                                                            id="BodyHeader2_id"
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 119,
+                                                              }
+                                                            }
+                                                          >
+                                                            Library Conc. (ng/μl) *
+                                                          </div>
+                                                        </th>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="BodyHeader3"
+                                                        >
+                                                          <div
+                                                            id="BodyHeader3_id"
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 99,
+                                                              }
+                                                            }
+                                                          >
+                                                            Library Vol. (μl) *
+                                                          </div>
+                                                        </th>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="BodyHeader4"
+                                                        >
+                                                          <UncontrolledTooltip
+                                                            placement="top"
+                                                            target="BodyHeader4_id"
+                                                          >
+                                                            <Tooltip
+                                                              autohide={true}
+                                                              delay={
+                                                                Object {
+                                                                  "hide": 250,
+                                                                  "show": 0,
+                                                                }
+                                                              }
+                                                              hideArrow={false}
+                                                              isOpen={false}
+                                                              placement="top"
+                                                              placementPrefix="bs-tooltip"
+                                                              target="BodyHeader4_id"
+                                                              toggle={[Function]}
+                                                            />
+                                                          </UncontrolledTooltip>
+                                                          <div
+                                                            id="BodyHeader4_id"
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 149,
+                                                              }
+                                                            }
+                                                          >
+                                                            Quantification Method *
+                                                          </div>
+                                                        </th>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="BodyHeader5"
+                                                        >
+                                                          <UncontrolledTooltip
+                                                            placement="top"
+                                                            target="BodyHeader5_id"
+                                                          >
+                                                            <Tooltip
+                                                              autohide={true}
+                                                              delay={
+                                                                Object {
+                                                                  "hide": 250,
+                                                                  "show": 0,
+                                                                }
+                                                              }
+                                                              hideArrow={false}
+                                                              isOpen={false}
+                                                              placement="top"
+                                                              placementPrefix="bs-tooltip"
+                                                              target="BodyHeader5_id"
+                                                              toggle={[Function]}
+                                                            />
+                                                          </UncontrolledTooltip>
+                                                          <div
+                                                            id="BodyHeader5_id"
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 74,
+                                                              }
+                                                            }
+                                                          >
+                                                            Image Available
+                                                          </div>
+                                                        </th>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="BodyHeader6"
+                                                        >
+                                                          <UncontrolledTooltip
+                                                            placement="top"
+                                                            target="BodyHeader6_id"
+                                                          >
+                                                            <Tooltip
+                                                              autohide={true}
+                                                              delay={
+                                                                Object {
+                                                                  "hide": 250,
+                                                                  "show": 0,
+                                                                }
+                                                              }
+                                                              hideArrow={false}
+                                                              isOpen={false}
+                                                              placement="top"
+                                                              placementPrefix="bs-tooltip"
+                                                              target="BodyHeader6_id"
+                                                              toggle={[Function]}
+                                                            />
+                                                          </UncontrolledTooltip>
+                                                          <div
+                                                            id="BodyHeader6_id"
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 124,
+                                                              }
+                                                            }
+                                                          >
+                                                            Storage Buffer *
+                                                          </div>
+                                                        </th>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="BodyHeader7"
+                                                        >
+                                                          <div
+                                                            id="BodyHeader7_id"
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 179,
+                                                              }
+                                                            }
+                                                          >
+                                                            Library Type *
+                                                          </div>
+                                                        </th>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="BodyHeader8"
+                                                        >
+                                                          <div
+                                                            id="BodyHeader8_id"
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 139,
+                                                              }
+                                                            }
+                                                          >
+                                                            Average Library Size (bp) *
+                                                          </div>
+                                                        </th>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="BodyHeader9"
+                                                        >
+                                                          <div
+                                                            id="BodyHeader9_id"
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 119,
+                                                              }
+                                                            }
+                                                          >
+                                                            Estimated Molarity (nM)
+                                                          </div>
+                                                        </th>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="BodyHeader10"
+                                                        >
+                                                          <div
+                                                            id="BodyHeader10_id"
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 139,
+                                                              }
+                                                            }
+                                                          >
+                                                            First Index (I7) Sequence *
+                                                          </div>
+                                                        </th>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="BodyHeader11"
+                                                        >
+                                                          <div
+                                                            id="BodyHeader11_id"
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 249,
+                                                              }
+                                                            }
+                                                          >
+                                                            Potential Biological Contaminants
+                                                          </div>
+                                                        </th>
+                                                        <th
+                                                          className="cell read-only"
+                                                          key="BodyHeader12"
+                                                        >
+                                                          <div
+                                                            id="BodyHeader12_id"
+                                                            style={
+                                                              Object {
+                                                                "height": "50px",
+                                                                "width": 1004,
+                                                              }
+                                                            }
+                                                          >
+                                                            Comments
+                                                          </div>
+                                                        </th>
+                                                      </tr>
+                                                    </thead>
+                                                  </table>
+                                                </span>
+                                              </div>
+                                            </ForwardRef(BodyHeader)>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td
+                                          style={
+                                            Object {
+                                              "verticalAlign": "top",
+                                            }
+                                          }
+                                        >
+                                          <div
+                                            style={
+                                              Object {
+                                                "border": "0px solid grey",
+                                              }
+                                            }
+                                          >
+                                            <ForwardRef(FrozenRows)
+                                              bottomPadding={140}
+                                              frozenColumns={
+                                                Array [
+                                                  Object {
+                                                    "value": "EG Library ID",
+                                                    "width": 130,
+                                                  },
+                                                  Object {
+                                                    "isSubmissionID": true,
+                                                    "value": "EG Submission ID",
+                                                    "width": 150,
+                                                  },
+                                                ]
+                                              }
+                                              frozenGrid={Array []}
+                                              frozenRowsWidth={280}
+                                              maxHeight={175}
+                                            >
+                                              <div
+                                                style={
+                                                  Object {
+                                                    "border": "0px solid gray",
+                                                    "maxHeight": 175,
+                                                    "overflow": "hidden",
+                                                    "width": 280,
+                                                  }
+                                                }
+                                              >
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "paddingBottom": 156,
+                                                    }
+                                                  }
+                                                >
+                                                  <span
+                                                    className="data-grid-container"
+                                                    tabIndex="0"
+                                                  >
+                                                    <table
+                                                      className="data-grid"
+                                                    >
+                                                      <tbody />
+                                                    </table>
+                                                  </span>
+                                                </div>
+                                              </div>
+                                            </ForwardRef(FrozenRows)>
+                                          </div>
+                                        </td>
+                                        <td
+                                          style={
+                                            Object {
+                                              "verticalAlign": "top",
+                                            }
+                                          }
+                                        >
+                                          <div
+                                            style={
+                                              Object {
+                                                "border": "0px solid grey",
+                                              }
+                                            }
+                                          >
+                                            <BodyWrapper
+                                              bodyHeight={50}
+                                              bodyWidth={692}
+                                              bottomPadding={140}
+                                              columns={
+                                                Array [
+                                                  Object {
+                                                    "id": "yourLibraryID",
+                                                    "validation": "required",
+                                                    "value": "Your Library ID *",
+                                                    "width": 250,
+                                                  },
+                                                  Object {
+                                                    "autocompleteOptions": Array [
+                                                      "Acanthamoeba_castellanii_str_neff_1257118",
+                                                      "Acanthamoeba_lenticulata_29196",
+                                                      "Acyrthosiphon_pisum_7029",
+                                                      "Aeromonas_hydrophila_subsp_hydrophila_196023",
+                                                      "Anas_platyrhynchos_8839",
+                                                      "Anser_cygnoides_8845",
+                                                      "Aspergillus_fumigatus_746128",
+                                                      "Bos_taurus_9913",
+                                                      "Caenorhabditis_elegans_6239",
+                                                      "Candida_auris_498019",
+                                                      "Canis_familiaris_6915",
+                                                      "Capra_hircus_9925",
+                                                      "Cavia_porcellus_10141",
+                                                      "Columba_livia_8932",
+                                                      "Corvus_cornix_181096",
+                                                      "Crassostrea_gigas_29159",
+                                                      "Cricetulus_griseus_10029",
+                                                      "Cyprinus_carpio_7962",
+                                                      "Danio_rerio_7955",
+                                                      "Daphnia_pulex_6669",
+                                                      "Drosphila_melanogaster_7227",
+                                                      "Eimeria_maxima_5804",
+                                                      "Emiliania_huxleyi_2903",
+                                                      "Equus_caballus_9796",
+                                                      "Escherichia_coli_str_K12_substr_MG1655_511145",
+                                                      "Felis_catus_9685",
+                                                      "Gallus_gallus_9031",
+                                                      "Gasterosteus_aculeatus_69293",
+                                                      "Homo_sapiens_9606",
+                                                      "Hordeum_vulgare_4513",
+                                                      "Lawsonia_intracellularis_29546",
+                                                      "Lepeophtheirus_salmonis_72036",
+                                                      "Meleagris_gallopavo_9103",
+                                                      "Methylocella_silvestris_199596",
+                                                      "Mus_musculus_10090",
+                                                      "Nasonia_vitripennis_7425",
+                                                      "Ovis_aries_9940",
+                                                      "Paxillus_involutus_71150",
+                                                      "Plasmodium_falciparum_5833",
+                                                      "Poecilia_reticulata_8081",
+                                                      "Pseudomonas_fluorescens_294",
+                                                      "Methylocella_silvestris/bl2.ASM2174v1.36",
+                                                      "Mus_musculus/GRCm38_ens84",
+                                                      "Mus_musculus/NCBIM37_ens67",
+                                                      "Rattus_norvegicus_10116",
+                                                      "Saccharomyces_cerevisiae_4932",
+                                                      "Salmo_salar_8030",
+                                                      "Serratia_liquefaciens_614",
+                                                      "Sus_scrofa_9823",
+                                                      "Taeniopygia_guttata_59729",
+                                                      "Trypanosoma_brucei_5691",
+                                                      "Trypanosoma_congolense_5692",
+                                                      "Xenopus_tropicalis_8364",
+                                                      "Xiphophorus_maculatus_8083",
+                                                      "Metagenome_0",
+                                                    ],
+                                                    "header": Object {
+                                                      "superscriptText": "1",
+                                                      "tooltipText": "If there are multiple species, please provide multiple species names and NCBI IDs (link to Taxonomy ID presented here - provide further instructions). For unknown species please write \\"unknown\\". Additionally, if this is a metagenomics project, please select \\"metagenome\\".",
+                                                    },
+                                                    "id": "speciesTaxonID",
+                                                    "validation": "required",
+                                                    "value": "Species_TaxonID *",
+                                                    "width": 370,
+                                                  },
+                                                  Object {
+                                                    "header": Object {
+                                                      "required": true,
+                                                      "superscriptText": "",
+                                                    },
+                                                    "id": "conc",
+                                                    "validation": "required,number",
+                                                    "value": "Library Conc. (ng/μl) *",
+                                                    "width": 120,
+                                                  },
+                                                  Object {
+                                                    "header": Object {
+                                                      "required": true,
+                                                      "superscriptText": "",
+                                                    },
+                                                    "id": "libraryVolume",
+                                                    "validation": "required,number",
+                                                    "value": "Library Vol. (μl) *",
+                                                    "width": 100,
+                                                  },
+                                                  Object {
+                                                    "autocompleteOptions": Array [
+                                                      "Fluorometric",
+                                                      "Spectrophotometer",
+                                                      "Tapestation",
+                                                    ],
+                                                    "header": Object {
+                                                      "superscriptText": "",
+                                                      "tooltipText": "We strongly recommend a flourometer or gel electrophoresis against a mass standard for quantification of nucleic acids; please supply twice the requested.",
+                                                    },
+                                                    "id": "quantificationMethod",
+                                                    "validation": "required",
+                                                    "value": "Quantification Method *",
+                                                    "width": 150,
+                                                  },
+                                                  Object {
+                                                    "header": Object {
+                                                      "superscriptText": "",
+                                                      "tooltipText": "Please provide a gel picture, Bioanalyser trace or equivalent for each sample.",
+                                                    },
+                                                    "id": "imageAvailable",
+                                                    "selectOptions": Array [
+                                                      "Yes",
+                                                      "No",
+                                                    ],
+                                                    "value": "Image Available",
+                                                    "width": 75,
+                                                  },
+                                                  Object {
+                                                    "autocompleteOptions": Array [
+                                                      "dH2O",
+                                                      "10mM Tris (EB)",
+                                                      "TE",
+                                                      "low TE",
+                                                    ],
+                                                    "header": Object {
+                                                      "superscriptText": "",
+                                                      "tooltipText": "e.g. 10mM Tris",
+                                                    },
+                                                    "id": "storageBuffer",
+                                                    "validation": "required",
+                                                    "value": "Storage Buffer *",
+                                                    "width": 125,
+                                                  },
+                                                  Object {
+                                                    "id": "libraryType",
+                                                    "selectOptions": Array [
+                                                      "DNA-seq",
+                                                      "RNA-seq",
+                                                      "ChIP-seq",
+                                                      "RiboSeq",
+                                                      "RNAIP-seq",
+                                                      "RAD-seq",
+                                                      "ATAC-seq",
+                                                      "BIS-seq",
+                                                      "10X DNA",
+                                                      "10X RNA",
+                                                      "small RNA",
+                                                      "Targeted re-sequencing",
+                                                      "Metagenomics",
+                                                      "Amplicon",
+                                                      "CAGE",
+                                                      "Hi-C",
+                                                      "CRAC",
+                                                      "Other",
+                                                    ],
+                                                    "validation": "required",
+                                                    "value": "Library Type *",
+                                                    "width": 180,
+                                                  },
+                                                  Object {
+                                                    "id": "averageLibrarySize",
+                                                    "validation": "required",
+                                                    "value": "Average Library Size (bp) *",
+                                                    "width": 140,
+                                                  },
+                                                  Object {
+                                                    "formula": [Function],
+                                                    "header": Object {
+                                                      "required": true,
+                                                      "superscriptText": "",
+                                                    },
+                                                    "id": "estimatedMolarityCalc",
+                                                    "value": "Estimated Molarity (nM)",
+                                                    "width": 120,
+                                                  },
+                                                  Object {
+                                                    "id": "firstIndexI7Sequence",
+                                                    "validation": "required,nucleotideSequence",
+                                                    "value": "First Index (I7) Sequence *",
+                                                    "width": 140,
+                                                  },
+                                                  Object {
+                                                    "header": Object {
+                                                      "superscriptText": "",
+                                                    },
+                                                    "id": "potentialBiologicalContaminants",
+                                                    "value": "Potential Biological Contaminants",
+                                                    "width": 250,
+                                                  },
+                                                  Object {
+                                                    "header": Object {
+                                                      "superscriptText": "",
+                                                    },
+                                                    "id": "comments",
+                                                    "value": "Comments",
+                                                    "width": 1005,
+                                                  },
+                                                ]
+                                              }
+                                              data={
+                                                Map {
+                                                  "no custom primer" => "",
+                                                }
+                                              }
+                                              disableRedo={[Function]}
+                                              disableUndo={[Function]}
+                                              enableRedo={[Function]}
+                                              enableUndo={[Function]}
+                                              frozenGrid={Array []}
+                                              id="0"
+                                              initialBodyGrid={Array []}
+                                              onTick={[Function]}
+                                              onUpdateBodyGrid={[Function]}
+                                              rowColours={Array []}
+                                              scrollOnClick={false}
+                                              setScrollbarPresent={[Function]}
+                                              updateBodyFocus={[Function]}
+                                              uuid="0"
+                                            >
+                                              <div
+                                                id="bodyWrapper"
+                                                onClick={[Function]}
+                                                style={
+                                                  Object {
+                                                    "border": "0px solid grey",
+                                                    "maxHeight": 190,
+                                                    "overflow": "auto",
+                                                    "width": 692,
+                                                  }
+                                                }
+                                              >
+                                                <Body
+                                                  bottomPadding={140}
+                                                  columns={
+                                                    Array [
+                                                      Object {
+                                                        "id": "yourLibraryID",
+                                                        "validation": "required",
+                                                        "value": "Your Library ID *",
+                                                        "width": 250,
+                                                      },
+                                                      Object {
+                                                        "autocompleteOptions": Array [
+                                                          "Acanthamoeba_castellanii_str_neff_1257118",
+                                                          "Acanthamoeba_lenticulata_29196",
+                                                          "Acyrthosiphon_pisum_7029",
+                                                          "Aeromonas_hydrophila_subsp_hydrophila_196023",
+                                                          "Anas_platyrhynchos_8839",
+                                                          "Anser_cygnoides_8845",
+                                                          "Aspergillus_fumigatus_746128",
+                                                          "Bos_taurus_9913",
+                                                          "Caenorhabditis_elegans_6239",
+                                                          "Candida_auris_498019",
+                                                          "Canis_familiaris_6915",
+                                                          "Capra_hircus_9925",
+                                                          "Cavia_porcellus_10141",
+                                                          "Columba_livia_8932",
+                                                          "Corvus_cornix_181096",
+                                                          "Crassostrea_gigas_29159",
+                                                          "Cricetulus_griseus_10029",
+                                                          "Cyprinus_carpio_7962",
+                                                          "Danio_rerio_7955",
+                                                          "Daphnia_pulex_6669",
+                                                          "Drosphila_melanogaster_7227",
+                                                          "Eimeria_maxima_5804",
+                                                          "Emiliania_huxleyi_2903",
+                                                          "Equus_caballus_9796",
+                                                          "Escherichia_coli_str_K12_substr_MG1655_511145",
+                                                          "Felis_catus_9685",
+                                                          "Gallus_gallus_9031",
+                                                          "Gasterosteus_aculeatus_69293",
+                                                          "Homo_sapiens_9606",
+                                                          "Hordeum_vulgare_4513",
+                                                          "Lawsonia_intracellularis_29546",
+                                                          "Lepeophtheirus_salmonis_72036",
+                                                          "Meleagris_gallopavo_9103",
+                                                          "Methylocella_silvestris_199596",
+                                                          "Mus_musculus_10090",
+                                                          "Nasonia_vitripennis_7425",
+                                                          "Ovis_aries_9940",
+                                                          "Paxillus_involutus_71150",
+                                                          "Plasmodium_falciparum_5833",
+                                                          "Poecilia_reticulata_8081",
+                                                          "Pseudomonas_fluorescens_294",
+                                                          "Methylocella_silvestris/bl2.ASM2174v1.36",
+                                                          "Mus_musculus/GRCm38_ens84",
+                                                          "Mus_musculus/NCBIM37_ens67",
+                                                          "Rattus_norvegicus_10116",
+                                                          "Saccharomyces_cerevisiae_4932",
+                                                          "Salmo_salar_8030",
+                                                          "Serratia_liquefaciens_614",
+                                                          "Sus_scrofa_9823",
+                                                          "Taeniopygia_guttata_59729",
+                                                          "Trypanosoma_brucei_5691",
+                                                          "Trypanosoma_congolense_5692",
+                                                          "Xenopus_tropicalis_8364",
+                                                          "Xiphophorus_maculatus_8083",
+                                                          "Metagenome_0",
+                                                        ],
+                                                        "header": Object {
+                                                          "superscriptText": "1",
+                                                          "tooltipText": "If there are multiple species, please provide multiple species names and NCBI IDs (link to Taxonomy ID presented here - provide further instructions). For unknown species please write \\"unknown\\". Additionally, if this is a metagenomics project, please select \\"metagenome\\".",
+                                                        },
+                                                        "id": "speciesTaxonID",
+                                                        "validation": "required",
+                                                        "value": "Species_TaxonID *",
+                                                        "width": 370,
+                                                      },
+                                                      Object {
+                                                        "header": Object {
+                                                          "required": true,
+                                                          "superscriptText": "",
+                                                        },
+                                                        "id": "conc",
+                                                        "validation": "required,number",
+                                                        "value": "Library Conc. (ng/μl) *",
+                                                        "width": 120,
+                                                      },
+                                                      Object {
+                                                        "header": Object {
+                                                          "required": true,
+                                                          "superscriptText": "",
+                                                        },
+                                                        "id": "libraryVolume",
+                                                        "validation": "required,number",
+                                                        "value": "Library Vol. (μl) *",
+                                                        "width": 100,
+                                                      },
+                                                      Object {
+                                                        "autocompleteOptions": Array [
+                                                          "Fluorometric",
+                                                          "Spectrophotometer",
+                                                          "Tapestation",
+                                                        ],
+                                                        "header": Object {
+                                                          "superscriptText": "",
+                                                          "tooltipText": "We strongly recommend a flourometer or gel electrophoresis against a mass standard for quantification of nucleic acids; please supply twice the requested.",
+                                                        },
+                                                        "id": "quantificationMethod",
+                                                        "validation": "required",
+                                                        "value": "Quantification Method *",
+                                                        "width": 150,
+                                                      },
+                                                      Object {
+                                                        "header": Object {
+                                                          "superscriptText": "",
+                                                          "tooltipText": "Please provide a gel picture, Bioanalyser trace or equivalent for each sample.",
+                                                        },
+                                                        "id": "imageAvailable",
+                                                        "selectOptions": Array [
+                                                          "Yes",
+                                                          "No",
+                                                        ],
+                                                        "value": "Image Available",
+                                                        "width": 75,
+                                                      },
+                                                      Object {
+                                                        "autocompleteOptions": Array [
+                                                          "dH2O",
+                                                          "10mM Tris (EB)",
+                                                          "TE",
+                                                          "low TE",
+                                                        ],
+                                                        "header": Object {
+                                                          "superscriptText": "",
+                                                          "tooltipText": "e.g. 10mM Tris",
+                                                        },
+                                                        "id": "storageBuffer",
+                                                        "validation": "required",
+                                                        "value": "Storage Buffer *",
+                                                        "width": 125,
+                                                      },
+                                                      Object {
+                                                        "id": "libraryType",
+                                                        "selectOptions": Array [
+                                                          "DNA-seq",
+                                                          "RNA-seq",
+                                                          "ChIP-seq",
+                                                          "RiboSeq",
+                                                          "RNAIP-seq",
+                                                          "RAD-seq",
+                                                          "ATAC-seq",
+                                                          "BIS-seq",
+                                                          "10X DNA",
+                                                          "10X RNA",
+                                                          "small RNA",
+                                                          "Targeted re-sequencing",
+                                                          "Metagenomics",
+                                                          "Amplicon",
+                                                          "CAGE",
+                                                          "Hi-C",
+                                                          "CRAC",
+                                                          "Other",
+                                                        ],
+                                                        "validation": "required",
+                                                        "value": "Library Type *",
+                                                        "width": 180,
+                                                      },
+                                                      Object {
+                                                        "id": "averageLibrarySize",
+                                                        "validation": "required",
+                                                        "value": "Average Library Size (bp) *",
+                                                        "width": 140,
+                                                      },
+                                                      Object {
+                                                        "formula": [Function],
+                                                        "header": Object {
+                                                          "required": true,
+                                                          "superscriptText": "",
+                                                        },
+                                                        "id": "estimatedMolarityCalc",
+                                                        "value": "Estimated Molarity (nM)",
+                                                        "width": 120,
+                                                      },
+                                                      Object {
+                                                        "id": "firstIndexI7Sequence",
+                                                        "validation": "required,nucleotideSequence",
+                                                        "value": "First Index (I7) Sequence *",
+                                                        "width": 140,
+                                                      },
+                                                      Object {
+                                                        "header": Object {
+                                                          "superscriptText": "",
+                                                        },
+                                                        "id": "potentialBiologicalContaminants",
+                                                        "value": "Potential Biological Contaminants",
+                                                        "width": 250,
+                                                      },
+                                                      Object {
+                                                        "header": Object {
+                                                          "superscriptText": "",
+                                                        },
+                                                        "id": "comments",
+                                                        "value": "Comments",
+                                                        "width": 1005,
+                                                      },
+                                                    ]
+                                                  }
+                                                  data={
+                                                    Map {
+                                                      "no custom primer" => "",
+                                                    }
+                                                  }
+                                                  disableRedo={[Function]}
+                                                  disableUndo={[Function]}
+                                                  enableRedo={[Function]}
+                                                  enableUndo={[Function]}
+                                                  frozenGrid={Array []}
+                                                  id="0"
+                                                  initialBodyGrid={Array []}
+                                                  onMove={[Function]}
+                                                  onUpdateBodyGrid={[Function]}
+                                                  rowColours={Array []}
+                                                  uuid="0"
+                                                >
+                                                  <div
+                                                    onKeyDown={[Function]}
+                                                    style={
+                                                      Object {
+                                                        "paddingBottom": 140,
+                                                        "width": 3025,
+                                                      }
+                                                    }
+                                                  >
+                                                    <DataSheet
+                                                      cellRenderer={[Function]}
+                                                      data={Array []}
+                                                      dataEditor={[Function]}
+                                                      onCellsChanged={[Function]}
+                                                      rowRenderer={[Function]}
+                                                      sheetRenderer={[Function]}
+                                                      valueRenderer={[Function]}
+                                                      valueViewer={[Function]}
+                                                    >
+                                                      <span
+                                                        className="data-grid-container"
+                                                        onKeyDown={[Function]}
+                                                        tabIndex="0"
+                                                      >
+                                                        <sheetRenderer
+                                                          className="data-grid"
+                                                          data={Array []}
+                                                        >
+                                                          <table
+                                                            className="data-grid"
+                                                            key="dsTable_"
+                                                          >
+                                                            <tbody />
+                                                          </table>
+                                                        </sheetRenderer>
+                                                      </span>
+                                                    </DataSheet>
+                                                  </div>
+                                                </Body>
+                                              </div>
+                                            </BodyWrapper>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  <DraggableCore
+                                    allowAnyClick={false}
+                                    cancel={null}
+                                    disabled={false}
+                                    enableUserSelectHack={true}
+                                    grid={null}
+                                    handle={null}
+                                    key="resizableHandle"
+                                    offsetParent={null}
+                                    onDrag={[Function]}
+                                    onMouseDown={[Function]}
+                                    onStart={[Function]}
+                                    onStop={[Function]}
+                                    transform={null}
+                                  >
+                                    <span
+                                      className="react-resizable-handle"
+                                      onMouseDown={[Function]}
+                                      onMouseUp={[Function]}
+                                      onTouchEnd={[Function]}
+                                      onTouchStart={[Function]}
+                                      style={
+                                        Object {
+                                          "touchAction": "none",
+                                        }
+                                      }
+                                    />
+                                  </DraggableCore>
+                                </div>
+                              </Resizable>
+                            </ResizableBox>
+                          </div>
+                        </SF2DataSheet>
+                      </SF2DataSheetWrapper>
+                      <p>
+                        <em>
+                          1. If the source of your samples is human or other organism covered by regulatory controls such as the Human Tissue regulations or CITES regulations we require you to affirm to us that all samples are covered by relevant licences and ethical permissions. You should note that we are not a clinical diagnostic service, and you should not use us as such.
+                        </em>
+                      </p>
+                      <Button
+                        color="secondary"
+                        disabled={false}
+                        onClick={[Function]}
+                        tag="button"
+                      >
+                        <button
+                          className="btn btn-secondary"
+                          disabled={false}
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          Save
+                        </button>
+                      </Button>
+                      <span>
+                            
+                      </span>
+                      <Button
+                        color="secondary"
+                        disabled={false}
+                        onClick={[Function]}
+                        tag="button"
+                      >
+                        <button
+                          className="btn btn-secondary"
+                          disabled={false}
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          Download
+                        </button>
+                      </Button>
+                      <span>
+                            
+                      </span>
+                      <Button
+                        color="secondary"
+                        disabled={false}
+                        onClick={[Function]}
+                        tag="button"
+                      >
+                        <button
+                          className="btn btn-secondary"
+                          disabled={false}
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          Submit
+                        </button>
+                      </Button>
+                      <br />
+                      <br />
+                      <div
+                        style={
+                          Object {
+                            "width": "1000px",
+                            "wordBreak": "break-word",
+                          }
+                        }
+                      />
+                    </div>
+                  </SF2Validator>
+                </div>
+              </LibrarySF2>
+            </div>
+          </ShowDocumentationHandler>
+        </DisableHandler>
+      </div>
+    </ConfirmHandler>
+  </div>
+</Stage2SF2Container>
+`;
