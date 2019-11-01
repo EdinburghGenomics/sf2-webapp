@@ -95,7 +95,7 @@ export default class Stage2SF2Container extends React.Component<Stage2SF2Contain
         return(
             <div>
                 <h2>{this.state.sf2type} SF2 Submission Form</h2>
-                {<Stage1FormStateSummary {...this.state}/>}
+                {/*<Stage1FormStateSummary {...this.state}/>*/}
                 {this.state.sf2type === 'Sample' &&
                     <SampleSF2
                         initialState={this.state}
