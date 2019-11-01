@@ -89,7 +89,7 @@ export default class App extends React.Component<AppProps, AppState> {
             href = 'http://localhost:8002/';
         } else {
             // running in test / production, infer url from window.location
-            href = location.href;
+            href = [location.protocol, '//', location.host, location.pathname].join('');
         }
 
         return href;

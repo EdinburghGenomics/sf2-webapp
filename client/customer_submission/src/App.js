@@ -89,7 +89,7 @@ export default class App extends React.Component<AppProps, AppState> {
             href = 'http://localhost:8001/';
         } else {
             // running in test / production, infer url from window.location
-            href = location.href;
+            href = [location.protocol, '//', location.host, location.pathname].join('');
         }
 
         return href;
@@ -200,7 +200,6 @@ export default class App extends React.Component<AppProps, AppState> {
                 console.log('Success (initstate):', JSON.stringify(json));
                 this.initialState = this.getInitialState(json);
                 this.startIndices = this.getStartIndices(json);
-                console.log(this.startIndices);
                 this.fetchInitData(queryString);
             }).catch(error => {
                 console.error('Error (initstate):', error);
