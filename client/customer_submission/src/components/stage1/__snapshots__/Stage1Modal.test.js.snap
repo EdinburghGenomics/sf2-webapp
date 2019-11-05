@@ -153,15 +153,16 @@ exports[`renders the stage1 form correctly when active 1`] = `
             exit={true}
             in={true}
             mountOnEnter={false}
+            onClick={[Function]}
             onEnter={[Function]}
             onEntered={[Function]}
             onEntering={[Function]}
             onExit={[Function]}
             onExited={[Function]}
             onExiting={[Function]}
+            onKeyDown={[Function]}
             onKeyUp={[Function]}
             onMouseDown={[Function]}
-            onMouseUp={[Function]}
             role="dialog"
             style={
               Object {
@@ -190,9 +191,10 @@ exports[`renders the stage1 form correctly when active 1`] = `
             >
               <div
                 className="modal fade"
+                onClick={[Function]}
+                onKeyDown={[Function]}
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
-                onMouseUp={[Function]}
                 role="dialog"
                 style={
                   Object {
@@ -214,6 +216,7 @@ exports[`renders the stage1 form correctly when active 1`] = `
                     className="modal-content"
                   >
                     <ModalHeader
+                      charCode={215}
                       closeAriaLabel="Close"
                       tag="h5"
                       wrapTag="div"

@@ -27,303 +27,6 @@ exports[`renders the Stage2SF2Container correctly with arguments 1`] = `
       Library
        SF2 Submission Form
     </h2>
-    <Stage1FormStateSummary
-      numberOfSamplesOrLibrariesInPools={1}
-      projectID="12345_Test_Project"
-      sf2type="Library"
-    >
-      <div>
-        <Container
-          style={
-            Object {
-              "maxWidth": "100%",
-            }
-          }
-          tag="div"
-        >
-          <div
-            className="container"
-            style={
-              Object {
-                "maxWidth": "100%",
-              }
-            }
-          >
-            <Row
-              tag="div"
-            >
-              <div
-                className="row"
-              >
-                <Col
-                  style={
-                    Object {
-                      "backgroundColor": "#E5EDF5",
-                      "border": "1px solid #C9C1D5",
-                      "color": "#5F5F5F",
-                      "padding": ".75rem",
-                    }
-                  }
-                  tag="div"
-                  widths={
-                    Array [
-                      "xs",
-                      "sm",
-                      "md",
-                      "lg",
-                      "xl",
-                    ]
-                  }
-                >
-                  <div
-                    className="col"
-                    style={
-                      Object {
-                        "backgroundColor": "#E5EDF5",
-                        "border": "1px solid #C9C1D5",
-                        "color": "#5F5F5F",
-                        "padding": ".75rem",
-                      }
-                    }
-                  >
-                    Project ID: 
-                    12345_Test_Project
-                  </div>
-                </Col>
-                <Col
-                  style={
-                    Object {
-                      "backgroundColor": "#E5EDF5",
-                      "border": "1px solid #C9C1D5",
-                      "color": "#5F5F5F",
-                      "padding": ".75rem",
-                    }
-                  }
-                  tag="div"
-                  widths={
-                    Array [
-                      "xs",
-                      "sm",
-                      "md",
-                      "lg",
-                      "xl",
-                    ]
-                  }
-                >
-                  <div
-                    className="col"
-                    style={
-                      Object {
-                        "backgroundColor": "#E5EDF5",
-                        "border": "1px solid #C9C1D5",
-                        "color": "#5F5F5F",
-                        "padding": ".75rem",
-                      }
-                    }
-                  >
-                    SF2 type: 
-                    Library
-                  </div>
-                </Col>
-                <Col
-                  style={
-                    Object {
-                      "backgroundColor": "#E5EDF5",
-                      "border": "1px solid #C9C1D5",
-                      "color": "#5F5F5F",
-                      "padding": ".75rem",
-                    }
-                  }
-                  tag="div"
-                  widths={
-                    Array [
-                      "xs",
-                      "sm",
-                      "md",
-                      "lg",
-                      "xl",
-                    ]
-                  }
-                >
-                  <div
-                    className="col"
-                    style={
-                      Object {
-                        "backgroundColor": "#E5EDF5",
-                        "border": "1px solid #C9C1D5",
-                        "color": "#5F5F5F",
-                        "padding": ".75rem",
-                      }
-                    }
-                  >
-                    Container type is plate: 
-                    no
-                  </div>
-                </Col>
-              </div>
-            </Row>
-            <div>
-              <Row
-                tag="div"
-              >
-                <div
-                  className="row"
-                >
-                  <Col
-                    style={
-                      Object {
-                        "backgroundColor": "#E5EDF5",
-                        "border": "1px solid #C9C1D5",
-                        "color": "#5F5F5F",
-                        "padding": ".75rem",
-                      }
-                    }
-                    tag="div"
-                    widths={
-                      Array [
-                        "xs",
-                        "sm",
-                        "md",
-                        "lg",
-                        "xl",
-                      ]
-                    }
-                  >
-                    <div
-                      className="col"
-                      style={
-                        Object {
-                          "backgroundColor": "#E5EDF5",
-                          "border": "1px solid #C9C1D5",
-                          "color": "#5F5F5F",
-                          "padding": ".75rem",
-                        }
-                      }
-                    >
-                      SF2 is Dual Index: 
-                      no
-                    </div>
-                  </Col>
-                  <Col
-                    style={
-                      Object {
-                        "backgroundColor": "#E5EDF5",
-                        "border": "1px solid #C9C1D5",
-                        "color": "#5F5F5F",
-                        "padding": ".75rem",
-                      }
-                    }
-                    tag="div"
-                    widths={
-                      Array [
-                        "xs",
-                        "sm",
-                        "md",
-                        "lg",
-                        "xl",
-                      ]
-                    }
-                  >
-                    <div
-                      className="col"
-                      style={
-                        Object {
-                          "backgroundColor": "#E5EDF5",
-                          "border": "1px solid #C9C1D5",
-                          "color": "#5F5F5F",
-                          "padding": ".75rem",
-                        }
-                      }
-                    >
-                      SF2 has Pools: 
-                      no
-                    </div>
-                  </Col>
-                </div>
-              </Row>
-              <Row
-                tag="div"
-              >
-                <div
-                  className="row"
-                >
-                  <Col
-                    style={
-                      Object {
-                        "backgroundColor": "#E5EDF5",
-                        "border": "1px solid #C9C1D5",
-                        "color": "#5F5F5F",
-                        "padding": ".75rem",
-                      }
-                    }
-                    tag="div"
-                    widths={
-                      Array [
-                        "xs",
-                        "sm",
-                        "md",
-                        "lg",
-                        "xl",
-                      ]
-                    }
-                  >
-                    <div
-                      className="col"
-                      style={
-                        Object {
-                          "backgroundColor": "#E5EDF5",
-                          "border": "1px solid #C9C1D5",
-                          "color": "#5F5F5F",
-                          "padding": ".75rem",
-                        }
-                      }
-                    >
-                      SF2 has Unpooled Libraries: 
-                      no
-                    </div>
-                  </Col>
-                  <Col
-                    style={
-                      Object {
-                        "backgroundColor": "#E5EDF5",
-                        "border": "1px solid #C9C1D5",
-                        "color": "#5F5F5F",
-                        "padding": ".75rem",
-                      }
-                    }
-                    tag="div"
-                    widths={
-                      Array [
-                        "xs",
-                        "sm",
-                        "md",
-                        "lg",
-                        "xl",
-                      ]
-                    }
-                  >
-                    <div
-                      className="col"
-                      style={
-                        Object {
-                          "backgroundColor": "#E5EDF5",
-                          "border": "1px solid #C9C1D5",
-                          "color": "#5F5F5F",
-                          "padding": ".75rem",
-                        }
-                      }
-                    >
-                      SF2 has Custom Primers: 
-                      no
-                    </div>
-                  </Col>
-                </div>
-              </Row>
-            </div>
-          </div>
-        </Container>
-      </div>
-    </Stage1FormStateSummary>
     <ConfirmHandler
       handleDownload={[Function]}
       handleSave={[Function]}
@@ -1435,6 +1138,11 @@ exports[`renders the Stage2SF2Container correctly with arguments 1`] = `
                                   ]
                                 }
                                 onResize={[Function]}
+                                resizeHandles={
+                                  Array [
+                                    "se",
+                                  ]
+                                }
                                 width={989}
                               >
                                 <div
@@ -2676,7 +2384,7 @@ exports[`renders the Stage2SF2Container correctly with arguments 1`] = `
                                     enableUserSelectHack={true}
                                     grid={null}
                                     handle={null}
-                                    key="resizableHandle"
+                                    key="resizableHandle-se"
                                     offsetParent={null}
                                     onDrag={[Function]}
                                     onMouseDown={[Function]}
@@ -2685,7 +2393,7 @@ exports[`renders the Stage2SF2Container correctly with arguments 1`] = `
                                     transform={null}
                                   >
                                     <span
-                                      className="react-resizable-handle"
+                                      className="react-resizable-handle react-resizable-handle-se"
                                       onMouseDown={[Function]}
                                       onMouseUp={[Function]}
                                       onTouchEnd={[Function]}
@@ -2715,6 +2423,7 @@ exports[`renders the Stage2SF2Container correctly with arguments 1`] = `
                         tag="button"
                       >
                         <button
+                          aria-label={null}
                           className="btn btn-secondary"
                           disabled={false}
                           onClick={[Function]}
@@ -2733,6 +2442,7 @@ exports[`renders the Stage2SF2Container correctly with arguments 1`] = `
                         tag="button"
                       >
                         <button
+                          aria-label={null}
                           className="btn btn-secondary"
                           disabled={false}
                           onClick={[Function]}
@@ -2751,6 +2461,7 @@ exports[`renders the Stage2SF2Container correctly with arguments 1`] = `
                         tag="button"
                       >
                         <button
+                          aria-label={null}
                           className="btn btn-secondary"
                           disabled={false}
                           onClick={[Function]}

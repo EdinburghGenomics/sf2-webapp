@@ -159,6 +159,11 @@ exports[`renders SF2 DataSheet correctly 1`] = `
           ]
         }
         onResize={[Function]}
+        resizeHandles={
+          Array [
+            "se",
+          ]
+        }
         width={989}
       >
         <div
@@ -907,7 +912,7 @@ exports[`renders SF2 DataSheet correctly 1`] = `
             enableUserSelectHack={true}
             grid={null}
             handle={null}
-            key="resizableHandle"
+            key="resizableHandle-se"
             offsetParent={null}
             onDrag={[Function]}
             onMouseDown={[Function]}
@@ -916,7 +921,7 @@ exports[`renders SF2 DataSheet correctly 1`] = `
             transform={null}
           >
             <span
-              className="react-resizable-handle"
+              className="react-resizable-handle react-resizable-handle-se"
               onMouseDown={[Function]}
               onMouseUp={[Function]}
               onTouchEnd={[Function]}
@@ -1113,6 +1118,11 @@ exports[`renders SF2 DataSheet correctly with hidden column set to hidden 1`] = 
           ]
         }
         onResize={[Function]}
+        resizeHandles={
+          Array [
+            "se",
+          ]
+        }
         width={989}
       >
         <div
@@ -2246,7 +2256,7 @@ exports[`renders SF2 DataSheet correctly with hidden column set to hidden 1`] = 
             enableUserSelectHack={true}
             grid={null}
             handle={null}
-            key="resizableHandle"
+            key="resizableHandle-se"
             offsetParent={null}
             onDrag={[Function]}
             onMouseDown={[Function]}
@@ -2255,7 +2265,7 @@ exports[`renders SF2 DataSheet correctly with hidden column set to hidden 1`] = 
             transform={null}
           >
             <span
-              className="react-resizable-handle"
+              className="react-resizable-handle react-resizable-handle-se"
               onMouseDown={[Function]}
               onMouseUp={[Function]}
               onTouchEnd={[Function]}
@@ -2452,6 +2462,11 @@ exports[`renders SF2 DataSheet correctly with hidden column set to visible 1`] =
           ]
         }
         onResize={[Function]}
+        resizeHandles={
+          Array [
+            "se",
+          ]
+        }
         width={989}
       >
         <div
@@ -3585,7 +3600,7 @@ exports[`renders SF2 DataSheet correctly with hidden column set to visible 1`] =
             enableUserSelectHack={true}
             grid={null}
             handle={null}
-            key="resizableHandle"
+            key="resizableHandle-se"
             offsetParent={null}
             onDrag={[Function]}
             onMouseDown={[Function]}
@@ -3594,7 +3609,7 @@ exports[`renders SF2 DataSheet correctly with hidden column set to visible 1`] =
             transform={null}
           >
             <span
-              className="react-resizable-handle"
+              className="react-resizable-handle react-resizable-handle-se"
               onMouseDown={[Function]}
               onMouseUp={[Function]}
               onTouchEnd={[Function]}

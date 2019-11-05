@@ -549,15 +549,16 @@ exports[`renders the Documentation Modal correctly with required arguments 1`] =
             exit={true}
             in={true}
             mountOnEnter={false}
+            onClick={[Function]}
             onEnter={[Function]}
             onEntered={[Function]}
             onEntering={[Function]}
             onExit={[Function]}
             onExited={[Function]}
             onExiting={[Function]}
+            onKeyDown={[Function]}
             onKeyUp={[Function]}
             onMouseDown={[Function]}
-            onMouseUp={[Function]}
             role="dialog"
             style={
               Object {
@@ -586,9 +587,10 @@ exports[`renders the Documentation Modal correctly with required arguments 1`] =
             >
               <div
                 className="modal fade"
+                onClick={[Function]}
+                onKeyDown={[Function]}
                 onKeyUp={[Function]}
                 onMouseDown={[Function]}
-                onMouseUp={[Function]}
                 role="dialog"
                 style={
                   Object {
@@ -610,6 +612,7 @@ exports[`renders the Documentation Modal correctly with required arguments 1`] =
                     className="modal-content"
                   >
                     <ModalHeader
+                      charCode={215}
                       closeAriaLabel="Close"
                       tag="h5"
                       wrapTag="div"
@@ -845,6 +848,7 @@ exports[`renders the Documentation Modal correctly with required arguments 1`] =
                           tag="button"
                         >
                           <button
+                            aria-label={null}
                             className="btn btn-secondary"
                             onClick={[Function]}
                             type="button"

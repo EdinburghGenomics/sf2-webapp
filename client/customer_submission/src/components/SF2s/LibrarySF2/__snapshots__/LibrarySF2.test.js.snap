@@ -1838,6 +1838,11 @@ exports[`renders the Library SF2 correctly with required arguments 1`] = `
                               ]
                             }
                             onResize={[Function]}
+                            resizeHandles={
+                              Array [
+                                "se",
+                              ]
+                            }
                             width={989}
                           >
                             <div
@@ -26270,7 +26275,7 @@ exports[`renders the Library SF2 correctly with required arguments 1`] = `
                                 enableUserSelectHack={true}
                                 grid={null}
                                 handle={null}
-                                key="resizableHandle"
+                                key="resizableHandle-se"
                                 offsetParent={null}
                                 onDrag={[Function]}
                                 onMouseDown={[Function]}
@@ -26279,7 +26284,7 @@ exports[`renders the Library SF2 correctly with required arguments 1`] = `
                                 transform={null}
                               >
                                 <span
-                                  className="react-resizable-handle"
+                                  className="react-resizable-handle react-resizable-handle-se"
                                   onMouseDown={[Function]}
                                   onMouseUp={[Function]}
                                   onTouchEnd={[Function]}
@@ -26309,6 +26314,7 @@ exports[`renders the Library SF2 correctly with required arguments 1`] = `
                     tag="button"
                   >
                     <button
+                      aria-label={null}
                       className="btn btn-secondary"
                       disabled={false}
                       onClick={[Function]}
@@ -26327,6 +26333,7 @@ exports[`renders the Library SF2 correctly with required arguments 1`] = `
                     tag="button"
                   >
                     <button
+                      aria-label={null}
                       className="btn btn-secondary"
                       disabled={false}
                       onClick={[Function]}
@@ -26345,6 +26352,7 @@ exports[`renders the Library SF2 correctly with required arguments 1`] = `
                     tag="button"
                   >
                     <button
+                      aria-label={null}
                       className="btn btn-secondary disabled"
                       disabled={true}
                       onClick={[Function]}

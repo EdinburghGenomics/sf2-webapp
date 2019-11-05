@@ -58,9 +58,6 @@ exports[`renders SelectEditor correctly 1`] = `
       closeOnSelect={true}
       components={Object {}}
       controlShouldRenderValue={true}
-      defaultInputValue=""
-      defaultMenuIsOpen={false}
-      defaultValue={null}
       escapeClearsValue={false}
       filterOption={[Function]}
       formatGroupLabel={[Function]}
@@ -155,9 +152,6 @@ exports[`renders SelectEditor correctly 1`] = `
             "closeOnSelect": true,
             "components": Object {},
             "controlShouldRenderValue": true,
-            "defaultInputValue": "",
-            "defaultMenuIsOpen": false,
-            "defaultValue": null,
             "escapeClearsValue": false,
             "filterOption": [Function],
             "formatGroupLabel": [Function],
@@ -241,7 +235,7 @@ exports[`renders SelectEditor correctly 1`] = `
         }
       >
         <div
-          className="css-10nd86i"
+          className="css-1pcexqc-container"
           onKeyDown={[Function]}
         >
           <Control
@@ -261,6 +255,7 @@ exports[`renders SelectEditor correctly 1`] = `
             isFocused={false}
             isMulti={false}
             isRtl={false}
+            menuIsOpen={true}
             options={
               Array [
                 Object {
@@ -285,9 +280,6 @@ exports[`renders SelectEditor correctly 1`] = `
                 "closeOnSelect": true,
                 "components": Object {},
                 "controlShouldRenderValue": true,
-                "defaultInputValue": "",
-                "defaultMenuIsOpen": false,
-                "defaultValue": null,
                 "escapeClearsValue": false,
                 "filterOption": [Function],
                 "formatGroupLabel": [Function],
@@ -371,7 +363,7 @@ exports[`renders SelectEditor correctly 1`] = `
             }
           >
             <div
-              className="css-vj8t7z"
+              className="css-bg1rzq-control"
               onMouseDown={[Function]}
               onTouchEnd={[Function]}
             >
@@ -408,9 +400,6 @@ exports[`renders SelectEditor correctly 1`] = `
                     "closeOnSelect": true,
                     "components": Object {},
                     "controlShouldRenderValue": true,
-                    "defaultInputValue": "",
-                    "defaultMenuIsOpen": false,
-                    "defaultValue": null,
                     "escapeClearsValue": false,
                     "filterOption": [Function],
                     "formatGroupLabel": [Function],
@@ -535,9 +524,6 @@ exports[`renders SelectEditor correctly 1`] = `
                         "closeOnSelect": true,
                         "components": Object {},
                         "controlShouldRenderValue": true,
-                        "defaultInputValue": "",
-                        "defaultMenuIsOpen": false,
-                        "defaultValue": null,
                         "escapeClearsValue": false,
                         "filterOption": [Function],
                         "formatGroupLabel": [Function],
@@ -621,7 +607,7 @@ exports[`renders SelectEditor correctly 1`] = `
                     }
                   >
                     <div
-                      className="css-xp4uvy"
+                      className="css-dvua67-singleValue"
                     >
                       test
                     </div>
@@ -640,6 +626,68 @@ exports[`renders SelectEditor correctly 1`] = `
                     onBlur={[Function]}
                     onChange={[Function]}
                     onFocus={[Function]}
+                    selectProps={
+                      Object {
+                        "autoFocus": true,
+                        "backspaceRemovesValue": true,
+                        "blurInputOnSelect": true,
+                        "captureMenuScroll": false,
+                        "closeMenuOnScroll": false,
+                        "closeMenuOnSelect": true,
+                        "closeOnSelect": true,
+                        "components": Object {},
+                        "controlShouldRenderValue": true,
+                        "escapeClearsValue": false,
+                        "filterOption": [Function],
+                        "formatGroupLabel": [Function],
+                        "getOptionLabel": [Function],
+                        "getOptionValue": [Function],
+                        "inputValue": "",
+                        "isDisabled": false,
+                        "isLoading": false,
+                        "isMulti": false,
+                        "isOptionDisabled": [Function],
+                        "isRtl": false,
+                        "isSearchable": true,
+                        "loadingMessage": [Function],
+                        "maxMenuHeight": 120,
+                        "menuIsOpen": true,
+                        "menuPlacement": "bottom",
+                        "menuPosition": "absolute",
+                        "menuShouldBlockScroll": false,
+                        "menuShouldScrollIntoView": true,
+                        "minMenuHeight": 140,
+                        "noOptionsMessage": [Function],
+                        "onChange": [Function],
+                        "onInputChange": [Function],
+                        "onInputKeyDown": [Function],
+                        "onMenuClose": [Function],
+                        "onMenuOpen": [Function],
+                        "openMenuOnClick": true,
+                        "openMenuOnFocus": true,
+                        "openOnFocus": true,
+                        "options": Array [
+                          Object {
+                            "label": "one",
+                            "value": "one",
+                          },
+                          Object {
+                            "label": "two",
+                            "value": "two",
+                          },
+                        ],
+                        "pageSize": 5,
+                        "placeholder": "Select...",
+                        "screenReaderStatus": [Function],
+                        "styles": Object {},
+                        "tabIndex": "0",
+                        "tabSelectsValue": true,
+                        "value": Object {
+                          "label": "test",
+                          "value": "test",
+                        },
+                      }
+                    }
                     spellCheck="false"
                     tabIndex="0"
                     theme={
@@ -693,6 +741,7 @@ exports[`renders SelectEditor correctly 1`] = `
                             "border": 0,
                             "color": "inherit",
                             "fontSize": "inherit",
+                            "label": "input",
                             "opacity": 1,
                             "outline": 0,
                             "padding": 0,
@@ -733,6 +782,7 @@ exports[`renders SelectEditor correctly 1`] = `
                                 "boxSizing": "content-box",
                                 "color": "inherit",
                                 "fontSize": "inherit",
+                                "label": "input",
                                 "opacity": 1,
                                 "outline": 0,
                                 "padding": 0,
@@ -795,9 +845,6 @@ exports[`renders SelectEditor correctly 1`] = `
                     "closeOnSelect": true,
                     "components": Object {},
                     "controlShouldRenderValue": true,
-                    "defaultInputValue": "",
-                    "defaultMenuIsOpen": false,
-                    "defaultValue": null,
                     "escapeClearsValue": false,
                     "filterOption": [Function],
                     "formatGroupLabel": [Function],
@@ -917,9 +964,6 @@ exports[`renders SelectEditor correctly 1`] = `
                         "closeOnSelect": true,
                         "components": Object {},
                         "controlShouldRenderValue": true,
-                        "defaultInputValue": "",
-                        "defaultMenuIsOpen": false,
-                        "defaultValue": null,
                         "escapeClearsValue": false,
                         "filterOption": [Function],
                         "formatGroupLabel": [Function],
@@ -1003,7 +1047,7 @@ exports[`renders SelectEditor correctly 1`] = `
                     }
                   >
                     <span
-                      className="css-d8oujb"
+                      className="css-bgvzuu-indicatorSeparator"
                     />
                   </IndicatorSeparator>
                   <DropdownIndicator
@@ -1047,9 +1091,6 @@ exports[`renders SelectEditor correctly 1`] = `
                         "closeOnSelect": true,
                         "components": Object {},
                         "controlShouldRenderValue": true,
-                        "defaultInputValue": "",
-                        "defaultMenuIsOpen": false,
-                        "defaultValue": null,
                         "escapeClearsValue": false,
                         "filterOption": [Function],
                         "formatGroupLabel": [Function],
@@ -1134,7 +1175,7 @@ exports[`renders SelectEditor correctly 1`] = `
                   >
                     <div
                       aria-hidden="true"
-                      className="css-1ep9fjw"
+                      className="css-16pqwjk-indicatorContainer"
                       onMouseDown={[Function]}
                       onTouchEnd={[Function]}
                     >
@@ -1199,9 +1240,6 @@ exports[`renders SelectEditor correctly 1`] = `
                 "closeOnSelect": true,
                 "components": Object {},
                 "controlShouldRenderValue": true,
-                "defaultInputValue": "",
-                "defaultMenuIsOpen": false,
-                "defaultValue": null,
                 "escapeClearsValue": false,
                 "filterOption": [Function],
                 "formatGroupLabel": [Function],
@@ -1330,9 +1368,6 @@ exports[`renders SelectEditor correctly 1`] = `
                   "closeOnSelect": true,
                   "components": Object {},
                   "controlShouldRenderValue": true,
-                  "defaultInputValue": "",
-                  "defaultMenuIsOpen": false,
-                  "defaultValue": null,
                   "escapeClearsValue": false,
                   "filterOption": [Function],
                   "formatGroupLabel": [Function],
@@ -1416,7 +1451,7 @@ exports[`renders SelectEditor correctly 1`] = `
               }
             >
               <div
-                className="css-15k3avv"
+                className="css-kj6f9i-menu"
                 onMouseDown={[Function]}
                 onMouseMove={[Function]}
               >
@@ -1461,9 +1496,6 @@ exports[`renders SelectEditor correctly 1`] = `
                           "closeOnSelect": true,
                           "components": Object {},
                           "controlShouldRenderValue": true,
-                          "defaultInputValue": "",
-                          "defaultMenuIsOpen": false,
-                          "defaultValue": null,
                           "escapeClearsValue": false,
                           "filterOption": [Function],
                           "formatGroupLabel": [Function],
@@ -1567,7 +1599,6 @@ exports[`renders SelectEditor correctly 1`] = `
                               "onClick": [Function],
                               "onMouseMove": [Function],
                               "onMouseOver": [Function],
-                              "role": "option",
                               "tabIndex": -1,
                             }
                           }
@@ -1602,9 +1633,6 @@ exports[`renders SelectEditor correctly 1`] = `
                               "closeOnSelect": true,
                               "components": Object {},
                               "controlShouldRenderValue": true,
-                              "defaultInputValue": "",
-                              "defaultMenuIsOpen": false,
-                              "defaultValue": null,
                               "escapeClearsValue": false,
                               "filterOption": [Function],
                               "formatGroupLabel": [Function],
@@ -1690,12 +1718,11 @@ exports[`renders SelectEditor correctly 1`] = `
                           value="one"
                         >
                           <div
-                            className="css-v73v8k"
+                            className="css-fk865s-option"
                             id="react-select-2-option-0"
                             onClick={[Function]}
                             onMouseMove={[Function]}
                             onMouseOver={[Function]}
-                            role="option"
                             tabIndex={-1}
                           >
                             one
@@ -1719,7 +1746,6 @@ exports[`renders SelectEditor correctly 1`] = `
                               "onClick": [Function],
                               "onMouseMove": [Function],
                               "onMouseOver": [Function],
-                              "role": "option",
                               "tabIndex": -1,
                             }
                           }
@@ -1754,9 +1780,6 @@ exports[`renders SelectEditor correctly 1`] = `
                               "closeOnSelect": true,
                               "components": Object {},
                               "controlShouldRenderValue": true,
-                              "defaultInputValue": "",
-                              "defaultMenuIsOpen": false,
-                              "defaultValue": null,
                               "escapeClearsValue": false,
                               "filterOption": [Function],
                               "formatGroupLabel": [Function],
@@ -1842,12 +1865,11 @@ exports[`renders SelectEditor correctly 1`] = `
                           value="two"
                         >
                           <div
-                            className="css-v73v8k"
+                            className="css-fk865s-option"
                             id="react-select-2-option-1"
                             onClick={[Function]}
                             onMouseMove={[Function]}
                             onMouseOver={[Function]}
-                            role="option"
                             tabIndex={-1}
                           >
                             two
