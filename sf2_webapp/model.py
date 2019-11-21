@@ -189,7 +189,7 @@ class TsvGenerator:
 
 
     @staticmethod
-    def row_to_tsv(row):  # List<dict> -> String
+    def row_to_tsv(row):
         """Function that converts a table row to a tsv string"""
 
         return '\t'.join(
@@ -198,7 +198,7 @@ class TsvGenerator:
 
 
     @staticmethod
-    def json_to_tsv(tables, frozen_grids, sf2_rows, sf2_frozen_rows, has_plates, table_name=''):  # type: (dict, dict, dict, dict, boolean, String) -> String
+    def json_to_tsv(tables, frozen_grids, sf2_rows, sf2_frozen_rows, has_plates, table_name=''):
         """Function that converts a json dict to a tsv string"""
 
         sf2_rows = TsvGenerator.sf2_rows

@@ -18,7 +18,7 @@ setup(
     url="http://gitlab.genepool.private/hdunnda/sf2-webapp",
     author="Hywel Dunn-Davies",
     author_email="Hywel.Dunn-Davies@ed.ac.uk",
-    license="Copyright 2019 Edinburgh Genomics",
+    license="MIT",
     classifiers=[
         "Programming Language :: Python :: 3.4.5"
     ],

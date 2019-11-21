@@ -24,6 +24,7 @@ def add_cors_if_enabled(cls, enable_cors=False):
     return WithCors if enable_cors else cls
 
 
+
 def set_up_logging(config_manager):
 
     logging_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -63,7 +64,8 @@ def set_up_logging(config_manager):
     logging.getLogger("tornado.general").setLevel(log_level)
 
 
-def initialise_http_server(form, model, custom_handlers, port, enable_cors=False):
+
+def initialise_tornado_app(form, model, custom_handlers, enable_cors=False):
 
     static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "client/{form}/build".format(**locals()))
 
@@ -80,6 +82,19 @@ def initialise_http_server(form, model, custom_handlers, port, enable_cors=False
     handlers = [(k, cors(custom_handlers[k]), handler_params) for k in custom_handlers.keys()] + generic_handlers
 
     application = tornado.web.Application(handlers, **settings)
+
+    return application
+
+
+def initialise_http_server(form, model, custom_handlers, port, enable_cors=False):
+
+    application = initialise_tornado_app(
+        form=form,
+        model=model,
+        custom_handlers=custom_handlers,
+        enable_cors=enable_cors
+    )
+
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(port)
 

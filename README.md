@@ -7,6 +7,7 @@ The SF2 Web Application provides a user friendly web based interface through whi
 * [React](https://reactjs.org/) - Used for building the JavaScript user interfaces
 * [react-datasheet](https://nadbm.github.io/react-datasheet/) - Provides the Excel-like spreadsheet component on which the main data entry UI is based
 * [Tornado](http://www.tornadoweb.org/en/stable/) - Python based web framework used to serve JavaScript and provide server side web service endpoints
+* [PyClarity-LIMS](https://github.com/EdinburghGenomics/pyclarity-lims) - Python module that communicates with a Clarity LIMS instance via its REST API
 
 ## Contributors
 

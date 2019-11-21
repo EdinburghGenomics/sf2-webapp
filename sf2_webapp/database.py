@@ -11,7 +11,7 @@ class DatabaseConnection:
 
 
     def __init__(self, connection_parameters):
-        """Initialise the class with explicit parameters, if provided, otherwise get them from the configuration file"""
+        """Initialise the class with explicit parameters"""
 
         self.connection_parameters = connection_parameters
 
@@ -28,7 +28,7 @@ class DatabaseConnection:
         """Property to indicate whether the connection is open"""
 
         try:
-            return self.connection and self.connection.closed == 0
+            return self.connection is not None and self.connection.closed == 0
         except AttributeError:  # The connection hasn't been initialised
             return False
 
