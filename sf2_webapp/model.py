@@ -289,7 +289,11 @@ class ProjectSetup:
 
         slx_identifiers = [s.udf['SLX Identifier'] for s in samples if 'SLX Identifier' in s.udf]
 
-        unpooled_submission_index_strings = [re.sub(r"^\d+\w\w", r"", slx_identifier) for slx_identifier in slx_identifiers if not re.search('pool', slx_identifier)]
+        # 10X samples don't have SLX Identifiers, so the unpooled submission logic breaks if we rely on them.  To get round this use stripped sample index strings for unpooled submissions if there are no SLX Identifiers but there are sample index strings
+        if len(slx_identifiers) == 0 and len(stripped_sample_index_strings) > 0:
+            unpooled_submission_index_strings = stripped_sample_index_strings
+        else:
+            unpooled_submission_index_strings = [re.sub(r"^\d+\w\w", r"", slx_identifier) for slx_identifier in slx_identifiers if not re.search('pool', slx_identifier)]
 
         pool_index_strings = [re.sub(r"^\d+\w\wpool", r"", slx_identifier) for slx_identifier in slx_identifiers if re.search('pool', slx_identifier)]
 
