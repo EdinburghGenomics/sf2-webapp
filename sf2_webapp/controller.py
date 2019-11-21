@@ -231,7 +231,6 @@ class CustomerSubmissionInitialStateHandler(tornado.web.RequestHandler):
 
 
     def post(self):
-        print(self.request.body)
         result = self.model.get_initial_state(self.request.body)
         self.write(str(result))
 

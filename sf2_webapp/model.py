@@ -241,12 +241,25 @@ class TsvGenerator:
     def generate_tsv(json_dict):
 
         has_plates = len(json_dict['frozenGrids'][0]['grids']) > 1
-        keyfunc = lambda k: k['name']
-        tables_dict = sorted(json_dict['tables'], key=keyfunc, reverse=True)
-        frozen_grids_dict = sorted(json_dict['frozenGrids'], key=keyfunc, reverse=True)
+
+        def sorted_and_filtered(dicts):
+            sorted_dicts = sorted(
+                dicts,
+                key=lambda k: k['name'],
+                reverse=True
+            )
+
+            # This filter handles the special case of an empty primer information grid being present when there are no primers in the Library SF2
+            return [
+                x for x in sorted_dicts if len(x['grids'][0]['grid']) > 0
+            ]
+
+        tables_dicts = sorted_and_filtered(json_dict['tables'])
+
+        frozen_grids_dicts = sorted_and_filtered(json_dict['frozenGrids'])
 
         return "\n".join(
-            TsvGenerator.json_to_tsv(tables_dict, frozen_grids_dict, TsvGenerator.sf2_rows, TsvGenerator.sf2_frozen_rows, has_plates)
+            TsvGenerator.json_to_tsv(tables_dicts, frozen_grids_dicts, TsvGenerator.sf2_rows, TsvGenerator.sf2_frozen_rows, has_plates)
         )
 
 
@@ -649,6 +662,7 @@ class SF2:
         )
 
         json_dict = json.loads(latest_save_download_record[4])
+
         tsv = TsvGenerator.generate_tsv(json_dict)
 
         return tsv

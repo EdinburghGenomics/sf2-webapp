@@ -196,6 +196,7 @@ class TestTsvGenerator(unittest.TestCase):
 
     def test_generate_tsv(self):
 
+        # 10X SF2
         test_json_dict = {'name': '10XSF2', 'frozenGrids': [{'name': '10XSampleInformation', 'grids': [{'grid': [[{'value': '00050ST0001'}, {'value': '00050ST0001'}]], 'id': '0'}]}], 'tables': [{'name': '10XSampleInformation', 'grids': [{'grid': [[{'value': 's1', 'readonly': False}, {'value': 'SI-GA-A1', 'readonly': False}, {'value': '1', 'readonly': False}, {'value': '2', 'readonly': False}, {'value': 'Homo_sapiens_9606', 'readonly': False}, {'value': 'Fluorometric', 'readonly': False}, {'value': 'Yes', 'readonly': False}, {'value': 'TE', 'readonly': False}, {'value': '4', 'readonly': False}, {'value': '384.6', 'readonly': False}, {'value': '', 'readonly': False}, {'value': '', 'readonly': False}]], 'id': '0'}]}]}
 
         tsv = model.TsvGenerator.generate_tsv(test_json_dict)
@@ -207,6 +208,38 @@ EG 10X Sample ID	EG 10X Submission ID	Your 10X Sample ID	10X Genomics Barcode Se
 
         self.assertEqual(tsv.strip(), expected_result)
 
+        # Library SF2, single unpooled sample in tube
+        test_json_dict = {'frozenGrids': [{'grids': [{'grid': [], 'id': '0'}],
+                                           'name': 'PrimerInformation'},
+                                          {'grids': [{'grid': [[{'value': '00052ST0002L01'}, {'value': '00052ST0002'}]], 'id': '0'}],
+                                           'name': 'LibraryInformation'}],
+                          'name': 'LibrarySF2',
+                          'tables': [{'grids': [{'grid': [[{'readonly': False, 'value': 'l1'},
+                                  {'readonly': False, 'value': 'Acanthamoeba_castellanii_str_neff_1257118'},
+                                  {'readonly': False, 'value': '1'},
+                                  {'readonly': False, 'value': '2'},
+                                  {'readonly': False, 'value': 'Fluorometric'},
+                                  {'readonly': False, 'value': 'Yes'},
+                                  {'readonly': False, 'value': 'dH2O'},
+                                  {'readonly': False, 'value': 'Targeted re-sequencing'},
+                                  {'readonly': False, 'value': '3'},
+                                  {'readonly': False, 'value': '512.8'},
+                                  {'readonly': False, 'value': 'AC'},
+                                  {'readonly': False, 'value': ''},
+                                  {'readonly': False, 'value': ''},
+                                  {'readonly': False, 'value': ''}]],
+                        'id': '0'}],
+                        'name': 'LibraryInformation'}
+        ]}
+
+        tsv = model.TsvGenerator.generate_tsv(test_json_dict)
+
+        expected_result="""LibraryInformation
+
+EG Library ID	EG Submission ID	Your Library ID	Species_TaxonID	Library Conc. (ng/ul)	Library Vol. (ul)	Quantification Method	Image Available	Storage Buffer	Library Type	Average Library Size (bp)	Estimated Molarity (nM)	First Index (I7) Sequence	Second Index (I5) Sequence	Custom Primer	Potential Biological Contaminants
+00052ST0002L01	00052ST0002	l1	Acanthamoeba_castellanii_str_neff_1257118	1	2	Fluorometric	Yes	dH2O	Targeted re-sequencing	3	512.8	AC"""
+
+        self.assertEqual(tsv.strip(), expected_result)
 
 
 class TestProjectSetup(unittest.TestCase):
