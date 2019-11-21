@@ -288,7 +288,7 @@ class ProjectSetup:
             container_index_strings = [c[-4:] for c in container_names if not re.search(r"PLATE", c)]
 
         def get_next_index_from_index_strings(index_strings):
-            indices = [int(float(x)) for x in index_strings]
+            indices = [int(float(re.sub(r"L01$", "", x))) for x in index_strings]
             next_index = max(indices) + 1 if len(indices) > 0 else 1
             return next_index
 
