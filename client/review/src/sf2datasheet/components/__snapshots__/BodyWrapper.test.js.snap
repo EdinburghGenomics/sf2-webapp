@@ -1,0 +1,291 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders BodyWrapper correctly 1`] = `
+<BodyWrapper
+  bodyHeight={100}
+  bodyWidth={100}
+  bottomPadding={140}
+  columns={
+    Array [
+      Object {
+        "value": "Your Sample ID",
+        "width": 335,
+      },
+    ]
+  }
+  disableRedo={[Function]}
+  disableUndo={[Function]}
+  enableRedo={[Function]}
+  enableUndo={[Function]}
+  frozenGrid={
+    Array [
+      Array [],
+    ]
+  }
+  id={0}
+  initialBodyGrid={
+    Array [
+      Array [
+        Object {
+          "readonly": false,
+          "value": "",
+        },
+      ],
+    ]
+  }
+  onTick={[Function]}
+  onUpdateBodyGrid={[Function]}
+  rowColours={null}
+  scrollOnClick={false}
+  setScrollbarPresent={[Function]}
+  uuid="test"
+>
+  <div
+    id="bodyWrapper"
+    onClick={[Function]}
+    style={
+      Object {
+        "border": "0px solid grey",
+        "maxHeight": 240,
+        "overflow": "auto",
+        "width": 100,
+      }
+    }
+  >
+    <Body
+      bottomPadding={140}
+      columns={
+        Array [
+          Object {
+            "value": "Your Sample ID",
+            "width": 335,
+          },
+        ]
+      }
+      disableRedo={[Function]}
+      disableUndo={[Function]}
+      enableRedo={[Function]}
+      enableUndo={[Function]}
+      frozenGrid={
+        Array [
+          Array [],
+        ]
+      }
+      id={0}
+      initialBodyGrid={
+        Array [
+          Array [
+            Object {
+              "readonly": false,
+              "value": "",
+            },
+          ],
+        ]
+      }
+      onMove={[Function]}
+      onUpdateBodyGrid={[Function]}
+      rowColours={null}
+      uuid="test"
+    >
+      <div
+        onKeyDown={[Function]}
+        style={
+          Object {
+            "paddingBottom": 140,
+            "width": 335,
+          }
+        }
+      >
+        <DataSheet
+          cellRenderer={[Function]}
+          data={
+            Array [
+              Array [
+                Object {
+                  "readonly": false,
+                  "value": "",
+                },
+              ],
+            ]
+          }
+          dataEditor={[Function]}
+          onCellsChanged={[Function]}
+          rowRenderer={[Function]}
+          sheetRenderer={[Function]}
+          valueRenderer={[Function]}
+          valueViewer={[Function]}
+        >
+          <span
+            className="data-grid-container"
+            onKeyDown={[Function]}
+            tabIndex="0"
+          >
+            <sheetRenderer
+              className="data-grid"
+              data={
+                Array [
+                  Array [
+                    Object {
+                      "readonly": false,
+                      "value": "",
+                    },
+                  ],
+                ]
+              }
+            >
+              <table
+                className="data-grid"
+                key="dsTable_"
+              >
+                <tbody>
+                  <rowRenderer
+                    cells={
+                      Array [
+                        Object {
+                          "readonly": false,
+                          "value": "",
+                        },
+                      ]
+                    }
+                    key="0"
+                    row={0}
+                  >
+                    <tr
+                      className="cell"
+                      key="dsRow__0"
+                    >
+                      <DataCell
+                        cell={
+                          Object {
+                            "readonly": false,
+                            "value": "",
+                          }
+                        }
+                        cellRenderer={[Function]}
+                        clearing={false}
+                        col={0}
+                        dataEditor={[Function]}
+                        editing={false}
+                        forceEdit={false}
+                        key="0-0"
+                        onChange={[Function]}
+                        onContextMenu={[Function]}
+                        onDoubleClick={[Function]}
+                        onKey={[Function]}
+                        onMouseDown={[Function]}
+                        onMouseOver={[Function]}
+                        onNavigate={[Function]}
+                        onRevert={[Function]}
+                        row={0}
+                        selected={false}
+                        valueRenderer={[Function]}
+                        valueViewer={[Function]}
+                      >
+                        <cellRenderer
+                          cell={
+                            Object {
+                              "readonly": false,
+                              "value": "",
+                            }
+                          }
+                          className="cell"
+                          col={0}
+                          editing={false}
+                          onContextMenu={[Function]}
+                          onDoubleClick={[Function]}
+                          onMouseDown={[Function]}
+                          onMouseOver={[Function]}
+                          row={0}
+                          selected={false}
+                          style={null}
+                          updated={false}
+                        >
+                          <CellRenderer
+                            cell={
+                              Object {
+                                "readonly": false,
+                                "value": "",
+                              }
+                            }
+                            className="cell"
+                            col={0}
+                            columns={
+                              Array [
+                                Object {
+                                  "value": "Your Sample ID",
+                                  "width": 335,
+                                },
+                              ]
+                            }
+                            data-uuid="test"
+                            editing={false}
+                            id={0}
+                            onContextMenu={[Function]}
+                            onDoubleClick={[Function]}
+                            onMouseDown={[Function]}
+                            onMouseOver={[Function]}
+                            row={0}
+                            rowColours={null}
+                            selected={false}
+                            style={null}
+                            updated={false}
+                            uuid="test"
+                          >
+                            <td
+                              cell={
+                                Object {
+                                  "readonly": false,
+                                  "value": "",
+                                }
+                              }
+                              className="cell"
+                              col={0}
+                              data-uuid="test"
+                              editing="false"
+                              key="dsCell_0_0_0"
+                              onContextMenu={[Function]}
+                              onDoubleClick={[Function]}
+                              onMouseDown={[Function]}
+                              onMouseOver={[Function]}
+                              row={0}
+                              selected={false}
+                              style={
+                                Object {
+                                  "height": 20,
+                                  "width": 335,
+                                }
+                              }
+                              updated="false"
+                            >
+                              <valueViewer
+                                cell={
+                                  Object {
+                                    "readonly": false,
+                                    "value": "",
+                                  }
+                                }
+                                col={0}
+                                row={0}
+                                value=""
+                              >
+                                <span
+                                  className="value-viewer"
+                                  data-uuid="test"
+                                />
+                              </valueViewer>
+                            </td>
+                          </CellRenderer>
+                        </cellRenderer>
+                      </DataCell>
+                    </tr>
+                  </rowRenderer>
+                </tbody>
+              </table>
+            </sheetRenderer>
+          </span>
+        </DataSheet>
+      </div>
+    </Body>
+  </div>
+</BodyWrapper>
+`;

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the header tooltip correctly with required arguments 1`] = `
+<SF2HeaderTooltip
+  headerText="test"
+  headerTooltipID="test"
+  tooltipText="test"
+>
+  <div>
+    <div>
+      test
+      <sup />
+       
+      <span
+        id="test"
+        style={
+          Object {
+            "fontSize": "x-small",
+          }
+        }
+      >
+        <sup>
+          ⓘ
+        </sup>
+      </span>
+    </div>
+    <Tooltip
+      autohide={true}
+      delay={
+        Object {
+          "hide": 250,
+          "show": 0,
+        }
+      }
+      hideArrow={false}
+      isOpen={false}
+      placement="right"
+      placementPrefix="bs-tooltip"
+      target="test"
+      toggle={[Function]}
+    />
+  </div>
+</SF2HeaderTooltip>
+`;

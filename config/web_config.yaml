@@ -1,0 +1,11 @@
+project_setup:
+    address: localhost
+    port: 8000
+
+customer_submission:
+    address: localhost
+    port: 8001
+
+review:
+    address: localhost
+    port: 8002

@@ -1,0 +1,386 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the Warning Modal correctly with required arguments 1`] = `
+<WarningModal
+  active={true}
+  onCancel={[Function]}
+  onConfirm={[Function]}
+  warnings={Array []}
+>
+  <Modal
+    autoFocus={true}
+    backdrop={true}
+    backdropTransition={
+      Object {
+        "mountOnEnter": true,
+        "timeout": 150,
+      }
+    }
+    centered={false}
+    fade={true}
+    isOpen={true}
+    keyboard={true}
+    modalTransition={
+      Object {
+        "timeout": 300,
+      }
+    }
+    onClosed={[Function]}
+    onOpened={[Function]}
+    role="dialog"
+    style={
+      Object {
+        "minWidth": "75%",
+      }
+    }
+    zIndex={1050}
+  >
+    <Portal
+      node={
+        <div
+          tabindex="-1"
+          style="position: relative; z-index: 1050;"
+        >
+          <div
+            class=""
+          >
+            <div
+              class="modal fade"
+              style="display: block;"
+              role="dialog"
+              tabindex="-1"
+            >
+              <div
+                style="min-width: 75%;"
+                class="modal-dialog"
+                role="document"
+              >
+                <div
+                  class="modal-content"
+                >
+                  <div
+                    class="modal-header"
+                  >
+                    <h5
+                      class="modal-title"
+                    >
+                      SF2 contains warnings
+                    </h5>
+                  </div>
+                  <div
+                    class="modal-body"
+                  >
+                    <div>
+                      This SF2 contains the following warnings:
+                    </div>
+                    <br />
+                    <div
+                      style="height: 150px; overflow-y: auto; padding: 10px;"
+                    />
+                    <br />
+                    <div>
+                      Do you want to submit the SF2 anyway?
+                    </div>
+                  </div>
+                  <div
+                    class="modal-footer"
+                  >
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                    >
+                      No
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                    >
+                      Yes
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="modal-backdrop fade"
+            />
+          </div>
+        </div>
+      }
+    >
+      <Portal
+        containerInfo={
+          <div
+            tabindex="-1"
+            style="position: relative; z-index: 1050;"
+          >
+            <div
+              class=""
+            >
+              <div
+                class="modal fade"
+                style="display: block;"
+                role="dialog"
+                tabindex="-1"
+              >
+                <div
+                  style="min-width: 75%;"
+                  class="modal-dialog"
+                  role="document"
+                >
+                  <div
+                    class="modal-content"
+                  >
+                    <div
+                      class="modal-header"
+                    >
+                      <h5
+                        class="modal-title"
+                      >
+                        SF2 contains warnings
+                      </h5>
+                    </div>
+                    <div
+                      class="modal-body"
+                    >
+                      <div>
+                        This SF2 contains the following warnings:
+                      </div>
+                      <br />
+                      <div
+                        style="height: 150px; overflow-y: auto; padding: 10px;"
+                      />
+                      <br />
+                      <div>
+                        Do you want to submit the SF2 anyway?
+                      </div>
+                    </div>
+                    <div
+                      class="modal-footer"
+                    >
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                      >
+                        No
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                      >
+                        Yes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="modal-backdrop fade"
+              />
+            </div>
+          </div>
+        }
+      >
+        <div
+          className=""
+        >
+          <Fade
+            appear={true}
+            baseClass="fade"
+            baseClassActive="show"
+            className="modal"
+            enter={true}
+            exit={true}
+            in={true}
+            mountOnEnter={false}
+            onClick={[Function]}
+            onEnter={[Function]}
+            onEntered={[Function]}
+            onEntering={[Function]}
+            onExit={[Function]}
+            onExited={[Function]}
+            onExiting={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseDown={[Function]}
+            role="dialog"
+            style={
+              Object {
+                "display": "block",
+              }
+            }
+            tabIndex="-1"
+            tag="div"
+            timeout={300}
+            unmountOnExit={false}
+          >
+            <Transition
+              appear={true}
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={false}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              timeout={300}
+              unmountOnExit={false}
+            >
+              <div
+                className="modal fade"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                role="dialog"
+                style={
+                  Object {
+                    "display": "block",
+                  }
+                }
+                tabIndex="-1"
+              >
+                <div
+                  className="modal-dialog"
+                  role="document"
+                  style={
+                    Object {
+                      "minWidth": "75%",
+                    }
+                  }
+                >
+                  <div
+                    className="modal-content"
+                  >
+                    <ModalHeader
+                      charCode={215}
+                      closeAriaLabel="Close"
+                      tag="h5"
+                      wrapTag="div"
+                    >
+                      <div
+                        className="modal-header"
+                      >
+                        <h5
+                          className="modal-title"
+                        >
+                          SF2 contains warnings
+                        </h5>
+                      </div>
+                    </ModalHeader>
+                    <ModalBody
+                      tag="div"
+                    >
+                      <div
+                        className="modal-body"
+                      >
+                        <div>
+                          This SF2 contains the following warnings:
+                        </div>
+                        <br />
+                        <div
+                          style={
+                            Object {
+                              "border": "1px solid grey",
+                              "height": "150px",
+                              "overflowY": "auto",
+                              "padding": "10px",
+                            }
+                          }
+                        />
+                        <br />
+                        <div>
+                          Do you want to submit the SF2 anyway?
+                        </div>
+                      </div>
+                    </ModalBody>
+                    <ModalFooter
+                      tag="div"
+                    >
+                      <div
+                        className="modal-footer"
+                      >
+                        <Button
+                          color="primary"
+                          onClick={[Function]}
+                          tag="button"
+                        >
+                          <button
+                            aria-label={null}
+                            className="btn btn-primary"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            No
+                          </button>
+                        </Button>
+                         
+                        <Button
+                          color="secondary"
+                          onClick={[Function]}
+                          tag="button"
+                        >
+                          <button
+                            aria-label={null}
+                            className="btn btn-secondary"
+                            onClick={[Function]}
+                            type="button"
+                          >
+                            Yes
+                          </button>
+                        </Button>
+                      </div>
+                    </ModalFooter>
+                  </div>
+                </div>
+              </div>
+            </Transition>
+          </Fade>
+          <Fade
+            appear={true}
+            baseClass="fade"
+            baseClassActive="show"
+            className="modal-backdrop"
+            enter={true}
+            exit={true}
+            in={true}
+            mountOnEnter={true}
+            onEnter={[Function]}
+            onEntered={[Function]}
+            onEntering={[Function]}
+            onExit={[Function]}
+            onExited={[Function]}
+            onExiting={[Function]}
+            tag="div"
+            timeout={150}
+            unmountOnExit={false}
+          >
+            <Transition
+              appear={true}
+              enter={true}
+              exit={true}
+              in={true}
+              mountOnEnter={true}
+              onEnter={[Function]}
+              onEntered={[Function]}
+              onEntering={[Function]}
+              onExit={[Function]}
+              onExited={[Function]}
+              onExiting={[Function]}
+              timeout={150}
+              unmountOnExit={false}
+            >
+              <div
+                className="modal-backdrop fade"
+              />
+            </Transition>
+          </Fade>
+        </div>
+      </Portal>
+    </Portal>
+  </Modal>
+</WarningModal>
+`;

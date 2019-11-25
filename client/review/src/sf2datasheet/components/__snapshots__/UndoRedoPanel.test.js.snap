@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Undo Redo Panel correctly 1`] = `
+<UndoRedoPanel
+  onRedo={[Function]}
+  onUndo={[Function]}
+  redoEnabled={false}
+  undoEnabled={false}
+  uuid="1"
+>
+  <div>
+    <button
+      data-uuid="1"
+      disabled={true}
+      onClick={[Function]}
+    >
+      Undo
+    </button>
+    <button
+      data-uuid="1"
+      disabled={true}
+      onClick={[Function]}
+    >
+      Redo
+    </button>
+  </div>
+</UndoRedoPanel>
+`;

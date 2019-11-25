@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders AutocompleteEditor correctly 1`] = `
+<AutocompleteEditor
+  cell={Object {}}
+  col={1}
+  onChange={[Function]}
+  onCommit={[Function]}
+  onKeyDown={[Function]}
+  onRevert={[Function]}
+  options={
+    Array [
+      "one",
+      "two",
+    ]
+  }
+  row={1}
+  value="test"
+>
+  <span
+    onKeyDown={[Function]}
+    style={
+      Object {
+        "display": "flex",
+        "height": "100%",
+      }
+    }
+  >
+    <Autocomplete
+      autoHighlight={true}
+      getItemValue={[Function]}
+      inputProps={Object {}}
+      isItemSelectable={[Function]}
+      items={
+        Array [
+          Object {
+            "id": "one",
+            "label": "one",
+          },
+          Object {
+            "id": "two",
+            "label": "two",
+          },
+        ]
+      }
+      menuStyle={
+        Object {
+          "background": "rgba(255, 255, 255, 0.9)",
+          "borderRadius": "3px",
+          "boxShadow": "0 2px 12px rgba(0, 0, 0, 0.1)",
+          "fontSize": "90%",
+          "maxHeight": "50%",
+          "overflow": "auto",
+          "padding": "2px 0",
+          "position": "fixed",
+        }
+      }
+      onChange={[Function]}
+      onMenuVisibilityChange={[Function]}
+      onSelect={[Function]}
+      open={true}
+      renderInput={[Function]}
+      renderItem={[Function]}
+      renderMenu={[Function]}
+      selectOnBlur={true}
+      shouldItemRender={[Function]}
+      value=""
+      wrapperProps={Object {}}
+      wrapperStyle={
+        Object {
+          "display": "flex",
+          "width": "-webkit-fill-available",
+        }
+      }
+    >
+      <div
+        style={
+          Object {
+            "display": "flex",
+            "width": "-webkit-fill-available",
+          }
+        }
+      >
+        <input
+          aria-autocomplete="list"
+          aria-expanded={true}
+          autoComplete="off"
+          onBlur={[Function]}
+          onChange={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          role="combobox"
+          style={
+            Object {
+              "display": "flex",
+              "width": "-webkit-fill-available",
+            }
+          }
+          value=""
+        />
+        <div
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onTouchStart={[Function]}
+          style={
+            Object {
+              "background": "rgba(255, 255, 255, 0.9)",
+              "borderRadius": "3px",
+              "boxShadow": "0 2px 12px rgba(0, 0, 0, 0.1)",
+              "fontSize": "90%",
+              "left": 0,
+              "maxHeight": "50%",
+              "minWidth": 0,
+              "overflow": "auto",
+              "padding": "2px 0",
+              "position": "fixed",
+              "top": 0,
+            }
+          }
+        >
+          <div
+            key="one"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+            style={
+              Object {
+                "backgroundColor": "transparent",
+              }
+            }
+          >
+            one
+          </div>
+          <div
+            key="two"
+            onClick={[Function]}
+            onMouseEnter={[Function]}
+            style={
+              Object {
+                "backgroundColor": "transparent",
+              }
+            }
+          >
+            two
+          </div>
+        </div>
+      </div>
+    </Autocomplete>
+  </span>
+</AutocompleteEditor>
+`;

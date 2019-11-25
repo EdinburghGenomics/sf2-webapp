@@ -1,0 +1,510 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the Stage1FormStateSummary correctly with arguments 1`] = `
+<Stage1FormStateSummary
+  containerTypeIsPlate={false}
+  numberOfPools="5"
+  numberOfSamplesOrLibraries="10"
+  projectID="test"
+  sf2HasPools={true}
+  sf2IsDualIndex={true}
+  sf2type="Library"
+>
+  <div>
+    <Container
+      style={
+        Object {
+          "maxWidth": "100%",
+        }
+      }
+      tag="div"
+    >
+      <div
+        className="container"
+        style={
+          Object {
+            "maxWidth": "100%",
+          }
+        }
+      >
+        <Row
+          tag="div"
+        >
+          <div
+            className="row"
+          >
+            <Col
+              style={
+                Object {
+                  "backgroundColor": "#E5EDF5",
+                  "border": "1px solid #C9C1D5",
+                  "color": "#5F5F5F",
+                  "padding": ".75rem",
+                }
+              }
+              tag="div"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <div
+                className="col"
+                style={
+                  Object {
+                    "backgroundColor": "#E5EDF5",
+                    "border": "1px solid #C9C1D5",
+                    "color": "#5F5F5F",
+                    "padding": ".75rem",
+                  }
+                }
+              >
+                Project ID: 
+                test
+              </div>
+            </Col>
+            <Col
+              style={
+                Object {
+                  "backgroundColor": "#E5EDF5",
+                  "border": "1px solid #C9C1D5",
+                  "color": "#5F5F5F",
+                  "padding": ".75rem",
+                }
+              }
+              tag="div"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <div
+                className="col"
+                style={
+                  Object {
+                    "backgroundColor": "#E5EDF5",
+                    "border": "1px solid #C9C1D5",
+                    "color": "#5F5F5F",
+                    "padding": ".75rem",
+                  }
+                }
+              >
+                SF2 type: 
+                Library
+              </div>
+            </Col>
+            <Col
+              style={
+                Object {
+                  "backgroundColor": "#E5EDF5",
+                  "border": "1px solid #C9C1D5",
+                  "color": "#5F5F5F",
+                  "padding": ".75rem",
+                }
+              }
+              tag="div"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <div
+                className="col"
+                style={
+                  Object {
+                    "backgroundColor": "#E5EDF5",
+                    "border": "1px solid #C9C1D5",
+                    "color": "#5F5F5F",
+                    "padding": ".75rem",
+                  }
+                }
+              >
+                Container type is plate: 
+                no
+              </div>
+            </Col>
+          </div>
+        </Row>
+        <div>
+          <Row
+            tag="div"
+          >
+            <div
+              className="row"
+            >
+              <Col
+                style={
+                  Object {
+                    "backgroundColor": "#E5EDF5",
+                    "border": "1px solid #C9C1D5",
+                    "color": "#5F5F5F",
+                    "padding": ".75rem",
+                  }
+                }
+                tag="div"
+                widths={
+                  Array [
+                    "xs",
+                    "sm",
+                    "md",
+                    "lg",
+                    "xl",
+                  ]
+                }
+              >
+                <div
+                  className="col"
+                  style={
+                    Object {
+                      "backgroundColor": "#E5EDF5",
+                      "border": "1px solid #C9C1D5",
+                      "color": "#5F5F5F",
+                      "padding": ".75rem",
+                    }
+                  }
+                >
+                  SF2 is Dual Index: 
+                  yes
+                </div>
+              </Col>
+              <Col
+                style={
+                  Object {
+                    "backgroundColor": "#E5EDF5",
+                    "border": "1px solid #C9C1D5",
+                    "color": "#5F5F5F",
+                    "padding": ".75rem",
+                  }
+                }
+                tag="div"
+                widths={
+                  Array [
+                    "xs",
+                    "sm",
+                    "md",
+                    "lg",
+                    "xl",
+                  ]
+                }
+              >
+                <div
+                  className="col"
+                  style={
+                    Object {
+                      "backgroundColor": "#E5EDF5",
+                      "border": "1px solid #C9C1D5",
+                      "color": "#5F5F5F",
+                      "padding": ".75rem",
+                    }
+                  }
+                >
+                  SF2 has Pools: 
+                  yes
+                </div>
+              </Col>
+              <Col
+                style={
+                  Object {
+                    "backgroundColor": "#E5EDF5",
+                    "border": "1px solid #C9C1D5",
+                    "color": "#5F5F5F",
+                    "padding": ".75rem",
+                  }
+                }
+                tag="div"
+                widths={
+                  Array [
+                    "xs",
+                    "sm",
+                    "md",
+                    "lg",
+                    "xl",
+                  ]
+                }
+              >
+                <div
+                  className="col"
+                  style={
+                    Object {
+                      "backgroundColor": "#E5EDF5",
+                      "border": "1px solid #C9C1D5",
+                      "color": "#5F5F5F",
+                      "padding": ".75rem",
+                    }
+                  }
+                >
+                  Number of Pools: 
+                  5
+                </div>
+              </Col>
+              <Col
+                style={
+                  Object {
+                    "backgroundColor": "#E5EDF5",
+                    "border": "1px solid #C9C1D5",
+                    "color": "#5F5F5F",
+                    "padding": ".75rem",
+                  }
+                }
+                tag="div"
+                widths={
+                  Array [
+                    "xs",
+                    "sm",
+                    "md",
+                    "lg",
+                    "xl",
+                  ]
+                }
+              >
+                <div
+                  className="col"
+                  style={
+                    Object {
+                      "backgroundColor": "#E5EDF5",
+                      "border": "1px solid #C9C1D5",
+                      "color": "#5F5F5F",
+                      "padding": ".75rem",
+                    }
+                  }
+                >
+                  Number of Libraries in Pools: 
+                </div>
+              </Col>
+            </div>
+          </Row>
+          <Row
+            tag="div"
+          >
+            <div
+              className="row"
+            >
+              <Col
+                style={
+                  Object {
+                    "backgroundColor": "#E5EDF5",
+                    "border": "1px solid #C9C1D5",
+                    "color": "#5F5F5F",
+                    "padding": ".75rem",
+                  }
+                }
+                tag="div"
+                widths={
+                  Array [
+                    "xs",
+                    "sm",
+                    "md",
+                    "lg",
+                    "xl",
+                  ]
+                }
+              >
+                <div
+                  className="col"
+                  style={
+                    Object {
+                      "backgroundColor": "#E5EDF5",
+                      "border": "1px solid #C9C1D5",
+                      "color": "#5F5F5F",
+                      "padding": ".75rem",
+                    }
+                  }
+                >
+                  SF2 has Unpooled Libraries: 
+                  no
+                </div>
+              </Col>
+              <Col
+                style={
+                  Object {
+                    "backgroundColor": "#E5EDF5",
+                    "border": "1px solid #C9C1D5",
+                    "color": "#5F5F5F",
+                    "padding": ".75rem",
+                  }
+                }
+                tag="div"
+                widths={
+                  Array [
+                    "xs",
+                    "sm",
+                    "md",
+                    "lg",
+                    "xl",
+                  ]
+                }
+              >
+                <div
+                  className="col"
+                  style={
+                    Object {
+                      "backgroundColor": "#E5EDF5",
+                      "border": "1px solid #C9C1D5",
+                      "color": "#5F5F5F",
+                      "padding": ".75rem",
+                    }
+                  }
+                >
+                  SF2 has Custom Primers: 
+                  no
+                </div>
+              </Col>
+            </div>
+          </Row>
+        </div>
+      </div>
+    </Container>
+  </div>
+</Stage1FormStateSummary>
+`;
+
+exports[`renders the Stage1FormStateSummary correctly with no arguments 1`] = `
+<Stage1FormStateSummary>
+  <div>
+    <Container
+      style={
+        Object {
+          "maxWidth": "100%",
+        }
+      }
+      tag="div"
+    >
+      <div
+        className="container"
+        style={
+          Object {
+            "maxWidth": "100%",
+          }
+        }
+      >
+        <Row
+          tag="div"
+        >
+          <div
+            className="row"
+          >
+            <Col
+              style={
+                Object {
+                  "backgroundColor": "#E5EDF5",
+                  "border": "1px solid #C9C1D5",
+                  "color": "#5F5F5F",
+                  "padding": ".75rem",
+                }
+              }
+              tag="div"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <div
+                className="col"
+                style={
+                  Object {
+                    "backgroundColor": "#E5EDF5",
+                    "border": "1px solid #C9C1D5",
+                    "color": "#5F5F5F",
+                    "padding": ".75rem",
+                  }
+                }
+              >
+                Project ID: 
+              </div>
+            </Col>
+            <Col
+              style={
+                Object {
+                  "backgroundColor": "#E5EDF5",
+                  "border": "1px solid #C9C1D5",
+                  "color": "#5F5F5F",
+                  "padding": ".75rem",
+                }
+              }
+              tag="div"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <div
+                className="col"
+                style={
+                  Object {
+                    "backgroundColor": "#E5EDF5",
+                    "border": "1px solid #C9C1D5",
+                    "color": "#5F5F5F",
+                    "padding": ".75rem",
+                  }
+                }
+              >
+                SF2 type: 
+              </div>
+            </Col>
+            <Col
+              style={
+                Object {
+                  "backgroundColor": "#E5EDF5",
+                  "border": "1px solid #C9C1D5",
+                  "color": "#5F5F5F",
+                  "padding": ".75rem",
+                }
+              }
+              tag="div"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+            >
+              <div
+                className="col"
+                style={
+                  Object {
+                    "backgroundColor": "#E5EDF5",
+                    "border": "1px solid #C9C1D5",
+                    "color": "#5F5F5F",
+                    "padding": ".75rem",
+                  }
+                }
+              >
+                Container type is plate: 
+                no
+              </div>
+            </Col>
+          </div>
+        </Row>
+      </div>
+    </Container>
+  </div>
+</Stage1FormStateSummary>
+`;

@@ -1,0 +1,277 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the paginator correctly with no arguments 1`] = `
+<nav
+  aria-label="Page navigation"
+  className=""
+>
+  <ul
+    className="pagination"
+    style={
+      Object {
+        "display": "table",
+        "width": "100%",
+      }
+    }
+  >
+    <li
+      className="disabled page-item"
+      style={
+        Object {
+          "display": "table-cell",
+        }
+      }
+    >
+      <a
+        aria-label={undefined}
+        className="page-link"
+        href="#"
+        onClick={[Function]}
+      >
+        Stage 1: Project setup (project team)
+      </a>
+    </li>
+    <li
+      className="disabled page-item"
+      style={
+        Object {
+          "display": "table-cell",
+        }
+      }
+    >
+      <a
+        aria-label={undefined}
+        className="page-link"
+        href="#"
+        onClick={[Function]}
+      >
+        Stage 2: SF2 submission form (client)
+      </a>
+    </li>
+    <li
+      className="disabled page-item"
+      style={
+        Object {
+          "display": "table-cell",
+        }
+      }
+    >
+      <a
+        aria-label={undefined}
+        className="page-link"
+        href="#"
+        onClick={[Function]}
+      >
+        Stage 3: SF2 submission review (project team)
+      </a>
+    </li>
+  </ul>
+</nav>
+`;
+
+exports[`renders the paginator correctly with stage set to 1 1`] = `
+<nav
+  aria-label="Page navigation"
+  className=""
+>
+  <ul
+    className="pagination"
+    style={
+      Object {
+        "display": "table",
+        "width": "100%",
+      }
+    }
+  >
+    <li
+      className="active page-item"
+      style={
+        Object {
+          "display": "table-cell",
+        }
+      }
+    >
+      <a
+        aria-label={undefined}
+        className="page-link"
+        href="#"
+        onClick={[Function]}
+      >
+        Stage 1: Project setup (project team)
+      </a>
+    </li>
+    <li
+      className="disabled page-item"
+      style={
+        Object {
+          "display": "table-cell",
+        }
+      }
+    >
+      <a
+        aria-label={undefined}
+        className="page-link"
+        href="#"
+        onClick={[Function]}
+      >
+        Stage 2: SF2 submission form (client)
+      </a>
+    </li>
+    <li
+      className="disabled page-item"
+      style={
+        Object {
+          "display": "table-cell",
+        }
+      }
+    >
+      <a
+        aria-label={undefined}
+        className="page-link"
+        href="#"
+        onClick={[Function]}
+      >
+        Stage 3: SF2 submission review (project team)
+      </a>
+    </li>
+  </ul>
+</nav>
+`;
+
+exports[`renders the paginator correctly with stage set to 2 1`] = `
+<nav
+  aria-label="Page navigation"
+  className=""
+>
+  <ul
+    className="pagination"
+    style={
+      Object {
+        "display": "table",
+        "width": "100%",
+      }
+    }
+  >
+    <li
+      className="disabled page-item"
+      style={
+        Object {
+          "display": "table-cell",
+        }
+      }
+    >
+      <a
+        aria-label={undefined}
+        className="page-link"
+        href="#"
+        onClick={[Function]}
+      >
+        Stage 1: Project setup (project team)
+      </a>
+    </li>
+    <li
+      className="active page-item"
+      style={
+        Object {
+          "display": "table-cell",
+        }
+      }
+    >
+      <a
+        aria-label={undefined}
+        className="page-link"
+        href="#"
+        onClick={[Function]}
+      >
+        Stage 2: SF2 submission form (client)
+      </a>
+    </li>
+    <li
+      className="disabled page-item"
+      style={
+        Object {
+          "display": "table-cell",
+        }
+      }
+    >
+      <a
+        aria-label={undefined}
+        className="page-link"
+        href="#"
+        onClick={[Function]}
+      >
+        Stage 3: SF2 submission review (project team)
+      </a>
+    </li>
+  </ul>
+</nav>
+`;
+
+exports[`renders the paginator correctly with stage set to 3 1`] = `
+<nav
+  aria-label="Page navigation"
+  className=""
+>
+  <ul
+    className="pagination"
+    style={
+      Object {
+        "display": "table",
+        "width": "100%",
+      }
+    }
+  >
+    <li
+      className="disabled page-item"
+      style={
+        Object {
+          "display": "table-cell",
+        }
+      }
+    >
+      <a
+        aria-label={undefined}
+        className="page-link"
+        href="#"
+        onClick={[Function]}
+      >
+        Stage 1: Project setup (project team)
+      </a>
+    </li>
+    <li
+      className="disabled page-item"
+      style={
+        Object {
+          "display": "table-cell",
+        }
+      }
+    >
+      <a
+        aria-label={undefined}
+        className="page-link"
+        href="#"
+        onClick={[Function]}
+      >
+        Stage 2: SF2 submission form (client)
+      </a>
+    </li>
+    <li
+      className="active page-item"
+      style={
+        Object {
+          "display": "table-cell",
+        }
+      }
+    >
+      <a
+        aria-label={undefined}
+        className="page-link"
+        href="#"
+        onClick={[Function]}
+      >
+        Stage 3: SF2 submission review (project team)
+      </a>
+    </li>
+  </ul>
+</nav>
+`;

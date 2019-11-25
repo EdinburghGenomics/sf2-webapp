@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the ConfirmHandler correctly with required arguments 1`] = `
+<div>
+  <WarningModal
+    active={false}
+    onCancel={[Function]}
+    onConfirm={[Function]}
+    warnings={Array []}
+  >
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      fade={true}
+      isOpen={false}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      role="dialog"
+      style={
+        Object {
+          "minWidth": "75%",
+        }
+      }
+      zIndex={1050}
+    />
+  </WarningModal>
+  <ConfirmModal
+    active={false}
+    onCancel={[Function]}
+    onConfirm={[Function]}
+  >
+    <Modal
+      autoFocus={true}
+      backdrop={true}
+      backdropTransition={
+        Object {
+          "mountOnEnter": true,
+          "timeout": 150,
+        }
+      }
+      centered={false}
+      fade={true}
+      isOpen={false}
+      keyboard={true}
+      modalTransition={
+        Object {
+          "timeout": 300,
+        }
+      }
+      onClosed={[Function]}
+      onOpened={[Function]}
+      role="dialog"
+      style={
+        Object {
+          "minWidth": "75%",
+        }
+      }
+      zIndex={1050}
+    />
+  </ConfirmModal>
+  <wrappedComponent
+    handleSubmission={[Function]}
+  >
+    <div>
+      test
+    </div>
+  </wrappedComponent>
+</div>
+`;

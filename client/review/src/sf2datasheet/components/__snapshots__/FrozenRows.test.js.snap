@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders Frozen Rows correctly 1`] = `
+<ForwardRef(FrozenRows)
+  bodyHeight={100}
+  bottomPadding={140}
+  frozenColumns={
+    Array [
+      Object {
+        "value": "Your Sample ID",
+        "width": 335,
+      },
+    ]
+  }
+  frozenGrid={
+    Array [
+      Array [
+        Object {
+          "value": "test1",
+        },
+      ],
+      Array [
+        Object {
+          "value": "test2",
+        },
+      ],
+    ]
+  }
+  frozenRowsWidth={100}
+  scrollTop={0}
+>
+  <div
+    style={
+      Object {
+        "border": "0px solid gray",
+        "maxHeight": undefined,
+        "overflow": "hidden",
+        "width": 100,
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "paddingBottom": 156,
+        }
+      }
+    >
+      <span
+        className="data-grid-container"
+        tabIndex="0"
+      >
+        <table
+          className="data-grid"
+        >
+          <tbody>
+            <tr
+              className="cell read-only row-handle"
+              key="FrozenRow0"
+            >
+              <td
+                key="0"
+              >
+                <span>
+                  <span
+                    className="value-viewer"
+                    style={
+                      Object {
+                        "width": 335,
+                      }
+                    }
+                  >
+                    test1
+                  </span>
+                </span>
+              </td>
+            </tr>
+            <tr
+              className="cell read-only row-handle"
+              key="FrozenRow1"
+            >
+              <td
+                key="0"
+              >
+                <span>
+                  <span
+                    className="value-viewer"
+                    style={
+                      Object {
+                        "width": 335,
+                      }
+                    }
+                  >
+                    test2
+                  </span>
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </span>
+    </div>
+  </div>
+</ForwardRef(FrozenRows)>
+`;
