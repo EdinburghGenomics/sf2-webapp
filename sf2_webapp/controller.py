@@ -46,9 +46,9 @@ def set_up_logging(config_manager):
     app_log.addHandler(logging_handler)
     gen_log.addHandler(logging_handler)
 
-    #logging.getLogger("tornado.access").propagate = False
-    #logging.getLogger("tornado.application").propagate = False
-    #logging.getLogger("tornado.general").propagate = False
+    logging.getLogger("tornado.access").propagate = False
+    logging.getLogger("tornado.application").propagate = False
+    logging.getLogger("tornado.general").propagate = False
 
     log_levels = dict(
         zip(
