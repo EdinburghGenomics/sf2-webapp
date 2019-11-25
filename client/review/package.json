@@ -1,6 +1,6 @@
 {
-  "name": "sf2-webapp-demo",
-  "version": "0.2.2",
+  "name": "sf2-webapp",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "bootstrap": "^4.1.3",

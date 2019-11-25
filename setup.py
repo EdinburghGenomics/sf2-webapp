@@ -11,7 +11,7 @@ with open(os.path.join(current_dir, "README.md"), 'r') as readme:
 
 setup(
     name="sf2_webapp",
-    version="0.0.1",
+    version="0.1.0",
     description="Edinburgh Genomics Online SF2 web application",
     long_description=README,
     long_description_content_type="text/markdown",
