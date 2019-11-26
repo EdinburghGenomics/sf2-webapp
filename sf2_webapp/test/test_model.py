@@ -1,13 +1,7 @@
 import datetime
 import json
-import logging
-import os
-import smtplib
 import unittest
-import tornado
 
-from tornado.testing import AsyncHTTPTestCase
-from collections import namedtuple
 from unittest.mock import Mock, patch
 
 from sf2_webapp import config

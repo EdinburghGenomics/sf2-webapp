@@ -1,7 +1,5 @@
-import os
 import unittest
 
-from collections import namedtuple
 from unittest.mock import patch
 
 from sf2_webapp import config
