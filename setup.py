@@ -25,8 +25,8 @@ setup(
     packages=["sf2_webapp"],
     include_package_data=True,
     install_requires=[
-        "tornado",
-        "psycopg2",
+        "tornado==4.5.3",
+        "psycopg2-binary",
         "pyyaml",
         "pyclarity-lims"
     ],

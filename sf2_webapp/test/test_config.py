@@ -176,7 +176,7 @@ class TestHelperFunctions(unittest.TestCase):
         input_file_contents = """
         log_level: debug
         log_file:
-            prefix: ~/.onlinesf2/onlinesf2_log
+            prefix: ~/.sf2webapp/logs/sf2_webapp.log
             max_size_in_bytes: 100000000
             number_to_keep: 1000
         """
@@ -184,7 +184,7 @@ class TestHelperFunctions(unittest.TestCase):
         expected_result = config.LoggingConfig(
             log_level = "debug",
             log_file = config.LogFileConfig(
-                prefix = os.path.expanduser("~/.onlinesf2/onlinesf2_log"),
+                prefix = os.path.expanduser("~/.sf2webapp/logs/sf2_webapp.log"),
                 max_size_in_bytes = 100000000,
                 number_to_keep = 1000
             )
@@ -202,7 +202,7 @@ class TestHelperFunctions(unittest.TestCase):
         input_file_contents = """
         log_level: debug
         log_file:
-            prefix: ~/.onlinesf2/onlinesf2_log
+            prefix: ~/.sf2webapp/logs/sf2_webapp.log
             max_size_in_bytes: 100000000
             number_to_keep: 1000
         """
@@ -210,7 +210,7 @@ class TestHelperFunctions(unittest.TestCase):
         expected_result = config.LoggingConfig(
             log_level = "debug",
             log_file = config.LogFileConfig(
-                prefix = os.path.expanduser("~/.onlinesf2/onlinesf2_log"),
+                prefix = os.path.expanduser("~/.sf2webapp/logs/sf2_webapp.log"),
                 max_size_in_bytes = 100000000,
                 number_to_keep = 1000
             )

@@ -82,7 +82,7 @@ class TestHelperFunctions(unittest.TestCase):
         mock_logging_config = config.LoggingConfig(
             log_level = "debug",
             log_file = config.LogFileConfig(
-                prefix = os.path.expanduser("~/.onlinesf2/onlinesf2_log"),
+                prefix = os.path.expanduser("~/.sf2webapp/logs/sf2_webapp.log"),
                 max_size_in_bytes = 100000000,
                 number_to_keep = 1000
             )

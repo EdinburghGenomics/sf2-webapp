@@ -151,6 +151,7 @@ class ConfigurationManager:
     """Class to manage configuration settings for the SF2 web application"""
 
 
+    _default_sf2webapp_dirpath = os.path.expanduser('~/.sf2webapp')
     _default_config_dirname = 'config'
     _default_config_filenames = {
         'db': 'db_config.yaml',
@@ -191,7 +192,7 @@ class ConfigurationManager:
     def _get_default_config_filepaths(self):
         """Return a dict of default config file paths"""
 
-        default_config_dirpath = os.path.join(os.path.dirname(os.path.dirname(__file__)), self._default_config_dirname)
+        default_config_dirpath = os.path.join(self._default_sf2webapp_dirpath, self._default_config_dirname)
 
         default_config_filepaths = {k: os.path.join(default_config_dirpath, self._default_config_filenames[k]) for k, v in self._default_config_filenames.items()}
 
