@@ -15,7 +15,7 @@ setup(
     description="Edinburgh Genomics Online SF2 web application",
     long_description=README,
     long_description_content_type="text/markdown",
-    url="http://gitlab.genepool.private/hdunnda/sf2-webapp",
+    url="https://github.com/EdinburghGenomics/sf2-webapp",
     author="Hywel Dunn-Davies",
     author_email="Hywel.Dunn-Davies@ed.ac.uk",
     license="MIT",

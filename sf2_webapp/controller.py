@@ -67,7 +67,7 @@ def set_up_logging(config_manager):
 
 def initialise_tornado_app(form, model, custom_handlers, enable_cors=False):
 
-    static_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "client/{form}/build".format(**locals()))
+    static_path = os.path.join(os.path.dirname(__file__), "client/{form}/build".format(**locals()))
 
     handler_params = dict(model=model)
 
