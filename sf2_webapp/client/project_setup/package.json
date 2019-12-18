@@ -1,5 +1,6 @@
 {
-  "name": "sf2-webapp",
+  "name": "sf2-webapp-project_setup",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
